@@ -1119,6 +1119,32 @@ canvas{ display: block; }
 }
 .modal-field p.pending{ color: var(--faint); font-style: italic; }
 
+/* Document block: full width, and never the only way in — some
+   browsers (notably on mobile) refuse to render a PDF in an iframe,
+   so the open button always sits right above the preview. */
+.modal-doc{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.modal-doc-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+.modal-doc-head h4{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0;
+}
+.modal-doc .doc-embed{ height: min(56vh, 520px); }
+
 .modal-actions{
   display: flex;
   flex-wrap: wrap;
