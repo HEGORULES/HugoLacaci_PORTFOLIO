@@ -878,6 +878,24 @@ canvas{ display: block; }
 }
 
 /* ---------- 16. BADGES ---------- */
+/* Lets a card carry more than one badge without breaking the meta grid. */
+.badge-group{
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+code{
+  font-family: var(--mono);
+  font-size: 0.88em;
+  padding: 2px 5px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  background: rgba(9,11,18,0.6);
+  color: var(--bone);
+}
+
 .badge{
   font-family: var(--mono);
   font-size: 10px;
@@ -1078,6 +1096,10 @@ canvas{ display: block; }
   transition: border-color .24s ease, color .24s ease, transform .24s ease;
 }
 .modal-close:hover{ border-color: var(--signal); color: var(--signal); transform: rotate(90deg); }
+
+/* Keep the meta row clear of the close button, which is absolutely
+   positioned over the same corner. */
+.modal-box .card-meta{ padding-right: 52px; }
 
 .modal-box h2{
   font-family: var(--display);
