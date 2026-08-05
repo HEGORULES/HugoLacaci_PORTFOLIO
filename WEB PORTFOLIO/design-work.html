@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Work — Hugo Lacaci Torres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="nav-name" href="index.html">HL/T</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tfg.html">Thesis</a></li>
+      <li><a href="prototypes.html">Prototypes</a></li>
+      <li><a href="design-work.html" class="active">Design Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to home</a>
+    <p class="eyebrow">Case Studies</p>
+    <h1 class="page-title">Design Work</h1>
+    <p class="page-sub">
+      Systems thinking applied across six different problems — from enemy rosters
+      constrained by a small team, to a self-initiated TFT set built from zero.
+    </p>
+  </div>
+</div>
+
+<section style="border-top:none;">
+  <div class="wrap">
+    <div class="project-grid">
+
+      <button class="project-card" onclick="openModal('modal-enemy-design')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Final Year Project · Team</span></div>
+          <h3>Enemy Design</h3>
+          <p>Designed the enemy roster for our final year game, balancing production limits, aesthetic and encounter design.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-hybridization')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Class Project · Team</span></div>
+          <h3>Genre Hybridization</h3>
+          <p>Combined roguelike and narrative-driven design into a single playable concept.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-ravenswatch')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Case Study · Solo</span></div>
+          <h3>Multiplayer Structure Analysis</h3>
+          <p>A critical breakdown of why Ravenswatch's co-op structure creates player frustration.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-tft-set')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Personal Project · Solo</span></div>
+          <h3>Custom TFT Set</h3>
+          <p>A full Teamfight Tactics set designed from scratch — champions, costs and traits.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-sotc-boss')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Personal Project · Solo</span></div>
+          <h3>Boss Design — Shadow of the Colossus</h3>
+          <p>A boss design concept built within the world and rules of Shadow of the Colossus.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-uniformity')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta"><span class="card-type">Class Project · Solo</span></div>
+          <h3>Uniformity — RPG Design</h3>
+          <p>Full game design document for a stylized third-person RPG set across four distinct city districts.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL: Enemy Design -->
+<div class="modal-overlay" id="modal-enemy-design" onclick="closeModalOnBackdrop(event, 'modal-enemy-design')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-enemy-design')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Final Year Project · Team</span></div>
+    <h2>Enemy Design</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>Designed the enemy roster for our final year game, considering three constraints at once: the team's production limits, the game's aesthetic direction, and how the enemies would complement each other within encounters.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Enemy and encounter design. Delivered animation-ready spec tables so the animation team had everything they needed to build each enemy.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-sm" href="https://clover-echo-9e9.notion.site/Enemy-Design-c13e31c9d5648328867f813b2c348285" target="_blank">📄 View documentation ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Genre Hybridization -->
+<div class="modal-overlay" id="modal-hybridization" onclick="closeModalOnBackdrop(event, 'modal-hybridization')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-hybridization')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Class Project · Team</span></div>
+    <h2>Genre Hybridization</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>An assignment to pick two deliberately mismatched videogame genres and design a single game combining both — in this case, roguelike and narrative-driven design.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Game design, co-authored with Aaron Fuentes.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="doc-embed">
+      <iframe src="https://drive.google.com/file/d/1ZKVs0mLVGixgnVCVGHTXFUcHT9sgTlwq/preview" title="Genre Hybridization — full GDD"></iframe>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-sm" href="https://drive.google.com/file/d/1ZKVs0mLVGixgnVCVGHTXFUcHT9sgTlwq/view" target="_blank">📄 Open in new tab</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Ravenswatch analysis -->
+<div class="modal-overlay" id="modal-ravenswatch" onclick="closeModalOnBackdrop(event, 'modal-ravenswatch')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-ravenswatch')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Case Study · Solo</span></div>
+    <h2>Multiplayer Structure Analysis</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>Started from a class project where our own multiplayer game didn't work as intended, which led to a wider analysis of why Ravenswatch's co-op structure tends to frustrate players.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Solo analysis and write-up.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="doc-embed">
+      <iframe src="https://drive.google.com/file/d/1c798ovLfcwk2VyYcuxjYjry4lemggoO5/preview" title="Ravenswatch multiplayer analysis"></iframe>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-sm" href="https://drive.google.com/file/d/1c798ovLfcwk2VyYcuxjYjry4lemggoO5/view" target="_blank">📄 Open in new tab</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: TFT Set -->
+<div class="modal-overlay" id="modal-tft-set" onclick="closeModalOnBackdrop(event, 'modal-tft-set')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-tft-set')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Personal Project · Solo</span></div>
+    <h2>Custom TFT Set</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>A self-initiated project: a full Teamfight Tactics set built from zero, including champions, costs and traits, fully documented and backed by a spreadsheet model for balancing the numbers.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Solo — design, documentation and the full balancing spreadsheet.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Traits &amp; champion design</h4>
+      <div class="doc-embed">
+        <iframe src="https://drive.google.com/file/d/15UXTveAxtvuHSIB8XQ8OV9wXLlnCtUy9/preview" title="TFT Set — 16 Traits spreadsheet"></iframe>
+      </div>
+    </div>
+    <div class="modal-section">
+      <h4>Damage calculator</h4>
+      <div class="doc-embed">
+        <iframe src="https://drive.google.com/file/d/1yxPfWPm8rnH5tx2DQhVvRuawuJx2HQnx/preview" title="TFT Damage Calculator spreadsheet"></iframe>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-sm" href="https://drive.google.com/file/d/15UXTveAxtvuHSIB8XQ8OV9wXLlnCtUy9/view" target="_blank">📄 Traits (open in new tab)</a>
+      <a class="btn btn-sm" href="https://drive.google.com/file/d/1yxPfWPm8rnH5tx2DQhVvRuawuJx2HQnx/view" target="_blank">📄 Damage calculator (open in new tab)</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SotC Boss Design -->
+<div class="modal-overlay" id="modal-sotc-boss" onclick="closeModalOnBackdrop(event, 'modal-sotc-boss')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-sotc-boss')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Personal Project · Solo</span></div>
+    <h2>Boss Design — Shadow of the Colossus</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>A boss design concept built within the world, scale and rules of Shadow of the Colossus.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Solo design.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="modal-actions">
+      <span class="btn btn-sm btn-pending">📄 Documentation — pending upload</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Uniformity RPG -->
+<div class="modal-overlay" id="modal-uniformity" onclick="closeModalOnBackdrop(event, 'modal-uniformity')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-uniformity')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;"><span class="card-type">Class Project · Solo</span></div>
+    <h2>Uniformity — RPG Design</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>A full game design document for Uniformity, a stylized third-person RPG set in a city divided into four districts, each with its own aesthetic and cultural identity. Covers art direction, narrative structure, player progression, combat and NPC design.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Solo design and documentation.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="doc-embed">
+      <iframe src="https://drive.google.com/file/d/1oEv6YbMqtkGB7wtMQWN_bahqUpTO9g67/preview" title="Uniformity — full RPG GDD"></iframe>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-sm" href="https://drive.google.com/file/d/1oEv6YbMqtkGB7wtMQWN_bahqUpTO9g67/view" target="_blank">📄 Open in new tab</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding: 0 32px 48px;">
+  <a class="back-link" href="index.html">← Back to home</a>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let's talk</h2>
+      <p>hugo.lacaci@gmail.com · Madrid, Spain</p>
+    </div>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:hugo.lacaci@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function openModal(id){
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id){
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOnBackdrop(event, id){
+    if(event.target.id === id) closeModal(id);
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal-overlay.open').forEach(function(m){
+        m.classList.remove('open');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>

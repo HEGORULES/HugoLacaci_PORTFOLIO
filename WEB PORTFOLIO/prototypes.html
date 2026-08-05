@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototypes — Hugo Lacaci Torres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="nav-name" href="index.html">HL/T</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tfg.html">Thesis</a></li>
+      <li><a href="prototypes.html" class="active">Prototypes</a></li>
+      <li><a href="design-work.html">Design Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to home</a>
+    <p class="eyebrow">Playable Builds</p>
+    <h1 class="page-title">Prototypes</h1>
+    <p class="page-sub">
+      Both of these were built and balanced in under a week — full playable builds, not
+      mockups. Speed here matters as much as the design: it's proof I can take an idea
+      from concept to something people can actually play, fast.
+    </p>
+  </div>
+</div>
+
+<section style="border-top:none;">
+  <div class="wrap">
+    <div class="project-grid">
+
+      <button class="project-card" onclick="openModal('modal-automatic-combat')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta">
+            <span class="card-type">Class Project · Team</span>
+            <span class="speed-badge">⚡ &lt;1 week</span>
+          </div>
+          <h3>Automatic Combat</h3>
+          <p>An auto-battler inspired by TFT and Clash Royale, focused on enemy balance.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+      <button class="project-card" onclick="openModal('modal-infinite-runner')">
+        <div class="project-thumb"><span>Cover image pending</span></div>
+        <div class="project-card-body">
+          <div class="card-meta">
+            <span class="card-type">Class Project · Team</span>
+            <span class="speed-badge">⚡ &lt;1 week</span>
+          </div>
+          <h3>Infinite Runner</h3>
+          <p>A fully playable infinite runner prototype, built and polished in under a week.</p>
+          <span class="expand-hint">Click to see the full breakdown →</span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL: Automatic Combat -->
+<div class="modal-overlay" id="modal-automatic-combat" onclick="closeModalOnBackdrop(event, 'modal-automatic-combat')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-automatic-combat')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;">
+      <span class="card-type">Class Project · Team</span>
+      <span class="speed-badge">⚡ Built in &lt;1 week</span>
+    </div>
+    <h2>Automatic Combat</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>An auto-battler inspired by Teamfight Tactics and Clash Royale, built as a class project with a hard one-week deadline.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Focused on enemy balance — pending your input on the specifics of what you tuned and how.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="modal-actions">
+      <span class="btn btn-sm btn-pending">▶ Play on itch.io — link pending</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Infinite Runner -->
+<div class="modal-overlay" id="modal-infinite-runner" onclick="closeModalOnBackdrop(event, 'modal-infinite-runner')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-infinite-runner')">✕</button>
+    <div class="modal-thumb"><span>Cover image pending</span></div>
+    <div class="card-meta" style="margin-bottom:14px;">
+      <span class="card-type">Class Project · Team</span>
+      <span class="speed-badge">⚡ Built in &lt;1 week</span>
+    </div>
+    <h2>Infinite Runner</h2>
+    <div class="modal-section">
+      <h4>What it is</h4>
+      <p>A fully playable infinite runner prototype, built and polished in under a week, promoted with a dedicated one-pager.</p>
+    </div>
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>Pending your input on the specifics of your role in this project.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Process &amp; what I learned</h4>
+      <p>Full write-up pending — send me the details and I'll fill this in.</p>
+    </div>
+    <div class="modal-actions">
+      <span class="btn btn-sm btn-pending">▶ Play on itch.io — link pending</span>
+      <span class="btn btn-sm btn-pending">📄 One-pager — pending upload</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding: 0 32px 48px;">
+  <a class="back-link" href="index.html">← Back to home</a>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let's talk</h2>
+      <p>hugo.lacaci@gmail.com · Madrid, Spain</p>
+    </div>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:hugo.lacaci@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function openModal(id){
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id){
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOnBackdrop(event, id){
+    if(event.target.id === id) closeModal(id);
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal-overlay.open').forEach(function(m){
+        m.classList.remove('open');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>
