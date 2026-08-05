@@ -3,108 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hugo Lacaci Torres — Game & Systems Designer</title>
+<title>Hugo Lacaci Torres — Game &amp; Systems Designer</title>
+<meta name="description" content="Game and systems designer specialising in enemies, boss encounters and combat balance. Portfolio of Hugo Lacaci Torres — U-tad, Madrid.">
+<meta name="author" content="Hugo Lacaci Torres">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hugo Lacaci Torres — Game &amp; Systems Designer">
+<meta property="og:description" content="Enemies, boss encounters and the systems that hold them together. Portfolio and design documentation.">
+<meta name="theme-color" content="#090B12">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23090B12'/><path d='M3 25 L8 19 L12 22 L17 9 L22 17 L29 5' stroke='%23F2912E' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
   <div class="wrap">
-    <a class="nav-name" href="index.html">HL/T</a>
+    <a class="nav-mark" href="index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>HLT</span>
+    </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html" aria-current="page">Home</a></li>
       <li><a href="tfg.html">Thesis</a></li>
       <li><a href="prototypes.html">Prototypes</a></li>
       <li><a href="design-work.html">Design Work</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
+  <span class="nav-progress" aria-hidden="true"></span>
 </nav>
 
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Portfolio — 2026</p>
-    <h1 class="name">Hugo Lacaci<br>Torres</h1>
-    <p class="role">Game &amp; Systems Designer</p>
+<nav class="rail" aria-label="Page sections"></nav>
 
-    <div class="hp-bar" aria-hidden="true"><div class="hp-fill"></div></div>
+<main class="shell">
 
-    <p class="bio">
-      Recent graduate in Interactive Product Design (U-tad). I design enemies, encounters
-      and the systems that hold them together — from boss patterns to combat balance —
-      grounded in production constraints and playtesting, not just theory.
-    </p>
+  <header class="hero" id="top" data-chapter="Top">
+    <canvas class="hero-scope" aria-hidden="true"></canvas>
+    <div class="wrap">
 
-    <div class="tag-row">
-      <span class="tag">Enemy &amp; Boss Design</span>
-      <span class="tag">Systems &amp; Balance</span>
-      <span class="tag">Combat Design</span>
-      <span class="tag">Design Documentation</span>
+      <div class="hero-eyebrow">
+        <p class="label">Portfolio · 2026</p>
+        <span class="rule" aria-hidden="true"></span>
+      </div>
+
+      <h1 class="display hero-name">
+        <span class="ln"><span>Hugo</span></span>
+        <span class="ln"><span>Lacaci</span></span>
+        <span class="ln"><span>Torres</span></span>
+      </h1>
+
+      <p class="hero-role" data-reveal style="--d:340ms">Game &amp; Systems Designer</p>
+
+      <p class="hero-bio" data-reveal style="--d:420ms">
+        I design enemies, encounters and the systems underneath them — boss patterns,
+        combat balance, enemy rosters. My thesis argued that a boss <strong>isn't a bigger
+        health bar</strong>; it's where four design curves converge. I work the same way:
+        constraints and playtesting first, theory second.
+      </p>
+
+      <dl class="readout" data-reveal style="--d:500ms">
+        <div class="readout-cell">
+          <dt>Discipline</dt>
+          <dd>Encounter &amp; Systems</dd>
+        </div>
+        <div class="readout-cell">
+          <dt>Education</dt>
+          <dd>U-tad · IPD</dd>
+        </div>
+        <div class="readout-cell">
+          <dt>Thesis</dt>
+          <dd><span class="accent">9.1</span> / 10</dd>
+        </div>
+        <div class="readout-cell">
+          <dt>Base</dt>
+          <dd>Madrid, ES</dd>
+        </div>
+      </dl>
+
+      <div class="tag-row" data-reveal style="--d:560ms">
+        <span class="tag">Enemy &amp; Boss Design</span>
+        <span class="tag">Systems &amp; Balance</span>
+        <span class="tag">Combat Design</span>
+        <span class="tag">Design Documentation</span>
+      </div>
+
+      <div class="btn-row" data-reveal style="--d:620ms">
+        <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+        <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+        <a class="btn" href="../CV/Curriculum_GD_G.pdf" target="_blank" rel="noopener"><span>Download CV</span></a>
+      </div>
+
     </div>
+  </header>
 
-    <div class="contact-row">
-      <a class="btn btn-primary" href="mailto:hugo.lacaci@gmail.com">Email me</a>
-      <a class="btn btn-ghost" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </div>
-  </div>
-</header>
+  <section class="section" id="signal" data-chapter="Argument">
+    <div class="wrap">
 
-<section>
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Explore the Work</h2>
-      <span class="section-note">3 categories</span>
-    </div>
+      <div class="stat-band" data-reveal>
+        <div class="stat">
+          <span class="stat-value"><span data-count="9.1" data-dec="1">0.0</span><span class="suffix">/10</span></span>
+          <span class="stat-key">Thesis grade</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value"><span data-count="111">0</span></span>
+          <span class="stat-key">Pages written</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value"><span data-count="8">0</span></span>
+          <span class="stat-key">Projects documented</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value"><span data-count="2">0</span></span>
+          <span class="stat-key">Playable builds</span>
+        </div>
+      </div>
 
-    <div class="cat-grid">
-      <a class="cat-tile" href="tfg.html">
-        <span class="cat-index">Featured · Grade 9.1/10</span>
-        <h3>Bachelor's Thesis</h3>
-        <p>
-          A ludonarrative framework redefining what a boss encounter is, built from the
-          analysis of three genre-spanning case studies.
+      <blockquote class="statement" data-reveal style="--d:120ms">
+        <p class="display statement-text">
+          A boss isn't a stronger enemy. It's the point where mechanical, spatial,
+          narrative and psychological design all converge.
         </p>
-        <span class="cat-arrow">Read the thesis →</span>
-      </a>
+        <footer class="statement-src">
+          <span class="rule" data-draw aria-hidden="true"></span>
+          <span>Beyond the Health Bar — Bachelor's thesis, graded 9.1 / 10</span>
+        </footer>
+      </blockquote>
 
-      <a class="cat-tile" href="prototypes.html">
-        <span class="cat-index">2 playable builds</span>
-        <h3>Prototypes</h3>
-        <p>
-          Fast, functional prototypes built and balanced in under a week — an auto-battler
-          and an infinite runner, both playable.
-        </p>
-        <span class="cat-arrow">Play the builds →</span>
-      </a>
-
-      <a class="cat-tile" href="design-work.html">
-        <span class="cat-index">6 projects</span>
-        <h3>Design Work</h3>
-        <p>
-          Enemy design, genre hybridization, multiplayer analysis and a self-initiated
-          TFT set — case studies in systems thinking.
-        </p>
-        <span class="cat-arrow">See the projects →</span>
-      </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer id="contact">
-  <div class="wrap">
-    <div>
-      <h2>Let's talk</h2>
-      <p>hugo.lacaci@gmail.com · Madrid, Spain</p>
-    </div>
-    <div class="contact-row">
-      <a class="btn btn-primary" href="mailto:hugo.lacaci@gmail.com">Email me</a>
-      <a class="btn btn-ghost" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </div>
-  </div>
-</footer>
+  <section class="section" id="work" data-chapter="Work">
+    <div class="wrap">
 
+      <div class="section-head" data-reveal>
+        <div class="head-group">
+          <p class="label">Three ways in</p>
+          <h2>Explore the Work</h2>
+        </div>
+        <p class="label">Select a channel</p>
+      </div>
+
+      <div class="route-grid">
+
+        <a class="panel route" href="tfg.html" data-reveal>
+          <canvas class="route-spark" data-signature="beyond-the-health-bar" data-nodes="9" aria-hidden="true"></canvas>
+          <span class="route-meta">Featured · 9.1 / 10</span>
+          <h3>Bachelor's Thesis</h3>
+          <p>
+            A ludonarrative framework redefining what a boss encounter is, built from the
+            analysis of three genre-spanning case studies.
+          </p>
+          <span class="route-go">Read the thesis →</span>
+        </a>
+
+        <a class="panel route" href="prototypes.html" data-reveal style="--d:90ms">
+          <canvas class="route-spark" data-signature="playable-builds-fast" data-nodes="9" aria-hidden="true"></canvas>
+          <span class="route-meta">2 playable builds</span>
+          <h3>Prototypes</h3>
+          <p>
+            Fast, functional prototypes built and balanced in under a week — an auto-battler
+            and an infinite runner, both playable.
+          </p>
+          <span class="route-go">Play the builds →</span>
+        </a>
+
+        <a class="panel route" href="design-work.html" data-reveal style="--d:180ms">
+          <canvas class="route-spark" data-signature="systems-case-studies" data-nodes="9" aria-hidden="true"></canvas>
+          <span class="route-meta">6 case studies</span>
+          <h3>Design Work</h3>
+          <p>
+            Enemy design, genre hybridisation, multiplayer analysis and a self-initiated
+            TFT set — case studies in systems thinking.
+          </p>
+          <span class="route-go">See the projects →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact" data-chapter="Contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <p class="label" data-reveal>Open to junior design roles</p>
+          <h2 data-reveal style="--d:80ms">Let's talk</h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span>
+            <span>·</span>
+            <span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="../CV/Curriculum_GD_G.pdf" target="_blank" rel="noopener"><span>CV</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres — Game &amp; Systems Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="site.js"></script>
 </body>
 </html>
