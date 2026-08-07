@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hugo Lacaci Torres — Game &amp; Systems Designer</title>
-<meta name="description" content="Game and systems designer specialising in enemies, boss encounters and combat balance. Portfolio of Hugo Lacaci Torres — U-tad, Madrid.">
+<title>Hugo Lacaci Torres — Game Designer</title>
+<meta name="description" content="Game designer working across systems, combat, narrative and documentation. Nine projects — a playable auto-battler, a custom TFT set, enemy rosters, and a 111-page thesis on boss encounters.">
 <meta name="author" content="Hugo Lacaci Torres">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hugo Lacaci Torres — Game &amp; Systems Designer">
-<meta property="og:description" content="Enemies, boss encounters and the systems that hold them together. Portfolio and design documentation.">
-<meta name="theme-color" content="#090B12">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23090B12'/><path d='M3 25 L8 19 L12 22 L17 9 L22 17 L29 5' stroke='%23F2912E' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<meta property="og:title" content="Hugo Lacaci Torres — Game Designer">
+<meta property="og:description" content="Systems, combat, narrative and documentation. Nine projects, one playable in your browser.">
+<meta name="theme-color" content="#0B0710">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0710'/><circle cx='13' cy='16' r='9' fill='%23FF3D57'/><circle cx='20' cy='16' r='9' fill='%237C4DFF' fill-opacity='.8'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,13 +25,12 @@
   <div class="wrap">
     <a class="nav-mark" href="index.html">
       <span class="dot" aria-hidden="true"></span>
-      <span>HLT</span>
+      <span>Lacaci</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" aria-current="page">Home</a></li>
-      <li><a href="tfg.html">Thesis</a></li>
-      <li><a href="prototypes.html">Prototypes</a></li>
-      <li><a href="design-work.html">Design Work</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="play.html">Play</a></li>
+      <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -43,65 +42,189 @@
 <main class="shell">
 
   <header class="hero" id="top" data-chapter="Top">
-    <canvas class="hero-scope" aria-hidden="true"></canvas>
     <div class="wrap">
 
       <div class="hero-eyebrow">
-        <p class="label">Portfolio · 2026</p>
-        <span class="rule" aria-hidden="true"></span>
+        <p class="label">Game Designer</p>
+        <p class="label label-haze">Madrid · Open to work</p>
       </div>
 
       <h1 class="display hero-name">
-        <span class="ln"><span>Hugo</span></span>
-        <span class="ln"><span>Lacaci</span></span>
-        <span class="ln"><span>Torres</span></span>
+        <span class="ln"><span class="misprint" data-text="Hugo">Hugo</span></span>
+        <span class="ln"><span class="misprint" data-text="Lacaci">Lacaci</span></span>
       </h1>
 
-      <p class="hero-role" data-reveal style="--d:340ms">Game &amp; Systems Designer</p>
-
-      <p class="hero-bio" data-reveal style="--d:420ms">
-        I design enemies, encounters and the systems underneath them — boss patterns,
-        combat balance, enemy rosters. My thesis argued that a boss <strong>isn't a bigger
-        health bar</strong>; it's where four design curves converge. I work the same way:
-        constraints and playtesting first, theory second.
+      <p class="hero-role" data-reveal style="--d:300ms">
+        Systems, combat, narrative — <em>and the documents that hold them together.</em>
       </p>
 
-      <dl class="readout" data-reveal style="--d:500ms">
-        <div class="readout-cell">
-          <dt>Discipline</dt>
-          <dd>Encounter &amp; Systems</dd>
-        </div>
-        <div class="readout-cell">
-          <dt>Education</dt>
-          <dd>U-tad · IPD</dd>
-        </div>
-        <div class="readout-cell">
-          <dt>Thesis</dt>
-          <dd><span class="accent">9.1</span> / 10</dd>
-        </div>
-        <div class="readout-cell">
-          <dt>Base</dt>
-          <dd>Madrid, ES</dd>
-        </div>
-      </dl>
+      <p class="hero-bio" data-reveal style="--d:380ms">
+        Recent graduate in Interactive Product Design (U-tad). I've built enemy rosters under
+        real production limits, balanced an auto-battler, designed a full Teamfight Tactics set
+        from zero, and written a <strong>111-page thesis on boss encounters</strong>. What ties
+        it together isn't a genre — it's caring whether the thing actually works when someone plays it.
+      </p>
 
-      <div class="tag-row" data-reveal style="--d:560ms">
-        <span class="tag">Enemy &amp; Boss Design</span>
-        <span class="tag">Systems &amp; Balance</span>
-        <span class="tag">Combat Design</span>
+      <div class="tag-row" data-reveal style="--d:440ms">
+        <span class="tag tag-flare">Systems &amp; Balance</span>
+        <span class="tag tag-volt">Combat &amp; Encounters</span>
+        <span class="tag">Narrative Design</span>
         <span class="tag">Design Documentation</span>
+        <span class="tag">Prototyping</span>
       </div>
 
-      <div class="btn-row" data-reveal style="--d:620ms">
-        <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
-        <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
-        <a class="btn" href="Curriculum_GD_G.pdf" download><span>&#8595; Download CV (183 KB)</span></a>
+      <div class="btn-row" data-reveal style="--d:500ms">
+        <a class="btn btn-solid" href="#work"><span>See the work</span></a>
+        <a class="btn" href="play.html"><span>▶ Play a build</span></a>
+        <a class="btn" href="Curriculum_GD_G.pdf" download><span>↓ CV</span></a>
       </div>
 
     </div>
   </header>
 
-  <section class="section" id="signal" data-chapter="Argument">
+  <section class="section section-tint" id="work" data-chapter="Work">
+    <div class="wrap">
+
+      <div class="section-head" data-reveal>
+        <div class="head-group">
+          <p class="label">Nine projects</p>
+          <h2>The Work</h2>
+        </div>
+        <p class="lead" style="max-width:34ch">
+          Class projects, personal work and a thesis. Tagged by what each one actually
+          asked of me, not by what course it belonged to.
+        </p>
+      </div>
+
+      <div class="work-grid">
+
+        <a class="panel work-card" href="work/beyond-the-health-bar.html" data-reveal>
+          <span class="work-plate"><canvas data-plate="beyond-the-health-bar" data-dot="11" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Research</span>
+              <span class="disc">Systems</span>
+              <span class="disc">Narrative</span>
+            </span>
+            <h3>Beyond the Health Bar</h3>
+            <p>A 111-page thesis arguing a boss isn't a stronger enemy but the point where mechanical, spatial, narrative and psychological design converge. Graded 9.1/10.</p>
+            <span class="work-go">Read it →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="play.html" data-reveal style="--d:60ms">
+          <span class="work-plate"><canvas data-plate="automatic-combat-autobattler" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Playable</span>
+              <span class="disc">Balance</span>
+              <span class="disc">Combat</span>
+            </span>
+            <h3>Automatic Combat</h3>
+            <p>An auto-battler inspired by TFT and Clash Royale, built in under a week. I tuned unit stats and matchups so fights resolved the way the design intended.</p>
+            <span class="work-go">▶ Play in browser →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/tft-set.html" data-reveal style="--d:120ms">
+          <span class="work-plate"><canvas data-plate="custom-tft-set-sixteen-traits" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Systems</span>
+              <span class="disc">Economy</span>
+              <span class="disc">Balance</span>
+            </span>
+            <h3>Custom TFT Set</h3>
+            <p>A full Teamfight Tactics set built from zero on my own time — champions, costs, 16 traits, and a damage model to balance the numbers against.</p>
+            <span class="work-go">See the set →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/enemy-design.html" data-reveal style="--d:180ms">
+          <span class="work-plate"><canvas data-plate="enemy-roster-design" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Combat</span>
+              <span class="disc">Production</span>
+              <span class="disc">Docs</span>
+            </span>
+            <h3>Enemy Design</h3>
+            <p>The enemy roster for our final year game, designed against three constraints at once: what the team could build, the art direction, and how enemies read together in a fight.</p>
+            <span class="work-go">See the roster →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/uniformity-rpg.html" data-reveal style="--d:240ms">
+          <span class="work-plate"><canvas data-plate="uniformity-rpg-four-districts" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Narrative</span>
+              <span class="disc">World</span>
+              <span class="disc">Docs</span>
+            </span>
+            <h3>Uniformity</h3>
+            <p>A 43-page design document for a third-person RPG set in a city of four districts, each with its own aesthetic and culture. Art direction, story, progression, combat, NPCs.</p>
+            <span class="work-go">Read the GDD →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/genre-hybridization.html" data-reveal style="--d:300ms">
+          <span class="work-plate"><canvas data-plate="genre-hybridization-roguelike" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Systems</span>
+              <span class="disc">Narrative</span>
+            </span>
+            <h3>Genre Hybridization</h3>
+            <p>Take two genres that shouldn't fit and make one game from them. We took roguelike and narrative-driven, and wrote the 75-page GDD to prove it holds up.</p>
+            <span class="work-go">Read the GDD →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/ravenswatch-analysis.html" data-reveal style="--d:360ms">
+          <span class="work-plate"><canvas data-plate="ravenswatch-multiplayer-analysis" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Analysis</span>
+              <span class="disc">Multiplayer</span>
+            </span>
+            <h3>Multiplayer Structure</h3>
+            <p>Our own co-op project wasn't working. Instead of guessing, I took apart Ravenswatch to find out why its structure frustrates players — and what that meant for ours.</p>
+            <span class="work-go">Read the analysis →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/sotc-boss.html" data-reveal style="--d:420ms">
+          <span class="work-plate"><canvas data-plate="shadow-of-the-colossus-boss" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Encounters</span>
+              <span class="disc">Combat</span>
+            </span>
+            <h3>Colossus Boss Concept</h3>
+            <p>A boss designed inside someone else's rules — the world, scale and restraint of Shadow of the Colossus, where the fight is a climb and not a damage race.</p>
+            <span class="work-go">See the concept →</span>
+          </span>
+        </a>
+
+        <a class="panel work-card" href="work/infinite-runner.html" data-reveal style="--d:480ms">
+          <span class="work-plate"><canvas data-plate="infinite-runner-prototype" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row">
+              <span class="disc disc-on">Prototyping</span>
+              <span class="disc">Speed</span>
+            </span>
+            <h3>Infinite Runner</h3>
+            <p>A complete, playable runner built and polished in under a week, promoted with its own one-pager. Proof that a deadline is a design constraint like any other.</p>
+            <span class="work-go">See the build →</span>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about" data-chapter="About">
     <div class="wrap">
 
       <div class="stat-band" data-reveal>
@@ -114,76 +237,25 @@
           <span class="stat-key">Pages written</span>
         </div>
         <div class="stat">
-          <span class="stat-value"><span data-count="8">0</span></span>
-          <span class="stat-key">Projects documented</span>
+          <span class="stat-value"><span data-count="9">0</span></span>
+          <span class="stat-key">Projects shipped</span>
         </div>
         <div class="stat">
-          <span class="stat-value"><span data-count="2">0</span></span>
-          <span class="stat-key">Playable builds</span>
+          <span class="stat-value"><span data-count="16">0</span></span>
+          <span class="stat-key">TFT traits designed</span>
         </div>
       </div>
 
-      <blockquote class="statement" data-reveal style="--d:120ms">
+      <blockquote class="statement" data-reveal style="--d:120ms; margin-top:var(--s9)">
         <p class="display statement-text">
-          A boss isn't a stronger enemy. It's the point where mechanical, spatial,
-          narrative and psychological design all converge.
+          A boss isn't a stronger enemy. It's where <em>every discipline converges</em> on one moment.
         </p>
         <footer class="statement-src">
           <span class="rule" data-draw aria-hidden="true"></span>
-          <span>Beyond the Health Bar — Bachelor's thesis, graded 9.1 / 10</span>
+          <span>Beyond the Health Bar — Bachelor's thesis</span>
         </footer>
       </blockquote>
 
-    </div>
-  </section>
-
-  <section class="section" id="work" data-chapter="Work">
-    <div class="wrap">
-
-      <div class="section-head" data-reveal>
-        <div class="head-group">
-          <p class="label">Three ways in</p>
-          <h2>Explore the Work</h2>
-        </div>
-        <p class="label">Select a channel</p>
-      </div>
-
-      <div class="route-grid">
-
-        <a class="panel route" href="tfg.html" data-reveal>
-          <canvas class="route-spark" data-signature="beyond-the-health-bar" data-nodes="9" aria-hidden="true"></canvas>
-          <span class="route-meta">Featured · 9.1 / 10</span>
-          <h3>Bachelor's Thesis</h3>
-          <p>
-            A ludonarrative framework redefining what a boss encounter is, built from the
-            analysis of three genre-spanning case studies.
-          </p>
-          <span class="route-go">Read the thesis →</span>
-        </a>
-
-        <a class="panel route" href="prototypes.html" data-reveal style="--d:90ms">
-          <canvas class="route-spark" data-signature="playable-builds-fast" data-nodes="9" aria-hidden="true"></canvas>
-          <span class="route-meta">2 playable builds</span>
-          <h3>Prototypes</h3>
-          <p>
-            Fast, functional prototypes built and balanced in under a week — an auto-battler
-            and an infinite runner, both playable.
-          </p>
-          <span class="route-go">Play the builds →</span>
-        </a>
-
-        <a class="panel route" href="design-work.html" data-reveal style="--d:180ms">
-          <canvas class="route-spark" data-signature="systems-case-studies" data-nodes="9" aria-hidden="true"></canvas>
-          <span class="route-meta">6 case studies</span>
-          <h3>Design Work</h3>
-          <p>
-            Enemy design, genre hybridisation, multiplayer analysis and a self-initiated
-            TFT set — case studies in systems thinking.
-          </p>
-          <span class="route-go">See the projects →</span>
-        </a>
-
-      </div>
     </div>
   </section>
 
@@ -191,8 +263,10 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <p class="label" data-reveal>Open to junior design roles</p>
-          <h2 data-reveal style="--d:80ms">Let's talk</h2>
+          <p class="label" data-reveal>Open to junior roles</p>
+          <h2 class="display" data-reveal style="--d:80ms">
+            <span class="misprint" data-text="Let's talk">Let's talk</span>
+          </h2>
           <p class="footer-meta" data-reveal style="--d:140ms">
             <span>hugo.lacaci@gmail.com</span>
             <span>·</span>
@@ -202,11 +276,11 @@
         <div class="btn-row" data-reveal style="--d:200ms">
           <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
           <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
-          <a class="btn" href="Curriculum_GD_G.pdf" download><span>&#8595; CV (183 KB)</span></a>
+          <a class="btn" href="Curriculum_GD_G.pdf" download><span>↓ CV</span></a>
         </div>
       </div>
       <div class="footer-base">
-        <span>Hugo Lacaci Torres — Game &amp; Systems Designer</span>
+        <span>Hugo Lacaci Torres — Game Designer</span>
         <span>Madrid · 2026</span>
       </div>
     </div>
