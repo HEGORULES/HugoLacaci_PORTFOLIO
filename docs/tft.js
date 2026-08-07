@@ -176,46 +176,53 @@
 
   /* ---------- sheet viewer ---------- */
 
-  function sheetTable(rows) {
-    var wrap = el('div', 'tft-scroll');
-    var t = el('table', 'tft-table tft-table-sheet');
-    rows.forEach(function (row, ri) {
-      var tr = el('tr');
-      row.forEach(function (cell, ci) {
-        var isHead = ri === 0 || ci === 0;
-        var td = el(isHead ? 'th' : 'td', typeof cell === 'number' ? 'num' : null);
-        td.textContent = cell === null || cell === undefined ? '' : String(cell);
-        tr.appendChild(td);
-      });
-      t.appendChild(tr);
-    });
-    wrap.appendChild(t);
-    return wrap;
-  }
+  /* ---------- the workbooks themselves ---------- */
+  /* Server-rendered from the .xlsx with its own fills, merges, column
+     widths and number formats, so this is the sheet rather than a
+     retyped copy of its numbers. */
 
-  function buildSheets() {
+  function buildSheets(books) {
     var host = document.getElementById('tft-sheets');
     if (!host) return;
+
     var all = [];
-    D.sheets.traits.forEach(function (s) { all.push({ label: 'Traits · ' + s.name, rows: s.rows }); });
-    D.sheets.calculator.forEach(function (s) { all.push({ label: 'Model · ' + s.name, rows: s.rows }); });
+    books.forEach(function (bk) {
+      bk.sheets.forEach(function (s) {
+        all.push({ label: bk.label + ' · ' + s.name, file: bk.file, html: s.html });
+      });
+    });
+    if (!all.length) return;
 
     var tabs = el('div', 'tft-tabs');
-    var body = el('div');
+    var meta = el('div', 'xl-bar');
+    var body = el('div', 'xl-frame');
+
+    function show(s) {
+      body.innerHTML = '<div class="xl-scroll">' + s.html + '</div>';
+      meta.innerHTML = '';
+      meta.appendChild(el('span', 'xl-hint', 'Cells with a formula are marked — hover one to read it.'));
+      var dl = el('a', 'btn btn-sm');
+      dl.href = '../files/' + s.file;
+      dl.setAttribute('download', '');
+      dl.appendChild(el('span', null, '↓ Open in Excel'));
+      meta.appendChild(dl);
+    }
+
     all.forEach(function (s, i) {
       var b = el('button', 'tft-tab' + (i === 0 ? ' is-on' : ''), s.label);
       b.type = 'button';
       b.addEventListener('click', function () {
         Array.prototype.forEach.call(tabs.children, function (x) { x.classList.remove('is-on'); });
         b.classList.add('is-on');
-        body.innerHTML = '';
-        body.appendChild(sheetTable(s.rows));
+        show(s);
       });
       tabs.appendChild(b);
     });
+
     host.appendChild(tabs);
+    host.appendChild(meta);
     host.appendChild(body);
-    body.appendChild(sheetTable(all[0].rows));
+    show(all[0]);
   }
 
   /* ---------- boot ---------- */
@@ -247,17 +254,29 @@
     controls.appendChild(enemy);
 
     render();
-    buildSheets();
   }
 
-  fetch('../data/tft.json')
-    .then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
+  function grab(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error(url.split('/').pop() + ': HTTP ' + r.status);
       return r.json();
-    })
+    });
+  }
+
+  // The sheets are the point, so they load independently of the model:
+  // if one fails the other still shows.
+  grab('../data/tft-sheets.json')
+    .then(buildSheets)
+    .catch(function (e) {
+      var host = document.getElementById('tft-sheets');
+      if (host) host.innerHTML = '<p class="tft-error">Couldn\'t load the sheets (' +
+        e.message + '). The .xlsx files are still downloadable below.</p>';
+    });
+
+  grab('../data/tft.json')
     .then(function (json) { D = json; start(); })
     .catch(function (e) {
-      root.innerHTML = '<p class="tft-error">Couldn\'t load the set data (' + e.message +
-        '). The spreadsheets are still available to download below.</p>';
+      var out = document.getElementById('tft-out');
+      if (out) out.innerHTML = '<p class="tft-error">Couldn\'t load the model (' + e.message + ').</p>';
     });
 })();

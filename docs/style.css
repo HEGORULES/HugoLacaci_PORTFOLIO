@@ -944,6 +944,54 @@ code{
 .tft-tab:hover{ color: var(--ivory); border-color: var(--volt); }
 .tft-tab.is-on{ background: var(--volt); border-color: var(--volt); color: var(--ivory); }
 
+/* The real sheet. Rendered on paper white, because its own fills were
+   chosen against a white ground and only read correctly there. */
+.xl-frame{
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+.xl-scroll{
+  overflow: auto;
+  max-height: 70vh;
+  background: #fff;
+}
+table.xl{
+  border-collapse: collapse;
+  background: #fff;
+  color: #111;
+  font-family: Calibri, 'Segoe UI', system-ui, sans-serif;
+  font-size: 12.5px;
+  table-layout: fixed;
+}
+table.xl td{
+  border: 1px solid #d6d6d6;
+  padding: 3px 6px;
+  height: 21px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+/* Formula cells get a corner flag, the way Excel marks a comment. */
+table.xl td.xl-f{ position: relative; cursor: help; }
+table.xl td.xl-f::after{
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  border-top: 6px solid var(--volt);
+  border-left: 6px solid transparent;
+}
+.xl-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+.xl-hint{ font-size: 13px; color: var(--haze); }
+
 .tft-sim{ margin-top: var(--s6); display: flex; flex-direction: column; gap: var(--s3); }
 .tft-bars{
   display: flex;
