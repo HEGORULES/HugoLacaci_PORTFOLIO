@@ -813,6 +813,170 @@ code{
   gap: var(--s3);
 }
 
+/* ---------- 20b. TFT LIVE MODEL ---------- */
+/* Break out of the reading column: tables and selectors need the room
+   that body copy does not. */
+#tft{
+  width: min(1240px, calc(100vw - var(--edge) * 2));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+#tft .prose{ max-width: var(--measure); }
+
+.tft-controls{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s5);
+}
+.tft-side{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s5);
+  border-radius: 18px;
+  background: var(--surface);
+}
+.tft-field{ display: flex; flex-direction: column; gap: 5px; }
+.tft-field-label{
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--haze);
+}
+.tft-select{
+  appearance: none;
+  width: 100%;
+  padding: 11px 14px;
+  border: 2px solid var(--surface-2);
+  border-radius: 10px;
+  background: var(--void-2);
+  color: var(--ivory);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.tft-select:hover{ border-color: var(--volt); }
+.tft-select:focus-visible{ outline: 3px solid var(--flare); outline-offset: 2px; }
+
+.tft-summary{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--s4);
+  margin-bottom: var(--s6);
+}
+.tft-stat{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--s4);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.tft-stat-wide{ grid-column: 1 / -1; }
+.tft-stat-key{
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--haze);
+}
+.tft-stat-val{
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -0.03em;
+  color: var(--flare);
+  font-variant-numeric: tabular-nums;
+}
+.tft-stat-wide .tft-stat-val{ font-size: 22px; color: var(--ivory); }
+
+.tft-scroll{ overflow-x: auto; border-radius: 14px; }
+.tft-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.tft-table th, .tft-table td{
+  padding: 9px 14px;
+  text-align: right;
+  border-bottom: 1px solid rgba(169,155,181,0.10);
+  white-space: nowrap;
+}
+.tft-table thead th{
+  background: var(--surface-2);
+  color: var(--ivory);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tft-table th:first-child,
+.tft-table td:first-child,
+.tft-rowhead{ text-align: left; color: var(--haze); font-weight: 700; }
+.tft-table tbody tr:hover{ background: rgba(124,77,255,0.10); }
+.tft-table-sheet{ font-size: 13px; min-width: 100%; }
+.tft-table-sheet th{ color: var(--ivory); font-weight: 700; }
+
+.tft-tabs{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-bottom: var(--s4);
+}
+.tft-tab{
+  padding: 9px 16px;
+  border: 2px solid var(--surface-2);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--haze);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.tft-tab:hover{ color: var(--ivory); border-color: var(--volt); }
+.tft-tab.is-on{ background: var(--volt); border-color: var(--volt); color: var(--ivory); }
+
+.tft-sim{ margin-top: var(--s6); display: flex; flex-direction: column; gap: var(--s3); }
+.tft-bars{
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 150px;
+  padding: var(--s3);
+  border-radius: 14px;
+  background: var(--surface);
+  overflow-x: auto;
+}
+.tft-bar-col{
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 100%;
+  flex: 1 0 14px;
+}
+.tft-bar{ width: 6px; border-radius: 3px 3px 0 0; min-height: 2px; }
+.tft-bar-ally{ background: var(--flare); }
+.tft-bar-enemy{ background: var(--volt); }
+.tft-legend{ display: flex; gap: var(--s4); flex-wrap: wrap; }
+.tft-legend-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--haze);
+}
+.tft-swatch{ width: 14px; height: 14px; border-radius: 4px; }
+.tft-error{ color: var(--flare); font-weight: 700; }
+
 /* ---------- 21. GAME STAGE ---------- */
 .stage{
   position: relative;

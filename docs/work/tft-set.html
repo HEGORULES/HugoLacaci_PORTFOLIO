@@ -59,6 +59,30 @@
         <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">My role</h2>
         <p>Solo — design, documentation and the whole balancing model.</p>
       </div>
+
+      <div id="tft" style="margin-top:var(--s8)">
+        <div class="section-head">
+          <div class="head-group">
+            <p class="label">Live model</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Damage calculator</h2>
+          </div>
+        </div>
+        <p class="prose" style="margin-bottom:var(--s5)">Pick a champion for each side, give them
+        three items each, and the set's own damage model runs in your browser. Crit is resolved on
+        expectation rather than a dice roll, so the numbers hold still while you compare builds.</p>
+
+        <div class="tft-controls" id="tft-controls"></div>
+        <div id="tft-out" style="margin-top:var(--s6)"></div>
+
+        <div class="section-head" style="margin-top:var(--s8)">
+          <div class="head-group">
+            <p class="label">Every sheet</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">The workbooks</h2>
+          </div>
+        </div>
+        <div id="tft-sheets"></div>
+      </div>
+
       <div class="btn-row" data-reveal style="margin-top:var(--s7)">
         <a class="btn btn-sm" download href="../files/tft-set-16-traits.xlsx"><span>16 Traits (.xlsx) · 34 KB</span></a>
         <a class="btn btn-sm" download href="../files/tft-damage-calculator.xlsx"><span>Damage calculator (.xlsx) · 38 KB</span></a>
@@ -123,5 +147,6 @@
 </main>
 
 <script src="../site.js"></script>
+<script src="../tft.js"></script>
 </body>
 </html>

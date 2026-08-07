@@ -117,8 +117,32 @@ PROJECTS = [
                 "champions, base items, items and the calculator itself.",
         "role": "Solo — design, documentation and the whole balancing model.",
         "process": None,
-        "extra_html": "",
+        "extra_html": """
+      <div id="tft" style="margin-top:var(--s8)">
+        <div class="section-head">
+          <div class="head-group">
+            <p class="label">Live model</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Damage calculator</h2>
+          </div>
+        </div>
+        <p class="prose" style="margin-bottom:var(--s5)">Pick a champion for each side, give them
+        three items each, and the set's own damage model runs in your browser. Crit is resolved on
+        expectation rather than a dice roll, so the numbers hold still while you compare builds.</p>
+
+        <div class="tft-controls" id="tft-controls"></div>
+        <div id="tft-out" style="margin-top:var(--s6)"></div>
+
+        <div class="section-head" style="margin-top:var(--s8)">
+          <div class="head-group">
+            <p class="label">Every sheet</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">The workbooks</h2>
+          </div>
+        </div>
+        <div id="tft-sheets"></div>
+      </div>
+""",
         "docs": [],
+        "scripts": ["../tft.js"],
         "links": [("16 Traits (.xlsx)", "../files/tft-set-16-traits.xlsx", "34 KB"),
                   ("Damage calculator (.xlsx)", "../files/tft-damage-calculator.xlsx", "38 KB")],
     },
@@ -323,7 +347,7 @@ PAGE = """<!DOCTYPE html>
 
 </main>
 
-<script src="../site.js"></script>
+<script src="../site.js"></script>{scripts}
 </body>
 </html>
 """
@@ -418,6 +442,9 @@ def main():
             discs="".join(f'<span class="disc">{esc(d)}</span>' for d in p["disciplines"]),
             body=build_body(p),
             next_cards=build_next(p["slug"]),
+            scripts="".join(
+                f'\n<script src="{src}"></script>' for src in p.get("scripts", [])
+            ),
         )
         (OUT / f"{p['slug']}.html").write_text(page, encoding="utf-8")
         print(f"  wrote work/{p['slug']}.html")
