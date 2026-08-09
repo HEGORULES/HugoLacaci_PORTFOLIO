@@ -738,6 +738,33 @@ code{
 }
 .principle p{ margin: 0; color: var(--haze); font-size: 16px; max-width: 58ch; }
 
+/* ---------- 17b. CASE STUDIES ---------- */
+.case-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: var(--s4);
+}
+.case{ padding: var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
+.case h3{
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(20px, 2.2vw, 27px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.boss-list{ list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.boss-list li{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--s3);
+  border-left: 3px solid var(--volt);
+}
+.boss-list li:nth-child(even){ border-left-color: var(--flare); }
+.boss-list strong{ font-weight: 700; font-size: 16px; color: var(--ivory); }
+.boss-list span{ font-size: 14px; line-height: 1.45; color: var(--haze); }
+
 /* ---------- 18. CHIPS ---------- */
 .chip-row{ display: flex; flex-wrap: wrap; gap: var(--s3); }
 .chip{
@@ -764,28 +791,7 @@ code{
   color: var(--volt);
 }
 
-/* ---------- 19. FIGURE ---------- */
-.figure{
-  border-radius: 20px;
-  background: var(--surface);
-  padding: var(--s5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s4);
-}
-.figure-canvas{ width: 100%; height: 300px; }
-.figure-legend{ display: flex; flex-wrap: wrap; gap: var(--s4); }
-.legend-item{
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s2);
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--haze);
-}
-.legend-swatch{ width: 18px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+/* ---------- 20. DOC EMBED ---------- */
 .figure-caption{
   font-size: 14px;
   line-height: 1.55;
@@ -793,7 +799,6 @@ code{
   margin: 0;
 }
 
-/* ---------- 20. DOC EMBED ---------- */
 .doc-embed{
   width: 100%;
   height: min(62vh, 580px);

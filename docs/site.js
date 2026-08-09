@@ -152,89 +152,6 @@
     return cv;
   }
 
-  /* ---------- convergence figure (thesis) ---------- */
-  function convergence(cv) {
-    var BASE = [
-      [0.00, 0.06], [0.10, 0.20], [0.18, 0.13], [0.28, 0.38], [0.38, 0.26],
-      [0.48, 0.55], [0.58, 0.40], [0.68, 0.50], [0.78, 0.74], [0.88, 0.96],
-      [0.94, 0.66], [1.00, 0.28]
-    ];
-    var LAYERS = [
-      { c: 'rgba(169,155,181,0.55)', off:  0.17, sq: 1.4 },
-      { c: 'rgba(124,77,255,0.85)',  off: -0.14, sq: 0.7 },
-      { c: 'rgba(169,155,181,0.4)',  off:  0.09, sq: 1.15 },
-      { c: '#FF3D57',                off:  0,    sq: 1 }
-    ];
-    var t = REDUCED ? 1 : 0;
-    var started = null, playing = false;
-
-    function poly(pts, steps) {
-      var out = [];
-      for (var i = 0; i < pts.length - 1; i++) {
-        var p0 = pts[i - 1] || pts[i], p1 = pts[i];
-        var p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-        for (var s = 0; s < steps; s++) {
-          var u = s / steps, u2 = u * u, u3 = u2 * u;
-          out.push([
-            0.5 * ((2*p1[0]) + (-p0[0]+p2[0])*u + (2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*u2 + (-p0[0]+3*p1[0]-3*p2[0]+p3[0])*u3),
-            0.5 * ((2*p1[1]) + (-p0[1]+p2[1])*u + (2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*u2 + (-p0[1]+3*p1[1]-3*p2[1]+p3[1])*u3)
-          ]);
-        }
-      }
-      out.push(pts[pts.length - 1].slice());
-      return out;
-    }
-    var SAMPLED = poly(BASE, 20);
-
-    function draw() {
-      var f = fit(cv);
-      if (!f) return;
-      var ctx = f.ctx, w = f.w, h = f.h;
-      ctx.clearRect(0, 0, w, h);
-      var box = { x: 8, y: 16, w: w - 16, h: h - 44 };
-      var conv = (1 - Math.pow(1 - t, 2)) * 0.86;
-
-      LAYERS.forEach(function (L, i) {
-        var last = i === LAYERS.length - 1;
-        ctx.beginPath();
-        SAMPLED.forEach(function (p, j) {
-          var spread = 1 - conv;
-          var y = Math.pow(p[1], 1 + (L.sq - 1) * spread) + L.off * spread;
-          y = Math.max(0.02, Math.min(0.98, y));
-          var px = box.x + p[0] * box.w;
-          var py = box.y + box.h - y * box.h;
-          if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-        });
-        ctx.strokeStyle = L.c;
-        ctx.lineWidth = last ? 6 : 3;
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
-        ctx.stroke();
-      });
-
-      ctx.font = '700 11px Karla, sans-serif';
-      ctx.fillStyle = '#6E6178';
-      ctx.textAlign = 'left';
-      ctx.fillText('ENCOUNTER TIME →', box.x, box.y + box.h + 26);
-    }
-
-    function step(ts) {
-      if (started === null) started = ts;
-      t = Math.min(1, (ts - started) / 2000);
-      draw();
-      if (t < 1) requestAnimationFrame(step);
-    }
-
-    cv.__redraw = draw;
-    cv.__play = function () {
-      if (REDUCED || playing) { draw(); return; }
-      playing = true;
-      requestAnimationFrame(step);
-    };
-    draw();
-    return cv;
-  }
-
   /* ---------- reveal ---------- */
   function setupReveal() {
     var nodes = document.querySelectorAll('[data-reveal], [data-draw]');
@@ -403,9 +320,6 @@
 
     var head = document.querySelector('.page-head-scope');
     if (head) canvases.push(plate(head, head.getAttribute('data-seed') || 'header', { dot: 13 }));
-
-    var conv = document.querySelector('.figure-canvas');
-    if (conv) canvases.push(convergence(conv));
 
     playOnEnter(canvases);
     setupReveal();
