@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Automatic Combat — Hugo Lacaci Torres</title>
-<meta name="description" content="Play Automatic Combat in the browser — an auto-battler prototype built and balanced in under a week.">
+<title>Play Slavic Battle — Hugo Lacaci Torres</title>
+<meta name="description" content="Play Slavic Battle in the browser — a two-player lane battler built and balanced in under a week.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Play Automatic Combat">
-<meta property="og:description" content="An auto-battler prototype, playable in the browser. No download.">
+<meta property="og:title" content="Play Slavic Battle">
+<meta property="og:description" content="A two-player lane battler, playable in the browser. No download.">
 <meta name="theme-color" content="#0B0710">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23090B12'/><path d='M3 25 L8 19 L12 22 L17 9 L22 17 L29 5' stroke='%23F2912E' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,12 +41,14 @@
   <div class="page-head" id="top">
     <div class="wrap">
       <a class="backlink" href="index.html#work">← All work</a>
-      <p class="label">Playable build · Unity WebGL</p>
-      <h1 class="display page-title"><span class="misprint" data-text="Automatic Combat">Automatic Combat</span></h1>
+      <p class="label">Automatic Combat · Playable build</p>
+      <h1 class="display page-title"><span class="misprint" data-text="Slavic Battle">Slavic Battle</span></h1>
       <p class="lead">
-        An auto-battler inspired by Teamfight Tactics and Clash Royale, built as a class
-        project with a hard one-week deadline. I handled enemy balance — tuning unit stats
-        and matchup outcomes so fights resolved the way the design intended.
+        A two-player, turn-based-into-real-time lane battler built in under a week. Each round
+        both players spend a shared gold budget to place Soldiers, Tanks, Rangers and Mages across
+        three lanes, then watch them clash automatically. Win two lanes to take the round, two
+        rounds to take the match — so the whole game rests on those four units feeling fair and
+        distinct.
       </p>
     </div>
   </div>
@@ -66,7 +68,7 @@
         <div class="stage-poster" id="poster">
           <canvas class="stage-bg" data-plate="automatic-combat-autobattler" data-dot="12" aria-hidden="true"></canvas>
           <div class="poster-inner">
-            <p class="label">Auto-battler · Built in &lt; 1 week</p>
+            <p class="label">Two players · Built in &lt; 1 week</p>
             <h2>Play in browser</h2>
             <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>▶ Start</span></button>
             <p class="poster-note">
@@ -154,7 +156,7 @@
         codeUrl:      BUILD + '.wasm.unityweb',
         streamingAssetsUrl: 'StreamingAssets',
         companyName: 'Hugo Lacaci Torres',
-        productName: 'Automatic Combat',
+        productName: 'Slavic Battle',
         productVersion: '0.1.0',
         // Swallow Unity's own red banner; errors surface through fail() instead.
         showBanner: function (msg, type) { if (type === 'error') fail(msg); }
