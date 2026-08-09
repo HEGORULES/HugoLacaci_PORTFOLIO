@@ -828,10 +828,12 @@ code{
 
 .doc-block{ display: flex; flex-direction: column; gap: var(--s4); }
 /* Documentation needs more room than a reading column allows. */
+/* Centred with margins, not a transform: these blocks also carry
+   [data-reveal], whose own transform would otherwise cancel the
+   pull-back and shove the block off the right edge. */
 .doc-wide{
   width: min(1240px, calc(100vw - var(--edge) * 2));
-  margin-left: 50%;
-  transform: translateX(-50%);
+  margin-left: calc(50% - min(1240px, calc(100vw - var(--edge) * 2)) / 2);
 }
 .doc-head{
   display: flex;
@@ -846,8 +848,7 @@ code{
    that body copy does not. */
 #tft{
   width: min(1240px, calc(100vw - var(--edge) * 2));
-  margin-left: 50%;
-  transform: translateX(-50%);
+  margin-left: calc(50% - min(1240px, calc(100vw - var(--edge) * 2)) / 2);
 }
 #tft .prose{ max-width: var(--measure); }
 

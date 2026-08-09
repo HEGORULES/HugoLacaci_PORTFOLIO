@@ -101,12 +101,12 @@ PROJECTS = [
     },
     {
         "slug": "infinite-runner",
-        "title": "Operation Fishback",
-        "eyebrow": "Infinite Runner · Class project · Team",
+        "title": "Prototype: Infinite Runner",
+        "eyebrow": "Class project · Team",
         "disciplines": ["Prototyping", "Speed", "Level Design"],
         "lead": "An infinite runner built and polished in under a week, and pitched with its own "
                 "one-pager rather than left as a folder of builds.",
-        "what": "Operation Fishback is a complete, playable infinite runner produced against a hard "
+        "what": "This prototype is a complete, playable infinite runner produced against a hard "
                 "one-week deadline. The runner is an unforgiving genre to prototype in: the loop is "
                 "so short that anything which feels wrong is felt immediately and repeatedly, so "
                 "there is nowhere for a weak core to hide. Alongside the build the team produced a "
@@ -276,7 +276,6 @@ PAGE = """<!DOCTYPE html>
     <ul class="nav-links">
       <li><a href="../index.html#work" aria-current="page">Work</a></li>
       <li><a href="../play.html">Play</a></li>
-      <li><a href="../index.html#about">About</a></li>
       <li><a href="../index.html#contact">Contact</a></li>
     </ul>
   </div>
