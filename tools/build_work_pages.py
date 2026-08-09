@@ -137,31 +137,19 @@ PROJECTS = [
       <div id="tft" style="margin-top:var(--s8)">
         <div class="section-head">
           <div class="head-group">
-            <p class="label">The workbooks, as they are</p>
-            <h2 style="font-size:clamp(28px,4vw,48px)">Both spreadsheets</h2>
+            <p class="label">Live, not a screenshot</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Both workbooks</h2>
           </div>
         </div>
-        <p class="prose" style="margin-bottom:var(--s5)">Every sheet from both files, with its own
-        colour coding, merged headers and column widths intact. Nothing retyped — this is rendered
-        straight from the .xlsx.</p>
+        <p class="prose" style="margin-bottom:var(--s5)">Every sheet, with its own colour coding and
+        merged headers. Click any cell to read what's behind it in the formula bar — cells with a
+        formula carry a corner flag. Change a value and the whole model recalculates, the same
+        VLOOKUPs and COUNTIFs running as in Excel. Nothing you type here touches the file.</p>
         <div id="tft-sheets"></div>
-
-        <div class="section-head" style="margin-top:var(--s9)">
-          <div class="head-group">
-            <p class="label">Companion tool</p>
-            <h2 style="font-size:clamp(28px,4vw,48px)">Try a matchup</h2>
-          </div>
-        </div>
-        <p class="prose" style="margin-bottom:var(--s5)">The Calculator sheet's dropdowns, wired up
-        so you can run a matchup without opening Excel. Crit resolves on expectation instead of the
-        sheet's RAND(), so the numbers hold still while you compare builds.</p>
-
-        <div class="tft-controls" id="tft-controls"></div>
-        <div id="tft-out" style="margin-top:var(--s6)"></div>
       </div>
 """,
         "docs": [],
-        "scripts": ["../tft.js"],
+        "scripts": ["../xlsheet.js", "../tft.js"],
         "links": [("16 Traits (.xlsx)", "../files/tft-set-16-traits.xlsx", "34 KB"),
                   ("Damage calculator (.xlsx)", "../files/tft-damage-calculator.xlsx", "38 KB")],
     },

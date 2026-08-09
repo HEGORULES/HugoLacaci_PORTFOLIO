@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Render the .xlsx sheets to HTML that looks like the workbook.
+"""Extract both .xlsx into docs/data/tft-sheets.json as a live model.
 
-Fill colours, font colours, bold, merged cells, column widths, borders
-and number formats are read from the file, so what the site shows is
-the spreadsheet itself rather than a retyped version of its numbers.
+Every cell keeps whatever it actually holds — a formula stays a formula,
+a literal stays a literal — plus the styling that makes the sheet
+readable. The browser renders the grid and evaluates the formulas, so
+the workbook can be edited and recalculated rather than just looked at.
 
     python3 tools/render_sheets.py
 """
 
-import html
 import json
 import pathlib
 
@@ -26,126 +26,114 @@ WORKBOOKS = [
 
 
 def argb(colour):
-    """openpyxl hands back an RGB string, a theme index, or an error repr."""
     if colour is None:
         return None
     rgb = getattr(colour, "rgb", None)
-    if not isinstance(rgb, str) or len(rgb) != 8:
-        return None
-    if rgb[:2] == "00":
+    if not isinstance(rgb, str) or len(rgb) != 8 or rgb[:2] == "00":
         return None
     return "#" + rgb[2:]
 
 
-def cell_text(cell, fmt):
-    v = cell.value
-    if v is None:
-        return ""
-    if isinstance(v, str):
-        return v
-    if isinstance(v, bool):
-        return "TRUE" if v else "FALSE"
-    if isinstance(v, (int, float)):
-        if "%" in (fmt or ""):
-            pct = v * 100
-            return (f"{pct:.0f}" if abs(pct % 1) < 0.005 else f"{pct:.1f}") + "%"
-        if isinstance(v, float):
-            if abs(v % 1) < 1e-9:
-                return str(int(v))
-            return f"{v:.2f}".rstrip("0").rstrip(".")
-        return str(v)
-    return str(v)
+def style_of(cell):
+    s = {}
+    if cell.fill is not None and cell.fill.patternType:
+        bg = argb(cell.fill.fgColor)
+        if bg and bg.lower() != "#ffffff":
+            s["bg"] = bg
+    if cell.font is not None:
+        fg = argb(cell.font.color)
+        if fg and fg.lower() != "#000000":
+            s["fg"] = fg
+        if cell.font.bold:
+            s["b"] = 1
+    align = getattr(cell.alignment, "horizontal", None)
+    if align in ("center", "right", "left"):
+        s["a"] = align
+    fmt = cell.number_format or ""
+    if "%" in fmt:
+        s["p"] = 1                      # render as a percentage
+    return s
 
 
-def render(ws, ws_formulas):
-    # Which cells are swallowed by a merge, and what each anchor spans.
-    covered, spans = set(), {}
+def sheet_model(ws, styles, index):
+    merges = []
+    covered = set()
     for rng in ws.merged_cells.ranges:
-        anchor = (rng.min_row, rng.min_col)
-        spans[anchor] = (rng.max_row - rng.min_row + 1, rng.max_col - rng.min_col + 1)
+        merges.append([rng.min_row, rng.min_col,
+                       rng.max_row - rng.min_row + 1,
+                       rng.max_col - rng.min_col + 1])
         for r in range(rng.min_row, rng.max_row + 1):
             for c in range(rng.min_col, rng.max_col + 1):
-                if (r, c) != anchor:
+                if (r, c) != (rng.min_row, rng.min_col):
                     covered.add((r, c))
 
-    max_row, max_col = 0, 0
+    cells = {}
+    max_row = max_col = 0
     for row in ws.iter_rows():
         for cell in row:
-            if cell.value not in (None, "") or argb(cell.fill.fgColor if cell.fill else None):
-                max_row = max(max_row, cell.row)
-                max_col = max(max_col, cell.column)
+            st = style_of(cell)
+            has_value = cell.value not in (None, "")
+            if not has_value and not st:
+                continue
+            max_row = max(max_row, cell.row)
+            max_col = max(max_col, cell.column)
+            rec = {}
+            v = cell.value
+            # Array formulas arrive as an object rather than a string.
+            text = getattr(v, "text", None)
+            if isinstance(text, str):
+                v = text
+            if isinstance(v, str) and v.startswith("="):
+                rec["f"] = v[1:]
+            elif has_value:
+                rec["v"] = v if isinstance(v, (int, float, str, bool)) else str(v)
+            if st:
+                key = json.dumps(st, sort_keys=True)
+                if key not in index:
+                    index[key] = len(styles)
+                    styles.append(st)
+                rec["s"] = index[key]
+            if rec:
+                cells[f"{cell.row},{cell.column}"] = rec
+
     if not max_row:
-        return ""
+        return None
 
     cols = []
     for c in range(1, max_col + 1):
         dim = ws.column_dimensions.get(get_column_letter(c))
-        width = getattr(dim, "width", None) if dim else None
-        cols.append(f'<col style="width:{round((width or 9) * 7.2 + 6)}px">')
+        w = getattr(dim, "width", None) if dim else None
+        cols.append(round((w or 9) * 7.2 + 6))
 
-    out = [f'<table class="xl"><colgroup>{"".join(cols)}</colgroup><tbody>']
-    for r in range(1, max_row + 1):
-        out.append("<tr>")
-        for c in range(1, max_col + 1):
-            if (r, c) in covered:
-                continue
-            cell = ws.cell(row=r, column=c)
-            fmt = cell.number_format
-            text = cell_text(cell, fmt)
-
-            styles = []
-            fill = argb(cell.fill.fgColor) if cell.fill and cell.fill.patternType else None
-            if fill and fill.lower() not in ("#ffffff",):
-                styles.append(f"background:{fill}")
-            fcol = argb(cell.font.color) if cell.font else None
-            if fcol and fcol.lower() not in ("#000000",):
-                styles.append(f"color:{fcol}")
-            if cell.font and cell.font.bold:
-                styles.append("font-weight:700")
-            align = getattr(cell.alignment, "horizontal", None)
-            if align in ("center", "right", "left"):
-                styles.append(f"text-align:{align}")
-            elif isinstance(cell.value, (int, float)) and not isinstance(cell.value, bool):
-                styles.append("text-align:right")
-
-            attrs = ""
-            if (r, c) in spans:
-                rs, cs = spans[(r, c)]
-                if rs > 1:
-                    attrs += f' rowspan="{rs}"'
-                if cs > 1:
-                    attrs += f' colspan="{cs}"'
-            if styles:
-                attrs += f' style="{";".join(styles)}"'
-
-            # Show the underlying formula on hover, so the model stays visible.
-            f = ws_formulas.cell(row=r, column=c).value
-            if isinstance(f, str) and f.startswith("="):
-                attrs += f' title="{html.escape(f, quote=True)}"'
-                attrs += ' class="xl-f"'
-
-            out.append(f"<td{attrs}>{html.escape(text)}</td>")
-        out.append("</tr>")
-    out.append("</tbody></table>")
-    return "".join(out)
+    return {
+        "name": ws.title,
+        "rows": max_row,
+        "cols": max_col,
+        "widths": cols,
+        "merges": merges,
+        "covered": [f"{r},{c}" for r, c in sorted(covered)],
+        "cells": cells,
+    }
 
 
 def main():
+    styles, index = [], {}
     books = []
     for label, fname in WORKBOOKS:
-        wb_v = openpyxl.load_workbook(FILES / fname, data_only=True)
-        wb_f = openpyxl.load_workbook(FILES / fname, data_only=False)
+        wb = openpyxl.load_workbook(FILES / fname, data_only=False)
         sheets = []
-        for ws in wb_v.worksheets:
-            markup = render(ws, wb_f[ws.title])
-            if markup:
-                sheets.append({"name": ws.title, "html": markup})
-                print(f"  {label} / {ws.title}: {len(markup) // 1024} KB")
+        for ws in wb.worksheets:
+            m = sheet_model(ws, styles, index)
+            if m:
+                sheets.append(m)
+                formulas = sum(1 for c in m["cells"].values() if "f" in c)
+                print(f"  {label} / {ws.title}: {len(m['cells'])} cells, {formulas} formulas")
         books.append({"label": label, "file": fname, "sheets": sheets})
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(books, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"wrote {OUT} ({OUT.stat().st_size / 1024:.0f} KB)")
+    OUT.write_text(json.dumps({"books": books, "styles": styles},
+                              ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"wrote {OUT} ({OUT.stat().st_size / 1024:.0f} KB, {len(styles)} styles)")
 
 
 if __name__ == "__main__":

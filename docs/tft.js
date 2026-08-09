@@ -1,7 +1,8 @@
 /* =========================================================
-   TFT SET — live damage model + sheet viewer
-   The workbook's logic, reimplemented so the set can be read
-   and played with in the browser instead of downloaded.
+   The workbooks, live.
+   Renders each sheet with its own styling and evaluates the
+   real formulas, so cells can be edited and the model
+   recalculates the way it does in Excel.
    ========================================================= */
 (function () {
   'use strict';
@@ -9,14 +10,10 @@
   var root = document.getElementById('tft');
   if (!root) return;
 
-  var STATS = [
-    ['hp', 'Health'], ['ad', 'Attack Damage'], ['ap', 'Ability Power'],
-    ['armor', 'Armor'], ['mr', 'Magic Resist'], ['as', 'Attack Speed'],
-    ['crit', 'Crit Chance'], ['critDmg', 'Crit Damage'], ['omnivamp', 'Omnivamp'],
-    ['dmgAmp', 'Damage Amp'], ['durability', 'Durability']
-  ];
-  var NONE = '— none —';
-  var D;
+  var STYLES = [];
+  var sel = null;        // { book, sheet, row, col }
+  var books = [];        // [{ label, file, model, engine }]
+  var current = null;
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -25,258 +22,223 @@
     return n;
   }
 
-  function fmt(n) {
-    if (typeof n !== 'number' || !isFinite(n)) return '0';
-    return Math.abs(n % 1) < 0.001 ? String(Math.round(n)) : n.toFixed(2);
-  }
-
-  function byName(list, name) {
-    for (var i = 0; i < list.length; i++) if (list[i].name === name) return list[i];
-    return null;
-  }
-
-  /* ---------- the model ---------- */
-
-  // Champion base + the three items, summed stat by stat.
-  function build(champName, itemNames) {
-    var c = byName(D.champions, champName);
-    if (!c) return null;
-    var out = { name: c.name, adScaling: c.adScaling, apScaling: c.apScaling };
-    STATS.forEach(function (s) { out[s[0]] = c[s[0]] || 0; });
-    itemNames.forEach(function (n) {
-      var it = byName(D.items, n);
-      if (!it) return;
-      STATS.forEach(function (s) { out[s[0]] += it[s[0]] || 0; });
-    });
-    return out;
-  }
-
-  // One attack's damage, from the workbook's Final Damage row.
-  // Crit is resolved on expectation rather than a coin flip, so the
-  // numbers hold still while you compare builds.
-  function damage(att, def) {
-    var critMult = att.crit * (att.critDmg || 1) + (1 - att.crit) * 1;
-    var physical = att.ad * att.adScaling * att.as * critMult / (1 + def.armor / 100);
-    var magical  = att.ap * att.apScaling / (1 + def.mr / 100);
-    var total = (physical + magical) * (1 + att.dmgAmp) / (1 + def.durability);
-    return total > 0 ? total : 0;
-  }
-
-  // Alternating turns, ally first, with omnivamp healing the attacker.
-  function simulate(ally, enemy, maxTurns) {
-    var ah = ally.hp, eh = enemy.hp, log = [];
-    for (var t = 1; t <= maxTurns; t++) {
-      var attacker = (t % 2 === 1) ? ally : enemy;
-      var defender = (t % 2 === 1) ? enemy : ally;
-      var dmg = damage(attacker, defender);
-      var heal = dmg * (attacker.omnivamp || 0);
-      if (t % 2 === 1) { eh -= dmg; ah = Math.min(ally.hp, ah + heal); }
-      else             { ah -= dmg; eh = Math.min(enemy.hp, eh + heal); }
-      log.push({ turn: t, side: t % 2 === 1 ? 'Ally' : 'Enemy', dmg: dmg, ah: ah, eh: eh });
-      if (ah <= 0 || eh <= 0) break;
+  function colName(n) {
+    var s = '';
+    while (n > 0) {
+      var r = (n - 1) % 26;
+      s = String.fromCharCode(65 + r) + s;
+      n = (n - r - 1) / 26;
     }
-    return { log: log, allyHp: ah, enemyHp: eh };
+    return s;
   }
 
-  /* ---------- selectors ---------- */
+  function display(value, style) {
+    if (value === '' || value === null || value === undefined) return '';
+    if (typeof value === 'boolean') return value ? 'TRUE' : 'FALSE';
+    if (typeof value === 'number') {
+      if (!isFinite(value)) return '#NUM!';
+      if (style && style.p) {
+        var pct = value * 100;
+        return (Math.abs(pct % 1) < 0.005 ? Math.round(pct) : pct.toFixed(1)) + '%';
+      }
+      if (Math.abs(value % 1) < 1e-9) return String(Math.round(value));
+      return String(Math.round(value * 100) / 100);
+    }
+    return String(value);
+  }
 
-  function select(label, options, value, onChange) {
-    var wrap = el('label', 'tft-field');
-    wrap.appendChild(el('span', 'tft-field-label', label));
-    var s = el('select', 'tft-select');
-    options.forEach(function (o) {
-      var opt = el('option', null, o);
-      opt.value = o;
-      s.appendChild(opt);
+  /* ---------- grid ---------- */
+
+  function renderSheet(bookIdx, sheetName) {
+    var bk = books[bookIdx];
+    var model = null;
+    bk.model.forEach(function (s) { if (s.name === sheetName) model = s; });
+    if (!model) return;
+    current = { bookIdx: bookIdx, sheet: sheetName, model: model };
+
+    var covered = {};
+    model.covered.forEach(function (k) { covered[k] = 1; });
+    var spans = {};
+    model.merges.forEach(function (m) { spans[m[0] + ',' + m[1]] = [m[2], m[3]]; });
+
+    var scroll = el('div', 'xl-scroll');
+    var table = el('table', 'xl');
+
+    var cg = document.createElement('colgroup');
+    cg.appendChild(el('col', 'xl-gutter'));
+    model.widths.forEach(function (w) {
+      var c = document.createElement('col');
+      c.style.width = Math.max(40, Math.min(260, w)) + 'px';
+      cg.appendChild(c);
     });
-    s.value = value;
-    s.addEventListener('change', onChange);
-    wrap.appendChild(s);
-    return { node: wrap, input: s };
-  }
+    table.appendChild(cg);
 
-  /* ---------- rendering ---------- */
-
-  function statTable(ally, enemy) {
-    var t = el('table', 'tft-table');
     var thead = el('thead');
     var hr = el('tr');
-    ['Stat', ally.name, enemy.name].forEach(function (h) { hr.appendChild(el('th', null, h)); });
+    hr.appendChild(el('th', 'xl-corner'));
+    for (var c = 1; c <= model.cols; c++) hr.appendChild(el('th', 'xl-head', colName(c)));
     thead.appendChild(hr);
-    t.appendChild(thead);
-    var tb = el('tbody');
-    STATS.forEach(function (s) {
+    table.appendChild(thead);
+
+    var tbody = el('tbody');
+    for (var r = 1; r <= model.rows; r++) {
       var tr = el('tr');
-      tr.appendChild(el('th', 'tft-rowhead', s[1]));
-      tr.appendChild(el('td', 'num', fmt(ally[s[0]])));
-      tr.appendChild(el('td', 'num', fmt(enemy[s[0]])));
-      tb.appendChild(tr);
-    });
-    t.appendChild(tb);
-    return t;
-  }
-
-  function render() {
-    var ally  = build(sel.ac.input.value, [sel.a1.input.value, sel.a2.input.value, sel.a3.input.value]);
-    var enemy = build(sel.ec.input.value, [sel.e1.input.value, sel.e2.input.value, sel.e3.input.value]);
-    if (!ally || !enemy) return;
-
-    var out = document.getElementById('tft-out');
-    out.innerHTML = '';
-
-    var aDmg = damage(ally, enemy);
-    var eDmg = damage(enemy, ally);
-    var sim = simulate(ally, enemy, 40);
-
-    var winner = sim.enemyHp <= 0 ? ally.name
-               : sim.allyHp  <= 0 ? enemy.name
-               : 'Nobody — 40 turns, still standing';
-
-    var summary = el('div', 'tft-summary');
-    [
-      ['Ally damage / attack', fmt(aDmg)],
-      ['Enemy damage / attack', fmt(eDmg)],
-      ['Turns to resolve', String(sim.log.length)],
-      ['Winner', winner]
-    ].forEach(function (pair, i) {
-      var card = el('div', 'tft-stat' + (i === 3 ? ' tft-stat-wide' : ''));
-      card.appendChild(el('span', 'tft-stat-key', pair[0]));
-      card.appendChild(el('span', 'tft-stat-val', pair[1]));
-      summary.appendChild(card);
-    });
-    out.appendChild(summary);
-
-    out.appendChild(statTable(ally, enemy));
-
-    // Health over the fight, drawn as two bars per turn.
-    var simWrap = el('div', 'tft-sim');
-    simWrap.appendChild(el('p', 'label', 'Combat simulation'));
-    var bars = el('div', 'tft-bars');
-    sim.log.forEach(function (r) {
-      var col = el('div', 'tft-bar-col');
-      var a = el('div', 'tft-bar tft-bar-ally');
-      a.style.height = Math.max(0, (r.ah / ally.hp) * 100) + '%';
-      var e = el('div', 'tft-bar tft-bar-enemy');
-      e.style.height = Math.max(0, (r.eh / enemy.hp) * 100) + '%';
-      col.appendChild(a); col.appendChild(e);
-      col.title = 'Turn ' + r.turn + ' — ' + r.side + ' hits for ' + fmt(r.dmg);
-      bars.appendChild(col);
-    });
-    simWrap.appendChild(bars);
-    var legend = el('div', 'tft-legend');
-    [['tft-bar-ally', ally.name + ' HP'], ['tft-bar-enemy', enemy.name + ' HP']].forEach(function (l) {
-      var i = el('span', 'tft-legend-item');
-      i.appendChild(el('span', 'tft-swatch ' + l[0]));
-      i.appendChild(document.createTextNode(l[1]));
-      legend.appendChild(i);
-    });
-    simWrap.appendChild(legend);
-    out.appendChild(simWrap);
-  }
-
-  /* ---------- sheet viewer ---------- */
-
-  /* ---------- the workbooks themselves ---------- */
-  /* Server-rendered from the .xlsx with its own fills, merges, column
-     widths and number formats, so this is the sheet rather than a
-     retyped copy of its numbers. */
-
-  function buildSheets(books) {
-    var host = document.getElementById('tft-sheets');
-    if (!host) return;
-
-    var all = [];
-    books.forEach(function (bk) {
-      bk.sheets.forEach(function (s) {
-        all.push({ label: bk.label + ' · ' + s.name, file: bk.file, html: s.html });
-      });
-    });
-    if (!all.length) return;
-
-    var tabs = el('div', 'tft-tabs');
-    var meta = el('div', 'xl-bar');
-    var body = el('div', 'xl-frame');
-
-    function show(s) {
-      body.innerHTML = '<div class="xl-scroll">' + s.html + '</div>';
-      meta.innerHTML = '';
-      meta.appendChild(el('span', 'xl-hint', 'Cells with a formula are marked — hover one to read it.'));
-      var dl = el('a', 'btn btn-sm');
-      dl.href = '../files/' + s.file;
-      dl.setAttribute('download', '');
-      dl.appendChild(el('span', null, '↓ Open in Excel'));
-      meta.appendChild(dl);
+      tr.appendChild(el('th', 'xl-head xl-rownum', String(r)));
+      for (var cc = 1; cc <= model.cols; cc++) {
+        var key = r + ',' + cc;
+        if (covered[key]) continue;
+        var td = el('td');
+        td.dataset.r = r;
+        td.dataset.c = cc;
+        if (spans[key]) {
+          if (spans[key][0] > 1) td.rowSpan = spans[key][0];
+          if (spans[key][1] > 1) td.colSpan = spans[key][1];
+        }
+        var cell = model.cells[key];
+        var st = cell && cell.s !== undefined ? STYLES[cell.s] : null;
+        if (st) {
+          if (st.bg) td.style.background = st.bg;
+          if (st.fg) td.style.color = st.fg;
+          if (st.b) td.style.fontWeight = '700';
+          if (st.a) td.style.textAlign = st.a;
+        }
+        if (cell && 'f' in cell) td.classList.add('xl-f');
+        var v = bk.engine.value(sheetName, r, cc);
+        if (typeof v === 'number' && !(st && st.a)) td.style.textAlign = 'right';
+        td.textContent = display(v, st);
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
     }
+    table.appendChild(tbody);
+    scroll.appendChild(table);
 
-    all.forEach(function (s, i) {
-      var b = el('button', 'tft-tab' + (i === 0 ? ' is-on' : ''), s.label);
-      b.type = 'button';
-      b.addEventListener('click', function () {
-        Array.prototype.forEach.call(tabs.children, function (x) { x.classList.remove('is-on'); });
-        b.classList.add('is-on');
-        show(s);
-      });
-      tabs.appendChild(b);
+    var host = document.getElementById('xl-grid');
+    host.innerHTML = '';
+    host.appendChild(scroll);
+    setBar(null);
+  }
+
+  function refreshValues() {
+    if (!current) return;
+    var bk = books[current.bookIdx];
+    var model = current.model;
+    var cells = document.querySelectorAll('#xl-grid td[data-r]');
+    Array.prototype.forEach.call(cells, function (td) {
+      var r = +td.dataset.r, c = +td.dataset.c;
+      var cell = model.cells[r + ',' + c];
+      var st = cell && cell.s !== undefined ? STYLES[cell.s] : null;
+      var v = bk.engine.value(current.sheet, r, c);
+      td.textContent = display(v, st);
+      td.classList.toggle('xl-f', !!(cell && 'f' in cell));
     });
+  }
 
-    host.appendChild(tabs);
-    host.appendChild(meta);
-    host.appendChild(body);
-    show(all[0]);
+  /* ---------- formula bar ---------- */
+
+  var refBox, input;
+
+  function setBar(td) {
+    if (!td) {
+      refBox.textContent = '—';
+      input.value = '';
+      input.disabled = true;
+      return;
+    }
+    var r = +td.dataset.r, c = +td.dataset.c;
+    var bk = books[current.bookIdx];
+    refBox.textContent = colName(c) + r;
+    input.value = bk.engine.formulaOf(current.sheet, r, c);
+    input.disabled = false;
+  }
+
+  function commit() {
+    if (!sel || !current) return;
+    var bk = books[current.bookIdx];
+    bk.engine.set(current.sheet, sel.r, sel.c, input.value);
+    refreshValues();
   }
 
   /* ---------- boot ---------- */
-  var sel = {};
 
-  function start() {
-    var champs = D.champions.map(function (c) { return c.name; });
-    var items = [NONE].concat(D.items.map(function (i) { return i.name; }));
+  function build(data) {
+    STYLES = data.styles || [];
+    books = data.books.map(function (b) {
+      return { label: b.label, file: b.file, model: b.sheets, engine: new window.XLSheet.Book(b.sheets) };
+    });
 
-    var controls = document.getElementById('tft-controls');
-    var ally = el('div', 'tft-side');
-    ally.appendChild(el('p', 'label', 'Ally'));
-    var enemy = el('div', 'tft-side');
-    enemy.appendChild(el('p', 'label label-volt', 'Enemy'));
+    var host = document.getElementById('tft-sheets');
+    host.innerHTML = '';
 
-    sel.ac = select('Champion', champs, champs[0], render);
-    sel.a1 = select('Item 1', items, items[1] || NONE, render);
-    sel.a2 = select('Item 2', items, items[2] || NONE, render);
-    sel.a3 = select('Item 3', items, items[3] || NONE, render);
-    [sel.ac, sel.a1, sel.a2, sel.a3].forEach(function (s) { ally.appendChild(s.node); });
+    var tabs = el('div', 'tft-tabs');
+    books.forEach(function (b, bi) {
+      b.model.forEach(function (s) {
+        var btn = el('button', 'tft-tab', b.label + ' · ' + s.name);
+        btn.type = 'button';
+        btn.addEventListener('click', function () {
+          Array.prototype.forEach.call(tabs.children, function (x) { x.classList.remove('is-on'); });
+          btn.classList.add('is-on');
+          sel = null;
+          renderSheet(bi, s.name);
+          dlBtn.href = '../files/' + b.file;
+        });
+        tabs.appendChild(btn);
+      });
+    });
+    host.appendChild(tabs);
 
-    sel.ec = select('Champion', champs, champs[Math.min(5, champs.length - 1)], render);
-    sel.e1 = select('Item 1', items, items[4] || NONE, render);
-    sel.e2 = select('Item 2', items, items[5] || NONE, render);
-    sel.e3 = select('Item 3', items, items[6] || NONE, render);
-    [sel.ec, sel.e1, sel.e2, sel.e3].forEach(function (s) { enemy.appendChild(s.node); });
+    var bar = el('div', 'xl-bar');
+    refBox = el('span', 'xl-ref', '—');
+    input = el('input', 'xl-input');
+    input.type = 'text';
+    input.disabled = true;
+    input.setAttribute('aria-label', 'Formula for the selected cell');
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { commit(); input.blur(); }
+      if (e.key === 'Escape') { setBar(document.querySelector('#xl-grid td.is-sel')); input.blur(); }
+    });
+    input.addEventListener('blur', commit);
+    var dlBtn = el('a', 'btn btn-sm');
+    dlBtn.setAttribute('download', '');
+    dlBtn.appendChild(el('span', null, '↓ Open in Excel'));
+    bar.appendChild(refBox);
+    bar.appendChild(input);
+    bar.appendChild(dlBtn);
+    host.appendChild(bar);
 
-    controls.appendChild(ally);
-    controls.appendChild(enemy);
+    var grid = el('div', 'xl-frame');
+    grid.id = 'xl-grid';
+    host.appendChild(grid);
 
-    render();
-  }
+    grid.addEventListener('click', function (e) {
+      var td = e.target.closest('td[data-r]');
+      if (!td) return;
+      var prev = grid.querySelector('td.is-sel');
+      if (prev) prev.classList.remove('is-sel');
+      td.classList.add('is-sel');
+      sel = { r: +td.dataset.r, c: +td.dataset.c };
+      setBar(td);
+    });
+    grid.addEventListener('dblclick', function (e) {
+      if (e.target.closest('td[data-r]')) input.focus();
+    });
 
-  function grab(url) {
-    return fetch(url).then(function (r) {
-      if (!r.ok) throw new Error(url.split('/').pop() + ': HTTP ' + r.status);
-      return r.json();
+    tabs.children[0].click();
+    // Start on the Calculator: it is the sheet worth playing with.
+    Array.prototype.forEach.call(tabs.children, function (btn) {
+      if (/Calculator/.test(btn.textContent)) btn.click();
     });
   }
 
-  // The sheets are the point, so they load independently of the model:
-  // if one fails the other still shows.
-  grab('../data/tft-sheets.json')
-    .then(buildSheets)
+  fetch('../data/tft-sheets.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(build)
     .catch(function (e) {
       var host = document.getElementById('tft-sheets');
-      if (host) host.innerHTML = '<p class="tft-error">Couldn\'t load the sheets (' +
+      if (host) host.innerHTML = '<p class="tft-error">Couldn\'t load the workbooks (' +
         e.message + '). The .xlsx files are still downloadable below.</p>';
-    });
-
-  grab('../data/tft.json')
-    .then(function (json) { D = json; start(); })
-    .catch(function (e) {
-      var out = document.getElementById('tft-out');
-      if (out) out.innerHTML = '<p class="tft-error">Couldn\'t load the model (' + e.message + ').</p>';
     });
 })();

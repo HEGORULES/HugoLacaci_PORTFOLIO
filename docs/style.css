@@ -967,37 +967,47 @@ code{
 .tft-tab:hover{ color: var(--ivory); border-color: var(--volt); }
 .tft-tab.is-on{ background: var(--volt); border-color: var(--volt); color: var(--ivory); }
 
-/* The real sheet. Rendered on paper white, because its own fills were
-   chosen against a white ground and only read correctly there. */
-.xl-frame{
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-}
-.xl-scroll{
-  overflow: auto;
-  max-height: 70vh;
-  background: #fff;
-}
+/* The live sheet. Paper white, because its own fills were chosen
+   against a white ground and only read correctly there. */
+.xl-frame{ border-radius: 0 0 16px 16px; overflow: hidden; background: #fff; }
+.xl-scroll{ overflow: auto; max-height: 72vh; background: #fff; }
+
 table.xl{
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: #fff;
   color: #111;
   font-family: Calibri, 'Segoe UI', system-ui, sans-serif;
   font-size: 12.5px;
   table-layout: fixed;
 }
-table.xl td{
-  border: 1px solid #d6d6d6;
+table.xl td, table.xl th{
+  border-right: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
   padding: 3px 6px;
-  height: 21px;
+  height: 22px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
 }
-/* Formula cells get a corner flag, the way Excel marks a comment. */
-table.xl td.xl-f{ position: relative; cursor: help; }
+table.xl td{ cursor: cell; }
+table.xl th.xl-head{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f1f1f1;
+  color: #555;
+  font-weight: 600;
+  font-size: 11px;
+  text-align: center;
+}
+table.xl th.xl-rownum{ position: sticky; left: 0; top: auto; z-index: 1; }
+table.xl th.xl-corner{ position: sticky; left: 0; top: 0; z-index: 3; background: #e6e6e6; }
+col.xl-gutter{ width: 42px; }
+
+/* Formula cells carry a corner flag, the way Excel marks a note. */
+table.xl td.xl-f{ position: relative; }
 table.xl td.xl-f::after{
   content: "";
   position: absolute;
@@ -1005,15 +1015,37 @@ table.xl td.xl-f::after{
   border-top: 6px solid var(--volt);
   border-left: 6px solid transparent;
 }
+table.xl td.is-sel{ outline: 2px solid var(--flare); outline-offset: -2px; }
+
 .xl-bar{
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: var(--s3);
-  margin-bottom: var(--s3);
+  padding: 10px 12px;
+  border-radius: 16px 16px 0 0;
+  background: var(--surface-2);
 }
-.xl-hint{ font-size: 13px; color: var(--haze); }
+.xl-ref{
+  min-width: 56px;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--flare);
+  font-variant-numeric: tabular-nums;
+}
+.xl-input{
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--void-2);
+  color: var(--ivory);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+}
+.xl-input:focus{ outline: none; border-color: var(--volt); }
+.xl-input:disabled{ opacity: .5; }
 
 .tft-sim{ margin-top: var(--s6); display: flex; flex-direction: column; gap: var(--s3); }
 .tft-bars{
