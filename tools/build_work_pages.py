@@ -127,17 +127,32 @@ PROJECTS = [
         "process": None,
         "extra_html": """
       <div id="tft" style="margin-top:var(--s8)">
+
         <div class="section-head">
           <div class="head-group">
-            <p class="label">Live, not a screenshot</p>
-            <h2 style="font-size:clamp(28px,4vw,48px)">Both workbooks</h2>
+            <p class="label">Workbook one</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Traits</h2>
           </div>
         </div>
-        <p class="prose" style="margin-bottom:var(--s5)">Every sheet, with its own colour coding and
-        merged headers. Click any cell to read what's behind it in the formula bar. Cells with a
-        formula carry a corner flag. Change a value and the whole model recalculates, the same
-        VLOOKUPs and COUNTIFs running as in Excel. Nothing you type here touches the file.</p>
-        <div id="tft-sheets"></div>
+        <p class="prose" style="margin-bottom:var(--s5)">Change a single champion's trait and the
+        set-wide results update on their own. The structure came out of research into every
+        previous TFT set (trait types, champion counts per trait, cost distribution) to land on a
+        combination that mirrors how an official set is actually built. Click any cell to read
+        what's behind it; edit one and the sheet recalculates. Nothing you type touches the file.</p>
+        <div class="xl-book" data-book="0"></div>
+
+        <div class="section-head" style="margin-top:var(--s9)">
+          <div class="head-group">
+            <p class="label">Workbook two</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Damage calculator</h2>
+          </div>
+        </div>
+        <p class="prose" style="margin-bottom:var(--s5)">Built to follow TFT's real combat rules as
+        closely as possible, so I could run 1v1 match-ups between champions with up to three items
+        each, check for dominant strategies and flag who needed a buff or a nerf. Open the
+        Calculator sheet and change the champion in E4 to see the whole stat block move.</p>
+        <div class="xl-book" data-book="1"></div>
+
       </div>
 """,
         "docs": [],
