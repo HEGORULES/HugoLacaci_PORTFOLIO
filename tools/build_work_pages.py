@@ -104,13 +104,18 @@ PROJECTS = [
         "title": "Prototype: Infinite Runner",
         "eyebrow": "Class project · Team",
         "disciplines": ["Prototyping", "Speed", "Level Design"],
-        "lead": "An infinite runner built and polished in under a week, and pitched with its own "
-                "one-pager rather than left as a folder of builds.",
-        "what": "This prototype is a complete, playable infinite runner produced against a hard "
-                "one-week deadline. The runner is an unforgiving genre to prototype in: the loop is "
-                "so short that anything which feels wrong is felt immediately and repeatedly, so "
-                "there is nowhere for a weak core to hide. Alongside the build the team produced a "
-                "one-pager, treating the prototype as something that has to be pitched and "
+        "lead": "A downhill skiing endless runner built and polished in under a week, and pitched "
+                "with its own one-pager rather than left as a folder of builds.",
+        "what": "A penguin called Mr. Flipper finally catches the legendary Golden Bass at the top "
+                "of Snowy Mountain, an eagle swoops down and takes it, and he straps on skis and "
+                "chases it down the slope. That is the whole premise, and the game is the chase: a "
+                "fast, randomised obstacle course you jump and slide through, pitched as skill "
+                "mixed with luck. The randomisation is what the pitch rests on, since no two runs "
+                "lay the course out the same way, and power-ups keep each one from settling into a "
+                "pattern. The runner is an unforgiving genre to prototype in: the loop is so short "
+                "that anything which feels wrong is felt immediately and repeatedly, so there is "
+                "nowhere for a weak core to hide. Alongside the build the team produced the "
+                "one-pager below, treating the prototype as something that has to be pitched and "
                 "understood by someone who has not played it, not just handed over.",
         "role_label": "What I did / experience gained",
         "role": [
@@ -125,7 +130,14 @@ PROJECTS = [
         ],
         "process": None,
         "extra_html": "",
-        "docs": [("The one-pager", "operation-fishback-one-pager.pdf")],
+        "docs": [],
+        "posters": [(
+            "The one-pager",
+            "operation-fishback-one-pager.pdf",
+            "operation-fishback-one-pager.jpg",
+            1347, 1743,
+            "One-pager for the infinite runner prototype: lore, unique selling points and genres.",
+        )],
         "links": [],
     },
     {
@@ -375,6 +387,27 @@ def build_body(p):
     if p.get("extra_html"):
         add(p["extra_html"])
 
+    # A single-page document is worth showing whole rather than trapped in a
+    # scrolling PDF frame, so it renders as a pre-rasterised sheet capped to
+    # the viewport height. The real PDF is one click away either way.
+    for label, fname, img, w, h, alt in p.get("posters", []):
+        stem = img.rsplit(".", 1)[0]
+        add('      <div class="doc-block" data-reveal style="margin-top:var(--s8)">')
+        add('        <div class="doc-head">')
+        add(f'          <p class="label">{esc(label)}</p>')
+        add('          <div class="btn-row">')
+        add(f'            <a class="btn btn-sm" href="../files/{fname}" target="_blank" rel="noopener"><span>Open full PDF ↗</span></a>')
+        add(f'            <a class="btn btn-sm" href="../files/{fname}" download><span>&#8595; Download</span></a>')
+        add('          </div>')
+        add('        </div>')
+        add(f'        <a class="poster-sheet" href="../files/{fname}" target="_blank" rel="noopener">')
+        add('          <picture>')
+        add(f'            <source srcset="../files/{stem}.webp" type="image/webp">')
+        add(f'            <img src="../files/{img}" alt="{esc(alt)}" width="{w}" height="{h}" loading="lazy">')
+        add('          </picture>')
+        add('        </a>')
+        add('      </div>')
+
     for label, fname in p.get("docs", []):
         add('      <div class="doc-block" data-reveal style="margin-top:var(--s8)">')
         add('        <div class="doc-head">')
@@ -399,7 +432,7 @@ def build_body(p):
             add(f'        <a class="btn btn-sm"{dl} href="{href}"><span>{esc(text)}</span></a>')
         add('      </div>')
 
-    if not p.get("docs") and not links:
+    if not p.get("docs") and not p.get("posters") and not links:
         add('      <div class="btn-row" data-reveal style="margin-top:var(--s7)">')
         add('        <span class="btn btn-sm btn-idle"><span>Documentation pending upload</span></span>')
         add('      </div>')
