@@ -180,9 +180,23 @@ PROJECTS = [
         "role": "Enemy and encounter design. I delivered animation-ready spec tables so the "
                 "animation team had everything they needed per enemy without coming back to ask.",
         "process": None,
-        "extra_html": "",
+        "extra_html": """
+      <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">The full documentation</p>
+          <a class="btn btn-sm" href="https://clover-echo-9e9.notion.site/Enemy-Design-c13e31c9d5648328867f813b2c348285" target="_blank" rel="noopener"><span>Open in Notion ↗</span></a>
+        </div>
+        <div class="notion-embed">
+          <iframe src="https://clover-echo-9e9.notion.site/ebd/c13e31c9d5648328867f813b2c348285"
+                  title="Enemy Design — full documentation" loading="lazy"
+                  allowfullscreen></iframe>
+        </div>
+        <p class="figure-caption">Lives in Notion, so it needs that page to stay published —
+        the button above always works even if the frame doesn't load.</p>
+      </div>
+""",
         "docs": [],
-        "links": [("Full documentation (Notion)", "https://clover-echo-9e9.notion.site/Enemy-Design-c13e31c9d5648328867f813b2c348285", None)],
+        "links": [],
     },
     {
         "slug": "uniformity-rpg",
