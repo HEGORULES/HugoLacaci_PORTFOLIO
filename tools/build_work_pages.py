@@ -101,18 +101,31 @@ PROJECTS = [
     },
     {
         "slug": "infinite-runner",
-        "title": "Infinite Runner",
-        "eyebrow": "Class project · Team",
-        "disciplines": ["Prototyping", "Speed"],
-        "lead": "A complete, playable runner built and polished in under a week, promoted with its "
-                "own one-pager.",
-        "what": "A hard one-week deadline treated as a design constraint rather than an excuse: "
-                "decide what the game is, cut everything that doesn't serve it, and spend the "
-                "remaining time making the core loop feel good instead of adding features.",
-        "role": None,
+        "title": "Operation Fishback",
+        "eyebrow": "Infinite Runner · Class project · Team",
+        "disciplines": ["Prototyping", "Speed", "Level Design"],
+        "lead": "An infinite runner built and polished in under a week, and pitched with its own "
+                "one-pager rather than left as a folder of builds.",
+        "what": "Operation Fishback is a complete, playable infinite runner produced against a hard "
+                "one-week deadline. The runner is an unforgiving genre to prototype in: the loop is "
+                "so short that anything which feels wrong is felt immediately and repeatedly, so "
+                "there is nowhere for a weak core to hide. Alongside the build the team produced a "
+                "one-pager, treating the prototype as something that has to be pitched and "
+                "understood by someone who has not played it, not just handed over.",
+        "role_label": "What I did / experience gained",
+        "role": [
+            "I worked on the prototype as part of the team and contributed to the one-pager that "
+            "presents it.",
+            "A one-week deadline is a design constraint like any other, and it forces the same "
+            "discipline every time: decide what the game actually is, cut whatever does not serve "
+            "that, and spend the time left making the core loop feel good instead of adding "
+            "features nobody asked for. Producing a one-pager alongside the build was its own "
+            "lesson, since explaining a game on a single page means knowing which single idea it "
+            "rests on.",
+        ],
         "process": None,
         "extra_html": "",
-        "docs": [],
+        "docs": [("The one-pager", "operation-fishback-one-pager.pdf")],
         "links": [],
     },
     {
