@@ -140,7 +140,7 @@
 
   function setBar(td) {
     if (!td) {
-      refBox.textContent = '—';
+      refBox.textContent = '';
       input.value = '';
       input.disabled = true;
       return;
@@ -188,7 +188,7 @@
     host.appendChild(tabs);
 
     var bar = el('div', 'xl-bar');
-    refBox = el('span', 'xl-ref', '—');
+    refBox = el('span', 'xl-ref', '');
     input = el('input', 'xl-input');
     input.type = 'text';
     input.disabled = true;

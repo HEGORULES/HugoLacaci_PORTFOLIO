@@ -23,10 +23,10 @@ PROJECTS = [
         "title": "Beyond the Health Bar",
         "eyebrow": "Bachelor's thesis · Graded 9.1 / 10",
         "disciplines": ["Research", "Systems", "Narrative"],
-        "lead": "A research thesis on how the mechanical, spatial, narrative and psychological dimensions of design come together to shape a boss encounter — tested across three genres that share almost no combat system.",
-        "what": "Beyond the Health Bar investigates how different dimensions of game design — mechanical, spatial, narrative and psychological — come together to shape the player's experience during boss encounters. To test this, I analysed recurring patterns across boss fights from three genres that share almost no combat system in common: an action RPG, a narrative choice-driven game, and a puzzle game. The aim was a clearer, more useful redefinition of what a boss actually is, beyond simply “a stronger enemy”.",
+        "lead": "A research thesis on how the mechanical, spatial, narrative and psychological dimensions of design come together to shape a boss encounter, tested across three genres that share almost no combat system.",
+        "what": "Beyond the Health Bar investigates how different dimensions of game design (mechanical, spatial, narrative and psychological) come together to shape the player's experience during boss encounters. To test this, I analysed recurring patterns across boss fights from three genres that share almost no combat system in common: an action RPG, a narrative choice-driven game, and a puzzle game. The aim was a clearer, more useful redefinition of what a boss actually is, beyond simply “a stronger enemy”.",
         "role_label": "What I did / experience gained",
-        "role": ["I conducted the research and analysis entirely solo: reviewing existing literature on mechanical, level, narrative and player-psychology design, then applying that lens to the bosses of Monster Hunter Wilds, Dispatch and Portal. From that comparison I built a five-principle framework — Convergence of Curves, Communicating the Challenge, Space as an Active Element, Ludonarrative Coherence, Emotional Validation — defining what elements make a boss.", "Above all, this project sharpened my analytical thinking and my ability to look at problems from different angles. Comparing genres that share very little forced me to think outside the box and approach problem-solving from multiple perspectives at once, which consistently led to more creative, less obvious solutions.", "It also strengthened my research skills and my ability to document complex information clearly, structuring both the investigation and the final write-up so the ideas stay accessible without losing depth."],
+        "role": ["I conducted the research and analysis entirely solo: reviewing existing literature on mechanical, level, narrative and player-psychology design, then applying that lens to the bosses of Monster Hunter Wilds, Dispatch and Portal. From that comparison I built a five-principle framework (Convergence of Curves, Communicating the Challenge, Space as an Active Element, Ludonarrative Coherence, Emotional Validation) defining what elements make a boss.", "Above all, this project sharpened my analytical thinking and my ability to look at problems from different angles. Comparing genres that share very little forced me to think outside the box and approach problem-solving from multiple perspectives at once, which consistently led to more creative, less obvious solutions.", "It also strengthened my research skills and my ability to document complex information clearly, structuring both the investigation and the final write-up so the ideas stay accessible without losing depth."],
         "process": None,
         "extra_html": """
       <div class="section-head" style="margin-top:var(--s8)">
@@ -40,7 +40,7 @@ PROJECTS = [
           <p class="label">Action RPG</p>
           <h3>Monster Hunter Wilds</h3>
           <ul class="boss-list">
-            <li><strong>Zoh Shia</strong><span>The final confrontation of the main story — an encounter that really begins the moment you first set foot in the Forbidden Lands.</span></li>
+            <li><strong>Zoh Shia</strong><span>The final confrontation of the main story, and an encounter that really begins the moment you first set foot in the Forbidden Lands.</span></li>
             <li><strong>Rey Dau</strong><span>Essentially different: it doesn't close the central conflict, which is exactly what makes it useful as a comparison.</span></li>
           </ul>
         </article>
@@ -49,14 +49,14 @@ PROJECTS = [
           <h3>Dispatch</h3>
           <ul class="boss-list">
             <li><strong>Episode 8</strong><span>The finale, where the three-act structure running under the whole season resolves.</span></li>
-            <li><strong>Episode 5</strong><span>"Team Building" — two narrative arcs developing in parallel, with no traditional enemy anywhere.</span></li>
+            <li><strong>Episode 5</strong><span>"Team Building": two narrative arcs developing in parallel, with no traditional enemy anywhere.</span></li>
           </ul>
         </article>
         <article class="panel case" data-reveal style="--d:160ms">
           <p class="label">First-person puzzle</p>
           <h3>Portal</h3>
           <ul class="boss-list">
-            <li><strong>GLaDOS</strong><span>The encounter that doesn't start when you reach the room — it starts with the first line she speaks.</span></li>
+            <li><strong>GLaDOS</strong><span>The encounter that doesn't start when you reach the room. It starts with the first line she speaks.</span></li>
             <li><strong>Test Chamber 15</strong><span>Consolidates the player's mechanical base before the game asks them to use it under pressure.</span></li>
           </ul>
         </article>
@@ -72,7 +72,7 @@ PROJECTS = [
         <article class="principle" data-reveal>
           <span class="principle-num">01</span>
           <div><h3>The Convergence of Curves</h3>
-          <p>Narrative structure, tension arc, difficulty curve and learning arc aren't separate systems — they're the same cyclical pattern of build, escalate, peak, viewed from different angles.</p></div>
+          <p>Narrative structure, tension arc, difficulty curve and learning arc aren't separate systems: they're the same cyclical pattern of build, escalate, peak, viewed from different angles.</p></div>
         </article>
         <article class="principle" data-reveal style="--d:60ms">
           <span class="principle-num">02</span>
@@ -82,7 +82,7 @@ PROJECTS = [
         <article class="principle" data-reveal style="--d:120ms">
           <span class="principle-num">03</span>
           <div><h3>Space as an Active Element</h3>
-          <p>The arena isn't a backdrop — it's part of the challenge, guiding attention and reinforcing the encounter's mechanical and narrative stakes.</p></div>
+          <p>The arena isn't a backdrop: it's part of the challenge, guiding attention and reinforcing the encounter's mechanical and narrative stakes.</p></div>
         </article>
         <article class="principle" data-reveal style="--d:180ms">
           <span class="principle-num">04</span>
@@ -120,10 +120,10 @@ PROJECTS = [
         "title": "Custom TFT Set",
         "eyebrow": "Personal project · Solo",
         "disciplines": ["Systems", "Economy", "Balance"],
-        "lead": "A complete custom Teamfight Tactics set designed from scratch — a self-linking traits spreadsheet and a damage calculator built to mirror TFT's real combat rules.",
-        "what": "A self-initiated project: a complete custom Teamfight Tactics set built from zero. The first spreadsheet handles traits, where changing a single champion's trait automatically updates the set-wide results; it came out of deep research into every previous TFT set — trait types, champion counts per trait, cost distribution — to land on a combination that mirrors how an official set is actually structured. The second is a damage calculator built to follow TFT's real combat rules as closely as possible, letting me run 1v1 match-ups between champions with up to three items each to check for dominant strategies and flag who needs buffs or nerfs. The full design document is still in progress; for now, the spreadsheets speak for themselves.",
+        "lead": "A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to mirror TFT's real combat rules.",
+        "what": "A self-initiated project: a complete custom Teamfight Tactics set built from zero. The first spreadsheet handles traits, where changing a single champion's trait automatically updates the set-wide results; it came out of deep research into every previous TFT set (trait types, champion counts per trait, cost distribution) to land on a combination that mirrors how an official set is actually structured. The second is a damage calculator built to follow TFT's real combat rules as closely as possible, letting me run 1v1 match-ups between champions with up to three items each to check for dominant strategies and flag who needs buffs or nerfs. The full design document is still in progress; for now, the spreadsheets speak for themselves.",
         "role_label": "What I did / experience gained",
-        "role": ["I designed and built both spreadsheets solo, including their internal linking, so a change in one place — a champion's trait, a stat, an item — propagates correctly across the whole set instead of requiring manual updates everywhere.", "This project taught me how to actually use Excel as a design tool: building automated tables and linking multiple sheets together to keep a large, interconnected dataset clean and error-resistant, rather than a flat spreadsheet that breaks the moment something changes."],
+        "role": ["I designed and built both spreadsheets solo, including their internal linking, so a change in one place (a champion's trait, a stat, an item) propagates correctly across the whole set instead of requiring manual updates everywhere.", "This project taught me how to actually use Excel as a design tool: building automated tables and linking multiple sheets together to keep a large, interconnected dataset clean and error-resistant, rather than a flat spreadsheet that breaks the moment something changes."],
         "process": None,
         "extra_html": """
       <div id="tft" style="margin-top:var(--s8)">
@@ -134,7 +134,7 @@ PROJECTS = [
           </div>
         </div>
         <p class="prose" style="margin-bottom:var(--s5)">Every sheet, with its own colour coding and
-        merged headers. Click any cell to read what's behind it in the formula bar — cells with a
+        merged headers. Click any cell to read what's behind it in the formula bar. Cells with a
         formula carry a corner flag. Change a value and the whole model recalculates, the same
         VLOOKUPs and COUNTIFs running as in Excel. Nothing you type here touches the file.</p>
         <div id="tft-sheets"></div>
@@ -151,9 +151,9 @@ PROJECTS = [
         "eyebrow": "Final year project · Team",
         "disciplines": ["Combat", "Production", "Docs"],
         "lead": "An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unattended.",
-        "what": "An enemy design document built for Bobrfield, a top-down shooter prototype where the player controls three beavers who grow stressed if left unattended, switching between them while clearing enemies, completing objectives and unlocking rewards across the map. Enemies were designed specifically to exploit that core mechanic — not just complementing each other within a species' different roles, but across species too — while staying grounded in the game's actual systems: weapons, armour types, and the different zones the levels would offer, including how enemies interact with the environment as well as the player.",
+        "what": "An enemy design document built for Bobrfield, a top-down shooter prototype where the player controls three beavers who grow stressed if left unattended, switching between them while clearing enemies, completing objectives and unlocking rewards across the map. Enemies were designed specifically to exploit that core mechanic, not just complementing each other within a species' different roles, but across species too, while staying grounded in the game's actual systems: weapons, armour types, and the different zones the levels would offer, including how enemies interact with the environment as well as the player.",
         "role_label": "What I did / experience gained",
-        "role": ["I designed the enemy roster working directly alongside the art and narrative teams to build out every faction from day one, rather than handing off a finished spec afterward. Every enemy had to justify itself beyond “it's a cool design”: I had to trace how it would affect moment-to-moment gameplay, how it would interact with the other enemies around it, and whether it reinforced the beaver-switching mechanic the whole game is built on.", "This was my first real experience designing inside a multidisciplinary team from the ground up, and it taught me what holistic design actually requires in practice: keeping every discipline's constraints in view at once so the final experience feels intentional rather than assembled from disconnected pieces. It sharpened my instinct to ask how a design choice ripples outward — into systems, into other enemies, into the player's moment-to-moment experience — instead of treating any one enemy as an isolated idea."],
+        "role": ["I designed the enemy roster working directly alongside the art and narrative teams to build out every faction from day one, rather than handing off a finished spec afterward. Every enemy had to justify itself beyond “it's a cool design”: I had to trace how it would affect moment-to-moment gameplay, how it would interact with the other enemies around it, and whether it reinforced the beaver-switching mechanic the whole game is built on.", "This was my first real experience designing inside a multidisciplinary team from the ground up, and it taught me what holistic design actually requires in practice: keeping every discipline's constraints in view at once so the final experience feels intentional rather than assembled from disconnected pieces. It sharpened my instinct to ask how a design choice ripples outward: into systems, into other enemies, into the player's moment-to-moment experience, instead of treating any one enemy as an isolated idea."],
         "process": None,
         "extra_html": """
       <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
@@ -163,11 +163,10 @@ PROJECTS = [
         </div>
         <div class="notion-embed">
           <iframe src="https://clover-echo-9e9.notion.site/ebd/c13e31c9d5648328867f813b2c348285"
-                  title="Enemy Design — full documentation" loading="lazy"
+                  title="Enemy Design, full documentation" loading="lazy"
                   allowfullscreen></iframe>
         </div>
-        <p class="figure-caption">Lives in Notion, so it needs that page to stay published —
-        the button above always works even if the frame doesn't load.</p>
+        <p class="figure-caption">Lives in Notion, so it needs that page to stay published. The button above always works even if the frame doesn't load.</p>
       </div>
 """,
         "docs": [],
@@ -178,10 +177,10 @@ PROJECTS = [
         "title": "Uniformity",
         "eyebrow": "Class project · Solo",
         "disciplines": ["Narrative", "World", "Docs"],
-        "lead": "An RPG design document for a third-person, Persona-style game set in Patchwork City — four rival school districts fighting for territory, and a faculty plot underneath it.",
-        "what": "Uniformity is a design document for a third-person, Persona-style RPG set in Patchwork City: a city split into four rival school districts, plus a neutral commercial hub, fighting for territorial control. That conflict hides a deeper threat — a faculty organisation plotting to turn every student into an obedient “model student”. The design borrows Persona's social-sim backbone (a daily actions system, affection and companion events, a three-act linear structure) and pairs it with Beat 'em Up combat inspired by Yakuza, Granblue Fantasy: Relink and SIFU, where street fights break out while exploring and boss fights are one-on-one duels against gang leaders.",
+        "lead": "An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for territory, with a faculty plot underneath.",
+        "what": "Uniformity is a design document for a third-person, Persona-style RPG set in Patchwork City: a city split into four rival school districts, plus a neutral commercial hub, fighting for territorial control. That conflict hides a deeper threat: a faculty organisation plotting to turn every student into an obedient “model student”. The design borrows Persona's social-sim backbone (a daily actions system, affection and companion events, a three-act linear structure) and pairs it with Beat 'em Up combat inspired by Yakuza, Granblue Fantasy: Relink and SIFU, where street fights break out while exploring and boss fights are one-on-one duels against gang leaders.",
         "role_label": "What I did / experience gained",
-        "role": ["I designed the full document: the three-act narrative structure, the five districts and their schools, the actions-per-day and mission systems, the stats, equipment and skill-tree progression, the combat and companion systems, and a roster of characters distributed across all four districts.", "The core challenge was keeping four districts — each with its own school, aesthetic and companions — genuinely equivalent, so no path through the game feels like the correct one. That meant setting hard rules before writing any content: the same number of companions per district, the same combat-role archetypes, and equal opportunities to raise every stat, even when the specific activity differs.", "This project sharpened my ability to design systems that reinforce narrative structure, using mechanical constraints — daily actions, act chokepoints — to control pacing the way a screenwriter controls a script. It also taught me how to take clear references and recombine them into a cohesive original system instead of a patchwork of borrowed mechanics."],
+        "role": ["I designed the full document: the three-act narrative structure, the five districts and their schools, the actions-per-day and mission systems, the stats, equipment and skill-tree progression, the combat and companion systems, and a roster of characters distributed across all four districts.", "The core challenge was keeping four districts, each with its own school, aesthetic and companions, genuinely equivalent, so no path through the game feels like the correct one. That meant setting hard rules before writing any content: the same number of companions per district, the same combat-role archetypes, and equal opportunities to raise every stat, even when the specific activity differs.", "This project sharpened my ability to design systems that reinforce narrative structure, using mechanical constraints (daily actions, act chokepoints) to control pacing the way a screenwriter controls a script. It also taught me how to take clear references and recombine them into a cohesive original system instead of a patchwork of borrowed mechanics."],
         "process": None,
         "extra_html": "",
         "docs": [("Full GDD · 43 pages", "uniformity-rpg-gdd.pdf")],
@@ -193,9 +192,9 @@ PROJECTS = [
         "eyebrow": "Genre hybridization · Class project · Team",
         "disciplines": ["Systems", "Narrative"],
         "lead": "A genre hybridization exercise fusing narrative adventure and roguelike: an unnamed child with social anxiety navigating a school his own imagination distorts into something hostile.",
-        "what": "Through Their Eyes combines two genres with very different design philosophies into a single cohesive game. It follows an unnamed child with social anxiety navigating a school that his own imagination turns into a hostile, nightmarish space. Procedurally generated levels and permadeath — the roguelike backbone — are used to reinforce a branching, choice-driven narrative, so every run produces a distinct path through the story rather than resetting it. Co-designed with Aaron Fuentes.",
+        "what": "Through Their Eyes combines two genres with very different design philosophies into a single cohesive game. It follows an unnamed child with social anxiety navigating a school that his own imagination turns into a hostile, nightmarish space. Procedurally generated levels and permadeath (the roguelike backbone) are used to reinforce a branching, choice-driven narrative, so every run produces a distinct path through the story rather than resetting it. Co-designed with Aaron Fuentes.",
         "role_label": "What I did / experience gained",
-        "role": ["I designed the game's core concept and the development framework used to structure the whole project. On the systems side, I designed how the different systems talk to each other: movement between rooms, and — the central design challenge — how to fold narrative into a roguelike structure so each run feels like its own story rather than a repeated loop. I also designed the characters, rooms, levels and enemies, and shaped the intended player experience end to end.", "This project pushed me to think about hybridization not as “genre A's mechanics next to genre B's mechanics”, but as finding the single system — here, turn-based combat and branching room paths — that can hold two very different design languages together without either feeling bolted on. It sharpened my ability to design at the systems level: how mechanics reinforce narrative intent, and how narrative intent should in turn shape mechanical decisions, rather than treating the two as separate layers."],
+        "role": ["I designed the game's core concept and the development framework used to structure the whole project. On the systems side, I designed how the different systems talk to each other: movement between rooms, and the central design challenge: how to fold narrative into a roguelike structure so each run feels like its own story rather than a repeated loop. I also designed the characters, rooms, levels and enemies, and shaped the intended player experience end to end.", "This project pushed me to think about hybridization not as “genre A's mechanics next to genre B's mechanics”, but as finding the single system (here, turn-based combat and branching room paths) that can hold two very different design languages together without either feeling bolted on. It sharpened my ability to design at the systems level: how mechanics reinforce narrative intent, and how narrative intent should in turn shape mechanical decisions, rather than treating the two as separate layers."],
         "process": None,
         "extra_html": "",
         "docs": [("Full GDD · 75 pages", "genre-hybridization-gdd.pdf")],
@@ -206,10 +205,10 @@ PROJECTS = [
         "title": "Multiplayer Structure",
         "eyebrow": "Case study · Solo",
         "disciplines": ["Analysis", "Multiplayer"],
-        "lead": "A design analysis of why Ravenswatch's multiplayer ends up feeling like several simultaneous solo runs — and what a roguelite built for co-op from the ground up does differently.",
-        "what": "A design analysis essay examining why Ravenswatch's multiplayer mode, despite being marketed as a core feature, ends up feeling like several simultaneous solo runs rather than genuine cooperative play. I identify three root design failures — enemy scaling that assumes players stay grouped, a reward-distribution system that penalises splitting up to explore, and the lack of real communication tools — and use Elden Ring Nightreign, a structurally similar roguelite built for multiplayer from the ground up, as a comparison point to show how each problem can be solved.",
+        "lead": "A design analysis of why Ravenswatch's multiplayer ends up feeling like several simultaneous solo runs, and what a roguelite built for co-op from the ground up does differently.",
+        "what": "A design analysis essay examining why Ravenswatch's multiplayer mode, despite being marketed as a core feature, ends up feeling like several simultaneous solo runs rather than genuine cooperative play. I identify three root design failures (enemy scaling that assumes players stay grouped, a reward-distribution system that penalises splitting up to explore, and the lack of real communication tools) and use Elden Ring Nightreign, a structurally similar roguelite built for multiplayer from the ground up, as a comparison point to show how each problem can be solved.",
         "role_label": "What I did / experience gained",
-        "role": ["I conducted the analysis and wrote the essay solo, breaking down Ravenswatch's core loop and multiplayer systems to trace each source of player frustration back to a specific design decision, rather than treating them as separate, unrelated complaints. For each problem I cross-referenced Nightreign's equivalent system — boss-only scaling, character synergies, shared experience and fast travel, a forgiving revive system, multi-marker communication — to show concretely what a multiplayer-first version of the same core loop looks like.", "This project sharpened my ability to diagnose systemic design problems rather than surface-level ones: recognising that the shared-lives system, the map size and the enemy scaling weren't separate issues but symptoms of the same root cause — a single-player framework extended to multiplayer without rethinking its underlying assumptions.", "It also reinforced how much multiplayer design has to account for social dynamics, not just mechanical balance. A system can be perfectly fair on paper — equal scaling per player — while still generating blame, guilt and frustration between real players."],
+        "role": ["I conducted the analysis and wrote the essay solo, breaking down Ravenswatch's core loop and multiplayer systems to trace each source of player frustration back to a specific design decision, rather than treating them as separate, unrelated complaints. For each problem I cross-referenced Nightreign's equivalent system (boss-only scaling, character synergies, shared experience and fast travel, a forgiving revive system, multi-marker communication) to show concretely what a multiplayer-first version of the same core loop looks like.", "This project sharpened my ability to diagnose systemic design problems rather than surface-level ones: recognising that the shared-lives system, the map size and the enemy scaling weren't separate issues but symptoms of the same root cause: a single-player framework extended to multiplayer without rethinking its underlying assumptions.", "It also reinforced how much multiplayer design has to account for social dynamics, not just mechanical balance. A system can be perfectly fair on paper (equal scaling per player) while still generating blame, guilt and frustration between real players."],
         "process": None,
         "extra_html": "",
         "docs": [("Full analysis · 10 pages", "ravenswatch-analysis.pdf")],
@@ -223,10 +222,10 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title} — Hugo Lacaci Torres</title>
+<title>{title} · Hugo Lacaci Torres</title>
 <meta name="description" content="{meta}">
 <meta property="og:type" content="article">
-<meta property="og:title" content="{title} — Hugo Lacaci Torres">
+<meta property="og:title" content="{title} · Hugo Lacaci Torres">
 <meta property="og:description" content="{meta}">
 <meta name="theme-color" content="#0B0710">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0710'/><circle cx='13' cy='16' r='9' fill='%23FF3D57'/><circle cx='20' cy='16' r='9' fill='%237C4DFF' fill-opacity='.8'/></svg>">
@@ -305,7 +304,7 @@ PAGE = """<!DOCTYPE html>
         </div>
       </div>
       <div class="footer-base">
-        <span>Hugo Lacaci Torres — Game Designer</span>
+        <span>Hugo Lacaci Torres · Game Designer</span>
         <span>Madrid · 2026</span>
       </div>
     </div>
