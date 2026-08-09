@@ -104,6 +104,22 @@ PROJECTS = [
         "links": [],
     },
     {
+        "slug": "infinite-runner",
+        "title": "Infinite Runner",
+        "eyebrow": "Class project · Team",
+        "disciplines": ["Prototyping", "Speed"],
+        "lead": "A complete, playable runner built and polished in under a week, promoted with its "
+                "own one-pager.",
+        "what": "A hard one-week deadline treated as a design constraint rather than an excuse: "
+                "decide what the game is, cut everything that doesn't serve it, and spend the "
+                "remaining time making the core loop feel good instead of adding features.",
+        "role": None,
+        "process": None,
+        "extra_html": "",
+        "docs": [],
+        "links": [],
+    },
+    {
         "slug": "tft-set",
         "title": "Custom TFT Set",
         "eyebrow": "Personal project · Solo",
@@ -213,45 +229,32 @@ PROJECTS = [
                 "and 'make it more fun' isn't an actionable note. So I looked at a shipped game with "
                 "the same shape and traced the frustration back to structural decisions rather than "
                 "tuning — which made the fix for our own project obvious.",
-        "role": "Solo analysis and write-up.",
-        "process": None,
+        "role_label": "What I did",
+        "role": [
+            "I conducted the analysis and wrote the essay solo, breaking down Ravenswatch's core "
+            "loop and multiplayer systems to trace each source of player frustration back to a "
+            "specific design decision, rather than treating them as separate, unrelated complaints.",
+            "For each problem I cross-referenced Nightreign's equivalent system — boss-only scaling, "
+            "character synergies, shared experience and fast travel, a forgiving revive system, "
+            "multi-marker communication — to show concretely what a multiplayer-first version of the "
+            "same core loop looks like.",
+        ],
+        "process_label": "Experience gained",
+        "process": [
+            "This project sharpened my ability to diagnose systemic design problems rather than "
+            "surface-level ones: recognising that the shared-lives system, the map size and the "
+            "enemy scaling weren't separate issues but symptoms of the same root cause — a "
+            "single-player framework extended to multiplayer without rethinking its underlying "
+            "assumptions.",
+            "It also reinforced how much multiplayer design has to account for social dynamics, not "
+            "just mechanical balance. A system can be perfectly fair on paper — equal scaling per "
+            "player — while still generating blame, guilt and frustration between real people.",
+        ],
         "extra_html": "",
         "docs": [("Full analysis · 10 pages", "ravenswatch-analysis.pdf")],
         "links": [],
     },
-    {
-        "slug": "sotc-boss",
-        "title": "Colossus Boss Concept",
-        "eyebrow": "Personal project · Solo",
-        "disciplines": ["Encounters", "Combat"],
-        "lead": "A boss designed inside somebody else's rules — the world, scale and restraint of "
-                "Shadow of the Colossus, where a fight is a climb rather than a damage race.",
-        "what": "Designing within an existing game is a harder constraint than a blank page: every "
-                "idea has to survive the question 'would this game do that?'. Shadow of the Colossus "
-                "has almost no combat vocabulary, so the encounter has to come from traversal, "
-                "scale and patience instead of abilities.",
-        "role": "Solo design.",
-        "process": None,
-        "extra_html": "",
-        "docs": [],
-        "links": [],
-    },
-    {
-        "slug": "infinite-runner",
-        "title": "Infinite Runner",
-        "eyebrow": "Class project · Team",
-        "disciplines": ["Prototyping", "Speed"],
-        "lead": "A complete, playable runner built and polished in under a week, promoted with its "
-                "own one-pager.",
-        "what": "A hard one-week deadline treated as a design constraint rather than an excuse: "
-                "decide what the game is, cut everything that doesn't serve it, and spend the "
-                "remaining time making the core loop feel good instead of adding features.",
-        "role": None,
-        "process": None,
-        "extra_html": "",
-        "docs": [],
-        "links": [],
-    },
+    
 ]
 
 PAGE = """<!DOCTYPE html>
@@ -371,14 +374,16 @@ def build_body(p):
 
     if p.get("role"):
         add('      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">')
-        add('        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">My role</h2>')
-        add(f'        <p>{esc(p["role"])}</p>')
+        add(f'        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">{esc(p.get("role_label", "My role"))}</h2>')
+        for para in p["role"] if isinstance(p["role"], list) else [p["role"]]:
+            add(f'        <p>{esc(para)}</p>')
         add('      </div>')
 
     if p.get("process"):
         add('      <div class="prose" data-reveal style="--d:120ms;margin-top:var(--s7)">')
-        add('        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">Process</h2>')
-        add(f'        <p>{esc(p["process"])}</p>')
+        add(f'        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">{esc(p.get("process_label", "Process"))}</h2>')
+        for para in p["process"] if isinstance(p["process"], list) else [p["process"]]:
+            add(f'        <p>{esc(para)}</p>')
         add('      </div>')
 
     if p.get("extra_html"):
