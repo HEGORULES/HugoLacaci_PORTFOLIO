@@ -331,7 +331,7 @@ PAGE = """<!DOCTYPE html>
       <div class="section-head">
         <div class="head-group">
           <p class="label">Keep going</p>
-          <h2 style="font-size:clamp(30px,5vw,64px)">Next up</h2>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
         </div>
       </div>
       <div class="work-grid">
@@ -492,21 +492,76 @@ def build_body(p):
     return "\n".join(out)
 
 
-def build_next(current):
-    others = [q for q in PROJECTS if q["slug"] != current][:2]
+# The playable build has its own page rather than a PROJECTS entry, but it
+# belongs in the ring: stepping neighbour to neighbour has to reach all eight
+# pieces of work, not seven.
+PLAY_CARD = {
+    "slug": "automatic-combat-autobattler",
+    "page": "play.html",
+    "title": "Prototype: Automatic Battle",
+    "lead": "A two-player lane battler built in under a week. Four units, three lanes, "
+            "one shared gold budget, and balance that had to hold.",
+    "disciplines": ["Playable", "Balance"],
+}
+
+
+def ring():
+    """Every piece of work in the order the home grid shows it."""
+    items = []
+    for p in PROJECTS:
+        items.append(dict(p, page=f"{p['slug']}.html"))
+        if p["slug"] == "beyond-the-health-bar":
+            items.append(PLAY_CARD)
+    return items
+
+
+def build_next(current, from_work_dir=True):
+    """The piece before this one and the piece after it.
+
+    Showing the same two projects on every page meant a reader who arrived
+    on one page and followed the links could circle a corner of the site
+    forever. Neighbours in the grid order wrap around, so following either
+    arrow walks through all eight and misses none.
+    """
+    items = ring()
+    here = next((i for i, q in enumerate(items) if q["page"] == current), 0)
+    picks = [(items[(here - 1) % len(items)], "← Previous"),
+             (items[(here + 1) % len(items)], "Next →")]
     cards = []
-    for i, q in enumerate(others):
+    for i, (q, go) in enumerate(picks):
         discs = "".join(f'<span class="disc">{esc(d)}</span>' for d in q["disciplines"][:2])
-        cards.append(f"""        <a class="panel work-card" href="{q['slug']}.html" data-reveal style="--d:{i*80}ms">
+        href = q["page"] if from_work_dir else q["page"]
+        if from_work_dir and q["page"] == "play.html":
+            href = "../play.html"
+        elif not from_work_dir and q["page"] != "play.html":
+            href = f"work/{q['page']}"
+        cards.append(f"""        <a class="panel work-card" href="{href}" data-reveal style="--d:{i*80}ms">
           <span class="work-plate"><canvas data-plate="{q['slug']}" aria-hidden="true"></canvas></span>
           <span class="work-body">
             <span class="disc-row">{discs}</span>
             <h3>{esc(q['title'])}</h3>
             <p>{esc(q['lead'][:130])}…</p>
-            <span class="work-go">Open →</span>
+            <span class="work-go">{go}</span>
           </span>
         </a>""")
     return "\n".join(cards)
+
+
+def update_play_page():
+    """Keep the playable build's own neighbours in step with the ring."""
+    path = ROOT / "docs" / "play.html"
+    if not path.exists():
+        return
+    text = path.read_text(encoding="utf-8")
+    start, end = "<!-- NEXTUP:START -->", "<!-- NEXTUP:END -->"
+    if start not in text or end not in text:
+        print("  play.html has no neighbour block, skipped")
+        return
+    head, rest = text.split(start, 1)
+    _, tail = rest.split(end, 1)
+    block = build_next("play.html", from_work_dir=False)
+    path.write_text(f"{head}{start}\n{block}\n        {end}{tail}", encoding="utf-8")
+    print("  updated play.html neighbours")
 
 
 def main():
@@ -520,13 +575,14 @@ def main():
             lead=esc(p["lead"]),
             discs="".join(f'<span class="disc">{esc(d)}</span>' for d in p["disciplines"]),
             body=build_body(p),
-            next_cards=build_next(p["slug"]),
+            next_cards=build_next(f"{p['slug']}.html"),
             scripts="".join(
                 f'\n<script src="{src}"></script>' for src in p.get("scripts", [])
             ),
         )
         (OUT / f"{p['slug']}.html").write_text(page, encoding="utf-8")
         print(f"  wrote work/{p['slug']}.html")
+    update_play_page()
     print(f"{len(PROJECTS)} pages generated in {OUT}")
 
 
