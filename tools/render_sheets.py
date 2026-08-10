@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Extract both .xlsx into docs/data/tft-sheets.json as a live model.
 
-Every cell keeps whatever it actually holds — a formula stays a formula,
-a literal stays a literal — plus the styling that makes the sheet
+Every cell keeps whatever it actually holds, a formula stays a formula,
+a literal stays a literal, plus the styling that makes the sheet
 readable. The browser renders the grid and evaluates the formulas, so
 the workbook can be edited and recalculated rather than just looked at.
 

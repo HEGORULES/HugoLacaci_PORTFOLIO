@@ -1,5 +1,5 @@
 /* =========================================================
-   KEY ART — interaction layer
+   KEY ART, interaction layer
    Every project gets a generated two-ink plate: overlapping
    shapes and halftone, seeded by its name so no two match.
    ========================================================= */

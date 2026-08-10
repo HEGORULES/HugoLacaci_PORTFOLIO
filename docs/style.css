@@ -1,12 +1,12 @@
 /* =========================================================
-   HUGO LACACI TORRES — KEY ART
+   HUGO LACACI TORRES, KEY ART
    Two-ink riso print: coral flare + electric volt on
    violet-black. Big fields, heavy type, grain, misregister.
    ========================================================= */
 
 /* ---------- 1. TOKENS ---------- */
 :root{
-  /* Ground — violet-black, never neutral */
+  /* Ground, violet-black, never neutral */
   --void:      #0B0710;
   --void-2:    #120B1A;
   --surface:   #191024;
@@ -77,7 +77,7 @@ canvas{ display: block; }
 }
 
 /* ---------- 3. PRINT LAYERS ---------- */
-/* Two big ink blooms that drift as you scroll — the poster's
+/* Two big ink blooms that drift as you scroll, the poster's
    colour comes from these, not from borders. */
 .bg-grid{
   position: fixed;
@@ -354,7 +354,7 @@ canvas{ display: block; }
 }
 .hero-bio strong{ color: var(--ivory); font-weight: 700; }
 
-/* Discipline chips — plural on purpose, nothing pigeonholing */
+/* Discipline chips, plural on purpose, nothing pigeonholing */
 .tag-row{
   display: flex;
   flex-wrap: wrap;
@@ -615,7 +615,7 @@ canvas{ display: block; }
 }
 .work-card:hover .work-go{ gap: 14px; }
 
-/* Discipline tags — several per project, so nothing pigeonholes */
+/* Discipline tags, several per project, so nothing pigeonholes */
 .disc-row{ display: flex; flex-wrap: wrap; gap: 6px; }
 .disc{
   font-weight: 700;
