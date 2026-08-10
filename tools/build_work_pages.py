@@ -20,8 +20,8 @@ OUT = ROOT / "docs" / "work"
 PROJECTS = [
     {
         "slug": "beyond-the-health-bar",
-        "title": "Beyond the Health Bar",
-        "eyebrow": "Bachelor's thesis · Graded 9.1 / 10",
+        "title": "Bachelor's Final Project (BFP)",
+        "eyebrow": "Theoretical modality · Graded 9.1 / 10",
         "disciplines": ["Research", "Systems", "Narrative"],
         "lead": "A research thesis on how the mechanical, spatial, narrative and psychological dimensions of design come together to shape a boss encounter, tested across three genres that share almost no combat system.",
         "what": "Beyond the Health Bar investigates how different dimensions of game design (mechanical, spatial, narrative and psychological) come together to shape the player's experience during boss encounters. To test this, I analysed recurring patterns across boss fights from three genres that share almost no combat system in common: an action RPG, a narrative choice-driven game, and a puzzle game. The aim was a clearer, more useful redefinition of what a boss actually is, beyond simply “a stronger enemy”.",
@@ -172,9 +172,11 @@ PROJECTS = [
         <p class="prose" style="margin-bottom:var(--s5)">Change a single champion's trait and the
         set-wide results update on their own. The structure came out of research into every
         previous TFT set (trait types, champion counts per trait, cost distribution) to land on a
-        combination that mirrors how an official set is actually built. Click any cell to read
-        what's behind it; edit one and the sheet recalculates. Nothing you type touches the file.</p>
-        <div class="xl-book" data-book="0"></div>
+        combination that mirrors how an official set is actually built. It opens fitted so the
+        whole sheet is on screen at once; use the zoom to walk back into it. Click any cell to
+        read what's behind it; edit one and the sheet recalculates. Nothing you type touches the
+        file.</p>
+        <div class="xl-book" data-book="0" data-fit="on"></div>
 
         <div class="section-head" style="margin-top:var(--s9)">
           <div class="head-group">
@@ -184,8 +186,9 @@ PROJECTS = [
         </div>
         <p class="prose" style="margin-bottom:var(--s5)">Built to follow TFT's real combat rules as
         closely as possible, so I could run 1v1 match-ups between champions with up to three items
-        each, check for dominant strategies and flag who needed a buff or a nerf. Open the
-        Calculator sheet and change the champion in E4 to see the whole stat block move.</p>
+        each, check for dominant strategies and flag who needed a buff or a nerf. The yellow cells
+        are dropdowns, the same ones the workbook has in Excel: pick the two champions and up to
+        three items each, and every stat, resistance and damage figure below recalculates.</p>
         <div class="xl-book" data-book="1"></div>
 
       </div>
@@ -224,7 +227,7 @@ PROJECTS = [
     },
     {
         "slug": "uniformity-rpg",
-        "title": "Uniformity",
+        "title": "RPG Design",
         "eyebrow": "Class project · Solo",
         "disciplines": ["Narrative", "World", "Docs"],
         "lead": "An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for territory, with a faculty plot underneath.",
@@ -238,8 +241,8 @@ PROJECTS = [
     },
     {
         "slug": "genre-hybridization",
-        "title": "Through Their Eyes",
-        "eyebrow": "Genre hybridization · Class project · Team",
+        "title": "Genre Hybridation",
+        "eyebrow": "Class project · Team",
         "disciplines": ["Systems", "Narrative"],
         "lead": "A genre hybridization exercise fusing narrative adventure and roguelike: an unnamed child with social anxiety navigating a school his own imagination distorts into something hostile.",
         "what": "Through Their Eyes combines two genres with very different design philosophies into a single cohesive game. It follows an unnamed child with social anxiety navigating a school that his own imagination turns into a hostile, nightmarish space. Procedurally generated levels and permadeath (the roguelike backbone) are used to reinforce a branching, choice-driven narrative, so every run produces a distinct path through the story rather than resetting it. Co-designed with Aaron Fuentes.",
