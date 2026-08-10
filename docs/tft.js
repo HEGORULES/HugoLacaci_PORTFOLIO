@@ -139,11 +139,36 @@
     return painted;
   }
 
+  /* The workbook colour-codes every champion and item by damage type on its
+     guide sheets, with a legend. Those colours are the point of the guides,
+     so a value picked in a dropdown carries its own colour into the cell it
+     was picked in, rather than sitting on a flat input tint. */
+  function guideColours(book) {
+    var wanted = {}, map = {};
+    book.sheets.forEach(function (s) {
+      (s.lists || []).forEach(function (list) {
+        list.forEach(function (name) { wanted[name] = 1; });
+      });
+    });
+    book.sheets.forEach(function (s) {
+      Object.keys(s.cells).forEach(function (k) {
+        var cell = s.cells[k];
+        if (cell.s === undefined || !('v' in cell)) return;
+        var st = STYLES[cell.s];
+        if (!st || !st.bg) return;
+        var v = String(cell.v);
+        if (wanted[v] && !map[v]) map[v] = st.bg;
+      });
+    });
+    return map;
+  }
+
   /* ---------- one self-contained viewer ---------- */
 
   function Viewer(host, book, opts) {
     opts = opts || {};
     var engine = new window.XLSheet.Book(book.sheets);
+    var guide = guideColours(book);
     var sheet = null;      // the sheet currently on screen
     var sel = null;
     var zoom = 1;
@@ -307,7 +332,7 @@
         if (box) box.value = v === null || v === undefined ? '' : String(v);
         else td.textContent = display(v, st);
         // The rule wins over the cell's own fill, as it does in Excel.
-        td.style.background = cf[key] || (st && st.bg) || '';
+        td.style.background = cf[key] || (box && guide[String(v)]) || (st && st.bg) || '';
         td.classList.toggle('xl-f', !!(cell && 'f' in cell));
       });
     }
@@ -403,6 +428,7 @@
           if (dv[key] !== undefined && lists[dv[key]]) {
             td.classList.add('xl-dv');
             td.appendChild(dropdown(model, r, cc, v));
+            if (guide[String(v)]) td.style.background = guide[String(v)];
           } else {
             if (typeof v === 'number' && !(st && st.a)) td.style.textAlign = 'right';
             td.textContent = display(v, st);

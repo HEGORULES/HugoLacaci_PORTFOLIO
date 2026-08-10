@@ -186,9 +186,12 @@ PROJECTS = [
         </div>
         <p class="prose" style="margin-bottom:var(--s5)">Built to follow TFT's real combat rules as
         closely as possible, so I could run 1v1 match-ups between champions with up to three items
-        each, check for dominant strategies and flag who needed a buff or a nerf. The yellow cells
-        are dropdowns, the same ones the workbook has in Excel: pick the two champions and up to
-        three items each, and every stat, resistance and damage figure below recalculates.</p>
+        each, check for dominant strategies and flag who needed a buff or a nerf. The cells in the
+        equipment selector are dropdowns, the same ones the workbook has in Excel: pick the two
+        champions and up to three items each, and every stat, resistance and damage figure below
+        recalculates. Each pick takes on its damage-type colour from the Champions and Items
+        sheets, and further down the simulation runs turn by turn until someone's health goes
+        red.</p>
         <div class="xl-book" data-book="1"></div>
 
       </div>
