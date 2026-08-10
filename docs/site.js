@@ -308,6 +308,66 @@
     });
   }
 
+  /* ---------- slide decks ---------- */
+  function setupDecks() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-deck]'), function (deck) {
+      var slides = deck.querySelectorAll('.deck-slide');
+      var dots = deck.querySelectorAll('[data-deck-go]');
+      var now = deck.querySelector('[data-deck-now]');
+      var prev = deck.querySelector('[data-deck-prev]');
+      var next = deck.querySelector('[data-deck-next]');
+      if (!slides.length) return;
+      var at = 0;
+
+      function show(i) {
+        at = Math.max(0, Math.min(slides.length - 1, i));
+        Array.prototype.forEach.call(slides, function (s, k) {
+          s.classList.toggle('is-on', k === at);
+          s.setAttribute('aria-hidden', k === at ? 'false' : 'true');
+        });
+        Array.prototype.forEach.call(dots, function (d, k) {
+          d.classList.toggle('is-on', k === at);
+          d.setAttribute('aria-selected', k === at ? 'true' : 'false');
+        });
+        if (now) now.textContent = String(at + 1);
+        if (prev) prev.disabled = at === 0;
+        if (next) next.disabled = at === slides.length - 1;
+        // Fetch the neighbour ahead of time so stepping forward feels instant.
+        var ahead = slides[at + 1] && slides[at + 1].querySelector('img');
+        if (ahead) ahead.loading = 'eager';
+      }
+
+      if (prev) prev.addEventListener('click', function () { show(at - 1); });
+      if (next) next.addEventListener('click', function () { show(at + 1); });
+      Array.prototype.forEach.call(dots, function (d) {
+        d.addEventListener('click', function () { show(+d.getAttribute('data-deck-go') - 1); });
+      });
+      // Clicking the slide itself advances, wrapping at the end.
+      Array.prototype.forEach.call(slides, function (s) {
+        s.addEventListener('click', function () {
+          show(at === slides.length - 1 ? 0 : at + 1);
+        });
+      });
+      deck.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); show(at + 1); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(at - 1); }
+        if (e.key === 'Home') { e.preventDefault(); show(0); }
+        if (e.key === 'End') { e.preventDefault(); show(slides.length - 1); }
+      });
+
+      var x0 = null;
+      deck.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      deck.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) > 45) show(dx < 0 ? at + 1 : at - 1);
+      }, { passive: true });
+
+      show(0);
+    });
+  }
+
   /* ---------- boot ---------- */
   function init() {
     var canvases = [];
@@ -324,6 +384,7 @@
     playOnEnter(canvases);
     setupReveal();
     setupCounters();
+    setupDecks();
     setupModals();
     setupScroll(buildRail());
 

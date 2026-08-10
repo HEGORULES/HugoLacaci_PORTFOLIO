@@ -96,6 +96,16 @@ PROJECTS = [
         </article>
       </div>
 """,
+        "decks": [{
+            "label": "BFP presentation",
+            "file": "bfp-presentation.pdf",
+            "dir": "bfp-slides",
+            "count": 16,
+            "w": 1728,
+            "h": 972,
+            "note": "The slides I defended the thesis with: a summary of its most important "
+                    "points, from the hypothesis to the five principles it arrives at.",
+        }],
         "docs": [("Full thesis · 111 pages", "beyond-the-health-bar.pdf")],
         "links": [],
     },
@@ -387,6 +397,45 @@ def build_body(p):
     if p.get("extra_html"):
         add(p["extra_html"])
 
+    # A deck is meant to be stepped through, not scrolled. Each slide is a
+    # pre-rasterised image; only the first loads eagerly, the rest arrive as
+    # the reader advances. Slide images live in docs/files/<dir>/NN.webp.
+    for deck in p.get("decks", []):
+        add('      <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">')
+        add('        <div class="doc-head">')
+        add(f'          <p class="label">{esc(deck["label"])}</p>')
+        add('          <div class="btn-row">')
+        add(f'            <a class="btn btn-sm" href="../files/{deck["file"]}" target="_blank" rel="noopener"><span>Open full PDF ↗</span></a>')
+        add(f'            <a class="btn btn-sm" href="../files/{deck["file"]}" download><span>&#8595; Download</span></a>')
+        add('          </div>')
+        add('        </div>')
+        if deck.get("note"):
+            add(f'        <p class="figure-caption">{esc(deck["note"])}</p>')
+        add(f'        <div class="deck" data-deck tabindex="0" role="group" aria-roledescription="carousel" aria-label="{esc(deck["label"])}">')
+        add('          <div class="deck-stage">')
+        for i in range(1, deck["count"] + 1):
+            on = " is-on" if i == 1 else ""
+            lazy = "" if i == 1 else ' loading="lazy"'
+            add(f'            <figure class="deck-slide{on}" data-i="{i}" aria-hidden="{"false" if i == 1 else "true"}">')
+            add('              <picture>')
+            add(f'                <source srcset="../files/{deck["dir"]}/{i:02d}.webp" type="image/webp">')
+            add(f'                <img src="../files/{deck["dir"]}/{i:02d}.jpg" alt="{esc(deck["label"])}, slide {i} of {deck["count"]}" width="{deck["w"]}" height="{deck["h"]}"{lazy}>')
+            add('              </picture>')
+            add('            </figure>')
+        add('          </div>')
+        add('          <div class="deck-bar">')
+        add('            <button class="btn btn-sm deck-nav" type="button" data-deck-prev><span>← Prev</span></button>')
+        add(f'            <p class="deck-count num"><span data-deck-now>1</span> / {deck["count"]}</p>')
+        add('            <button class="btn btn-sm deck-nav" type="button" data-deck-next><span>Next →</span></button>')
+        add('          </div>')
+        add('          <div class="deck-dots" role="tablist">')
+        for i in range(1, deck["count"] + 1):
+            on = " is-on" if i == 1 else ""
+            add(f'            <button class="deck-dot{on}" type="button" data-deck-go="{i}" role="tab" aria-label="Slide {i}"></button>')
+        add('          </div>')
+        add('        </div>')
+        add('      </div>')
+
     # A single-page document is worth showing whole rather than trapped in a
     # scrolling PDF frame, so it renders as a pre-rasterised sheet capped to
     # the viewport height. The real PDF is one click away either way.
@@ -432,7 +481,7 @@ def build_body(p):
             add(f'        <a class="btn btn-sm"{dl} href="{href}"><span>{esc(text)}</span></a>')
         add('      </div>')
 
-    if not p.get("docs") and not p.get("posters") and not links:
+    if not p.get("docs") and not p.get("posters") and not p.get("decks") and not links:
         add('      <div class="btn-row" data-reveal style="margin-top:var(--s7)">')
         add('        <span class="btn btn-sm btn-idle"><span>Documentation pending upload</span></span>')
         add('      </div>')

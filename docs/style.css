@@ -809,6 +809,65 @@ code{
 }
 .doc-embed iframe{ width: 100%; height: 100%; border: 0; display: block; }
 
+/* ---------- SLIDE DECK ---------- */
+/* A deck is stepped through, not scrolled: one slide at a time, capped to
+   the viewport so the whole slide is readable without moving the page. */
+.deck{ display: flex; flex-direction: column; gap: var(--s3); outline: none; }
+.deck:focus-visible{ outline: 2px solid var(--volt); outline-offset: 8px; border-radius: 18px; }
+
+/* fit-content so the frame hugs the slide instead of leaving dark bands
+   either side of it. */
+.deck-stage{
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  background: var(--void-2);
+  border: 1px solid var(--surface-2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.deck-slide{ display: none; margin: 0; cursor: pointer; }
+.deck-slide.is-on{ display: block; }
+.deck-slide img{
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 68vh;
+}
+
+.deck-bar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s4);
+  flex-wrap: wrap;
+}
+.deck-count{ margin: 0; color: var(--haze); font-weight: 700; letter-spacing: .04em; }
+.deck-count span{ color: var(--ivory); }
+.deck-nav[disabled]{ opacity: .35; pointer-events: none; }
+
+.deck-dots{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+.deck-dot{
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+.deck-dot:hover{ background: var(--dusk); }
+.deck-dot.is-on{ background: var(--flare); transform: scale(1.35); }
+.deck-dot:focus-visible{ outline: 2px solid var(--volt); outline-offset: 3px; }
+
 /* A one-page document shown whole. Capped to the viewport so the entire
    sheet is on screen at once instead of scrolling inside a PDF frame. */
 .poster-sheet{
