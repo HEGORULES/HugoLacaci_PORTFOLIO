@@ -157,6 +157,45 @@ def validations(wb, ws, values):
     return lists, cells
 
 
+def conditional_formats(ws, palette):
+    """The rules that colour cells from their own values.
+
+    The combat simulation block is entirely conditional: the two HP columns
+    run a colour scale from red to green and turn solid red once a fighter
+    is dead. Read as static fills the block is blank, which is most of the
+    colour the sheet has.
+    """
+    out = []
+    fmt = ws.conditional_formatting
+    if not fmt:
+        return out
+    for group in fmt:
+        spans = []
+        for ref in str(group.sqref).split():
+            c1, r1, c2, r2 = range_boundaries(ref)
+            spans.append([r1, c1, r2 or r1, c2 or c1])
+        for rule in group.rules:
+            base = {"p": rule.priority or 99, "r": spans}
+            if rule.type == "cellIs" and rule.dxf is not None:
+                fill = rule.dxf.fill
+                bg = None
+                if fill is not None:
+                    bg = argb(fill.bgColor, palette) or argb(fill.fgColor, palette)
+                if not bg:
+                    continue
+                out.append(dict(base, t="cellIs", op=rule.operator,
+                                f=[str(x) for x in (rule.formula or [])], bg=bg))
+            elif rule.type == "colorScale" and rule.colorScale is not None:
+                cs = rule.colorScale
+                colours = [argb(c, palette) for c in cs.color]
+                if any(c is None for c in colours):
+                    continue
+                out.append(dict(base, t="colorScale", colors=colours,
+                                cfvo=[[v.type, str(v.val) if v.val is not None else None]
+                                      for v in cs.cfvo]))
+    return out
+
+
 def sheet_model(ws, styles, index, palette, values):
     merges = []
     covered = set()
@@ -219,6 +258,7 @@ def sheet_model(ws, styles, index, palette, values):
         "cells": cells,
         "lists": lists,
         "dv": dv,
+        "cf": conditional_formats(ws, palette),
     }
 
 
@@ -236,7 +276,8 @@ def main():
                 sheets.append(m)
                 formulas = sum(1 for c in m["cells"].values() if "f" in c)
                 print(f"  {label} / {ws.title}: {len(m['cells'])} cells, "
-                      f"{formulas} formulas, {len(m['dv'])} dropdowns")
+                      f"{formulas} formulas, {len(m['dv'])} dropdowns, "
+                      f"{len(m['cf'])} conditional rules")
         books.append({"label": label, "file": fname, "sheets": sheets})
 
     OUT.parent.mkdir(parents=True, exist_ok=True)

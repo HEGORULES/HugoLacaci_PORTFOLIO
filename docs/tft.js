@@ -45,6 +45,100 @@
     return String(value);
   }
 
+  /* ---------- conditional formatting ---------- */
+  /* Excel colours a lot of these sheets from the values themselves rather
+     than from a fixed fill: champion costs in the traits set, and the whole
+     combat simulation, whose two HP columns run a red-to-green scale and go
+     solid red once a fighter is dead. Read as static fills those blocks are
+     blank, so the rules have to be evaluated here, after every recalc. */
+
+  function hex(c) {
+    return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
+  }
+
+  function mix(a, b, t) {
+    var x = hex(a), y = hex(b), o = '#';
+    for (var i = 0; i < 3; i++) {
+      var v = Math.round(x[i] + (y[i] - x[i]) * t);
+      o += (v < 16 ? '0' : '') + v.toString(16);
+    }
+    return o;
+  }
+
+  function passes(v, op, nums) {
+    switch (op) {
+      case 'equal': return v === nums[0];
+      case 'notEqual': return v !== nums[0];
+      case 'lessThan': return v < nums[0];
+      case 'lessThanOrEqual': return v <= nums[0];
+      case 'greaterThan': return v > nums[0];
+      case 'greaterThanOrEqual': return v >= nums[0];
+      case 'between': return v >= nums[0] && v <= nums[1];
+      case 'notBetween': return v < nums[0] || v > nums[1];
+      default: return false;
+    }
+  }
+
+  function bound(cfvo, sorted) {
+    var kind = cfvo[0], raw = parseFloat(cfvo[1]);
+    var lo = sorted[0], hi = sorted[sorted.length - 1];
+    if (kind === 'min') return lo;
+    if (kind === 'max') return hi;
+    if (kind === 'percent') return lo + (hi - lo) * (raw / 100);
+    if (kind === 'percentile') {
+      var i = (sorted.length - 1) * (raw / 100);
+      var f = Math.floor(i);
+      return f + 1 < sorted.length ? sorted[f] + (sorted[f + 1] - sorted[f]) * (i - f) : sorted[f];
+    }
+    return isFinite(raw) ? raw : lo;
+  }
+
+  function conditionalFills(model, valueAt) {
+    var painted = {};
+    var rules = (model.cf || []).slice().sort(function (a, b) { return a.p - b.p; });
+    rules.forEach(function (rule) {
+      var cells = [], nums = [];
+      rule.r.forEach(function (span) {
+        for (var r = span[0]; r <= span[2]; r++) {
+          for (var c = span[1]; c <= span[3]; c++) {
+            var v = valueAt(r, c);
+            if (typeof v !== 'number' || !isFinite(v)) continue;
+            cells.push([r + ',' + c, v]);
+            nums.push(v);
+          }
+        }
+      });
+      if (!cells.length) return;
+
+      if (rule.t === 'cellIs') {
+        var args = (rule.f || []).map(parseFloat);
+        if (!args.length || args.some(isNaN)) return;
+        cells.forEach(function (x) {
+          if (painted[x[0]] === undefined && passes(x[1], rule.op, args)) painted[x[0]] = rule.bg;
+        });
+        return;
+      }
+
+      if (rule.t === 'colorScale') {
+        var sorted = nums.slice().sort(function (a, b) { return a - b; });
+        var stops = rule.colors.map(function (col, i) {
+          return { at: bound(rule.cfvo[i], sorted), col: col };
+        });
+        // A degenerate scale (every value the same) would divide by zero.
+        if (stops[stops.length - 1].at === stops[0].at) return;
+        cells.forEach(function (x) {
+          if (painted[x[0]] !== undefined) return;
+          var v = x[1], k = 0;
+          while (k < stops.length - 2 && v > stops[k + 1].at) k++;
+          var a = stops[k], b = stops[k + 1];
+          var t = b.at === a.at ? 0 : (v - a.at) / (b.at - a.at);
+          painted[x[0]] = mix(a.col, b.col, Math.max(0, Math.min(1, t)));
+        });
+      }
+    });
+    return painted;
+  }
+
   /* ---------- one self-contained viewer ---------- */
 
   function Viewer(host, book, opts) {
@@ -195,15 +289,25 @@
 
     /* ---------- grid ---------- */
 
+    function cfMap() {
+      return conditionalFills(sheet, function (r, c) {
+        return engine.value(sheet.name, r, c);
+      });
+    }
+
     function refresh() {
+      var cf = cfMap();
       Array.prototype.forEach.call(grid.querySelectorAll('td[data-r]'), function (td) {
         var r = +td.dataset.r, c = +td.dataset.c;
-        var cell = sheet.cells[r + ',' + c];
+        var key = r + ',' + c;
+        var cell = sheet.cells[key];
         var st = cell && cell.s !== undefined ? STYLES[cell.s] : null;
         var v = engine.value(sheet.name, r, c);
         var box = td.querySelector('select');
         if (box) box.value = v === null || v === undefined ? '' : String(v);
         else td.textContent = display(v, st);
+        // The rule wins over the cell's own fill, as it does in Excel.
+        td.style.background = cf[key] || (st && st.bg) || '';
         td.classList.toggle('xl-f', !!(cell && 'f' in cell));
       });
     }
@@ -250,6 +354,9 @@
       model.merges.forEach(function (m) { spans[m[0] + ',' + m[1]] = [m[2], m[3]]; });
       var dv = model.dv || {};
       var lists = model.lists || [];
+      var cf = conditionalFills(model, function (r, c) {
+        return engine.value(model.name, r, c);
+      });
 
       var table = el('table', 'xl');
       var cg = document.createElement('colgroup');
@@ -285,11 +392,12 @@
           var cell = model.cells[key];
           var st = cell && cell.s !== undefined ? STYLES[cell.s] : null;
           if (st) {
-            if (st.bg) td.style.background = st.bg;
             if (st.fg) td.style.color = st.fg;
             if (st.b) td.style.fontWeight = '700';
             if (st.a) td.style.textAlign = st.a;
           }
+          var paint = cf[key] || (st && st.bg);
+          if (paint) td.style.background = paint;
           if (cell && 'f' in cell) td.classList.add('xl-f');
           var v = engine.value(model.name, r, cc);
           if (dv[key] !== undefined && lists[dv[key]]) {
