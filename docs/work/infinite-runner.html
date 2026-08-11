@@ -64,7 +64,7 @@
         <div class="doc-head">
           <p class="label">Playable build</p>
           <div class="btn-row">
-            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/v3.0/InfiniteRunner.Web.Build.zip"><span>&#8595; Build (86 MB)</span></a>
+            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/trial/OperationFishback.zip"><span>&#8595; Windows build (118 MB)</span></a>
           </div>
         </div>
 
@@ -107,7 +107,14 @@
       <script>
       (function () {
         var BUILD = '../game/runner/Build/OperationFishback';
-        var FPS_CAP = 60;
+        /* ?fps=45 sets the cap, ?fps=0 turns it off, and any ?fps at all shows
+           a live readout. The desktop build starts at quality Ultra and this one
+           at High, so the two run at different frame rates on the same machine;
+           until the project's frame-rate dependent rotations are fixed, the right
+           cap is whatever number makes this feel like the desktop build. */
+        var qs = new URLSearchParams(location.search).get('fps');
+        var FPS_CAP = qs === null ? 60 : parseInt(qs, 10);
+        if (isNaN(FPS_CAP)) FPS_CAP = 60;
 
         /* The build's movement is frame-rate dependent, and WebGL runs at the
            browser's refresh rate: on a 144 Hz screen the game plays more than
@@ -152,6 +159,26 @@
         var fsBtn   = document.getElementById('fullscreen-btn');
         var canvas  = document.getElementById('unity-canvas');
 
+        /* Diagnostic only: never rendered unless ?fps is in the address. */
+        function showMeter() {
+          var box = document.createElement('p');
+          box.style.cssText = 'position:absolute;top:8px;left:8px;z-index:5;margin:0;' +
+            'padding:4px 8px;border-radius:4px;background:rgba(0,0,0,.7);color:#fff;' +
+            'font:700 12px/1.4 ui-monospace,Menlo,monospace;pointer-events:none';
+          document.getElementById('stage').appendChild(box);
+          var frames = 0, t0 = performance.now();
+          (function tick() {
+            frames++;
+            var now = performance.now();
+            if (now - t0 >= 500) {
+              box.textContent = Math.round(frames / ((now - t0) / 1000)) + ' fps' +
+                (FPS_CAP > 0 ? '  (cap ' + FPS_CAP + ')' : '  (sin cap)');
+              frames = 0; t0 = now;
+            }
+            requestAnimationFrame(tick);
+          })();
+        }
+
         function fail(msg) {
           loading.hidden = true;
           errBox.hidden = false;
@@ -161,7 +188,8 @@
         playBtn.addEventListener('click', function () {
           poster.hidden = true;
           loading.hidden = false;
-          capFrames(FPS_CAP);
+          if (FPS_CAP > 0) capFrames(FPS_CAP);
+          if (qs !== null) showMeter();
 
           var script = document.createElement('script');
           script.src = BUILD + '.loader.js';
