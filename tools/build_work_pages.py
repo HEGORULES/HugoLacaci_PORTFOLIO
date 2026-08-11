@@ -136,7 +136,112 @@ PROJECTS = [
             "with multiple simultaneous cameras in a single scene.",
         ],
         "process": None,
-        "extra_html": "",
+        # The playable build. Same pattern as the Automatic Battle page: nothing
+        # downloads until Start is pressed, because this one is large.
+        "extra_html": """
+      <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">Playable build</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/v3.0/InfiniteRunner.Web.Build.zip"><span>&#8595; Build (86 MB)</span></a>
+          </div>
+        </div>
+
+        <!-- 16:9: the game's own menu is laid out for it, and at 16:10 the
+             buttons fall off the left edge. -->
+        <div class="stage" id="stage" style="aspect-ratio:16/9">
+          <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
+
+          <div class="stage-loading" id="loading" hidden>
+            <p class="label">Loading build</p>
+            <div class="load-bar"><div class="load-fill" id="load-fill"></div></div>
+            <p class="load-pct num" id="load-pct">0%</p>
+          </div>
+
+          <div class="stage-poster" id="poster">
+            <canvas class="stage-bg" data-plate="infinite-runner-prototype" data-dot="12" aria-hidden="true"></canvas>
+            <div class="poster-inner">
+              <p class="label">Arcade runner &middot; Built in &lt; 1 week</p>
+              <h2>Play in browser</h2>
+              <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>&#9654; Start</span></button>
+              <p class="poster-note">
+                Roughly 120 MB loads when you press start. Nothing downloads before that,
+                and on a slow connection it will take a while. Built for desktop, and best
+                played in fullscreen: the menu is laid out for a big screen.
+              </p>
+            </div>
+          </div>
+
+          <div class="stage-error" id="stage-error" hidden></div>
+        </div>
+
+        <div class="stage-bar">
+          <p class="label">Unity WebGL &middot; runs in the browser</p>
+          <div class="btn-row">
+            <button class="btn btn-sm" type="button" id="fullscreen-btn" hidden><span>&#9974; Fullscreen</span></button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      (function () {
+        var BUILD = '../game/runner/Build/OperationFishback';
+        var poster  = document.getElementById('poster');
+        var loading = document.getElementById('loading');
+        var fill    = document.getElementById('load-fill');
+        var pct     = document.getElementById('load-pct');
+        var errBox  = document.getElementById('stage-error');
+        var playBtn = document.getElementById('play-btn');
+        var fsBtn   = document.getElementById('fullscreen-btn');
+        var canvas  = document.getElementById('unity-canvas');
+
+        function fail(msg) {
+          loading.hidden = true;
+          errBox.hidden = false;
+          errBox.textContent = msg;
+        }
+
+        playBtn.addEventListener('click', function () {
+          poster.hidden = true;
+          loading.hidden = false;
+
+          var script = document.createElement('script');
+          script.src = BUILD + '.loader.js';
+
+          script.onerror = function () {
+            fail('Could not load the game engine. Check your connection and reload the page.');
+          };
+
+          script.onload = function () {
+            createUnityInstance(canvas, {
+              arguments: [],
+              dataUrl:      BUILD + '.data',
+              frameworkUrl: BUILD + '.framework.js',
+              codeUrl:      BUILD + '.wasm',
+              streamingAssetsUrl: 'StreamingAssets',
+              companyName: 'Hugo Lacaci Torres',
+              productName: 'Operation Fishback',
+              productVersion: '0.1',
+              showBanner: function (msg, type) { if (type === 'error') fail(msg); }
+            }, function (progress) {
+              var p = Math.round(progress * 100);
+              fill.style.width = p + '%';
+              pct.textContent = p + '%';
+            }).then(function (instance) {
+              loading.hidden = true;
+              fsBtn.hidden = false;
+              fsBtn.addEventListener('click', function () { instance.SetFullscreen(1); });
+              canvas.focus();
+            }).catch(function (message) {
+              fail(String(message));
+            });
+          };
+
+          document.body.appendChild(script);
+        });
+      })();
+      </script>
+""",
         "docs": [],
         "posters": [(
             "The one-pager",

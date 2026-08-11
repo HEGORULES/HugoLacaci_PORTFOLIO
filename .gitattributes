@@ -1,0 +1,2 @@
+# The Unity WebGL builds are binary blobs; never let git try to normalise them.
+docs/game/** binary
