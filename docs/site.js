@@ -1,14 +1,16 @@
 /* =========================================================
-   KEY ART, interaction layer
-   Every project gets a generated two-ink plate: overlapping
-   shapes and halftone, seeded by its name so no two match.
+   BLUEPRINT, interaction layer
+   Every project gets a generated node graph, seeded by its
+   name so no two are alike: nodes, the edges between them,
+   and one path through the middle picked out as the solution.
    ========================================================= */
 (function () {
   'use strict';
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var FLARE = [255, 61, 87];
-  var VOLT  = [124, 77, 255];
+  var SIGNAL = [200, 242, 49];
+  var MARKER = [255, 90, 31];
+  var DATUM  = [110, 139, 255];
 
   function rgba(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
 
@@ -36,47 +38,72 @@
     return { ctx: ctx, w: r.width, h: r.height };
   }
 
-  /* ---------- halftone ---------- */
-  function halftone(ctx, x, y, w, h, colour, rnd, density) {
-    var step = density || 9;
-    var cx = x + w * (0.3 + rnd() * 0.4);
-    var cy = y + h * (0.3 + rnd() * 0.4);
-    var max = Math.hypot(w, h) * 0.62;
-    ctx.fillStyle = colour;
-    for (var gy = y; gy < y + h; gy += step) {
-      for (var gx = x; gx < x + w; gx += step) {
-        var d = Math.hypot(gx - cx, gy - cy) / max;      // 0 at core, 1 at edge
-        var r = Math.max(0, (1 - d)) * (step * 0.46);
-        if (r > 0.35) {
-          ctx.beginPath();
-          ctx.arc(gx, gy, r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-    }
-  }
-
-  /* ---------- one generated plate ---------- */
+  /* ---------- one generated graph ---------- */
+  /* Nodes are scattered on a jittered grid rather than at random, so a
+     plate never collapses into a clump or a straight line. Edges join
+     near neighbours; one path through the graph is then picked out, which
+     is the whole image: a system, and a route found through it. */
   function plate(cv, seedStr, opts) {
     opts = opts || {};
     var rnd = seeded(seedStr);
-    // Freeze the shape list once so redraws stay identical.
-    var shapes = [];
-    var count = 3 + Math.floor(rnd() * 3);
-    for (var i = 0; i < count; i++) {
-      shapes.push({
-        kind: ['disc', 'arc', 'wedge', 'bar'][Math.floor(rnd() * 4)],
-        x: 0.1 + rnd() * 0.8,
-        y: 0.1 + rnd() * 0.8,
-        r: 0.18 + rnd() * 0.42,
-        rot: rnd() * Math.PI * 2,
-        ink: rnd() > 0.5 ? FLARE : VOLT,
-        a: 0.55 + rnd() * 0.35
-      });
-    }
-    var htInk = rnd() > 0.5 ? FLARE : VOLT;
-    var htSeed = seeded(seedStr + '-ht');
+    var onPaper = !!cv.closest('.work-plate');
+    var ink = onPaper ? [21, 24, 31] : [236, 233, 224];
 
+    var cols = 3 + Math.floor(rnd() * 2);          // 3 or 4
+    var rows = 3;
+    var nodes = [];
+    for (var gy = 0; gy < rows; gy++) {
+      for (var gx = 0; gx < cols; gx++) {
+        if (rnd() < 0.14) continue;                // a few gaps keep it organic
+        nodes.push({
+          x: (gx + 0.5) / cols + (rnd() - 0.5) * 0.16,
+          y: (gy + 0.5) / rows + (rnd() - 0.5) * 0.2,
+          r: 2.6 + rnd() * 2.6
+        });
+      }
+    }
+    if (nodes.length < 4) nodes.push({ x: 0.5, y: 0.5, r: 3 });
+
+    // Join every node to its two nearest neighbours, without repeats.
+    var edges = [], seen = {};
+    nodes.forEach(function (a, i) {
+      var order = nodes
+        .map(function (b, j) { return { j: j, d: Math.hypot(a.x - b.x, a.y - b.y) }; })
+        .filter(function (o) { return o.j !== i; })
+        .sort(function (p, q) { return p.d - q.d; });
+      order.slice(0, 2).forEach(function (o) {
+        var key = Math.min(i, o.j) + '-' + Math.max(i, o.j);
+        if (seen[key]) return;
+        seen[key] = 1;
+        edges.push([i, o.j]);
+      });
+    });
+
+    // The highlighted route: walk from the leftmost node to the rightmost.
+    var startIdx = 0, endIdx = 0;
+    nodes.forEach(function (n, i) {
+      if (n.x < nodes[startIdx].x) startIdx = i;
+      if (n.x > nodes[endIdx].x) endIdx = i;
+    });
+    var path = [startIdx], guard = 0;
+    while (path[path.length - 1] !== endIdx && guard++ < 12) {
+      var here = path[path.length - 1];
+      var next = null, best = Infinity;
+      edges.forEach(function (e) {
+        var other = e[0] === here ? e[1] : (e[1] === here ? e[0] : null);
+        if (other === null || path.indexOf(other) !== -1) return;
+        var d = Math.hypot(nodes[other].x - nodes[endIdx].x, nodes[other].y - nodes[endIdx].y);
+        if (d < best) { best = d; next = other; }
+      });
+      if (next === null) break;
+      path.push(next);
+    }
+    var onPath = {};
+    for (var k = 0; k + 1 < path.length; k++) {
+      onPath[Math.min(path[k], path[k + 1]) + '-' + Math.max(path[k], path[k + 1])] = 1;
+    }
+
+    var accent = rnd() > 0.5 ? SIGNAL : DATUM;
     var t = REDUCED ? 1 : 0;
     var started = null, playing = false;
 
@@ -84,60 +111,75 @@
       var f = fit(cv);
       if (!f) return;
       var ctx = f.ctx, w = f.w, h = f.h;
-      var S = Math.min(w, h);
+      var pad = Math.min(w, h) * 0.12;
+      var X = function (n) { return pad + n.x * (w - pad * 2); };
+      var Y = function (n) { return pad + n.y * (h - pad * 2); };
 
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#120B1A';
-      ctx.fillRect(0, 0, w, h);
+      ctx.lineCap = 'round';
 
-      // Ink overlaps brighten, the way two passes of transparent ink do.
-      ctx.globalCompositeOperation = 'screen';
-
-      shapes.forEach(function (s, i) {
-        var appear = Math.max(0, Math.min(1, (t - i * 0.12) / 0.55));
+      // Plain edges first, drawn in from nothing.
+      ctx.lineWidth = 1;
+      edges.forEach(function (e, i) {
+        var key = Math.min(e[0], e[1]) + '-' + Math.max(e[0], e[1]);
+        if (onPath[key]) return;
+        var appear = Math.max(0, Math.min(1, (t - i * 0.02) / 0.4));
         if (appear <= 0) return;
-        var e = 1 - Math.pow(1 - appear, 3);
-        var x = s.x * w, y = s.y * h, r = s.r * S * e;
-
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(s.rot);
-        ctx.fillStyle = rgba(s.ink, s.a * e);
-
-        if (s.kind === 'disc') {
-          ctx.beginPath();
-          ctx.arc(0, 0, r, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (s.kind === 'arc') {
-          ctx.lineWidth = r * 0.34;
-          ctx.strokeStyle = rgba(s.ink, s.a * e);
-          ctx.beginPath();
-          ctx.arc(0, 0, r, 0, Math.PI * 1.35);
-          ctx.stroke();
-        } else if (s.kind === 'wedge') {
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.arc(0, 0, r, 0, Math.PI * 0.62);
-          ctx.closePath();
-          ctx.fill();
-        } else {
-          ctx.fillRect(-r, -r * 0.16, r * 2, r * 0.32);
-        }
-        ctx.restore();
+        var a = nodes[e[0]], b = nodes[e[1]];
+        ctx.strokeStyle = rgba(ink, 0.22 * appear);
+        ctx.beginPath();
+        ctx.moveTo(X(a), Y(a));
+        ctx.lineTo(X(a) + (X(b) - X(a)) * appear, Y(a) + (Y(b) - Y(a)) * appear);
+        ctx.stroke();
       });
 
-      if (t > 0.45) {
-        ctx.globalAlpha = Math.min(1, (t - 0.45) / 0.5) * 0.5;
-        halftone(ctx, 0, 0, w, h, rgba(htInk, 0.5), htSeed, opts.dot || 9);
-        ctx.globalAlpha = 1;
+      // The route, thicker and in colour, arriving after the structure.
+      ctx.lineWidth = 2.4;
+      for (var i = 0; i + 1 < path.length; i++) {
+        var appear2 = Math.max(0, Math.min(1, (t - 0.3 - i * 0.12) / 0.4));
+        if (appear2 <= 0) break;
+        var a2 = nodes[path[i]], b2 = nodes[path[i + 1]];
+        ctx.strokeStyle = rgba(accent, 0.95);
+        ctx.beginPath();
+        ctx.moveTo(X(a2), Y(a2));
+        ctx.lineTo(X(a2) + (X(b2) - X(a2)) * appear2, Y(a2) + (Y(b2) - Y(a2)) * appear2);
+        ctx.stroke();
       }
 
-      ctx.globalCompositeOperation = 'source-over';
+      // Nodes on top, so no edge ever crosses a joint.
+      nodes.forEach(function (n, i) {
+        var appear3 = Math.max(0, Math.min(1, (t - i * 0.03) / 0.35));
+        if (appear3 <= 0) return;
+        var lit = path.indexOf(i) !== -1;
+        var r = n.r * appear3;
+        ctx.beginPath();
+        ctx.arc(X(n), Y(n), r, 0, Math.PI * 2);
+        ctx.fillStyle = lit ? rgba(accent, 1) : (onPaper ? '#E2DDCD' : '#11141B');
+        ctx.fill();
+        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = lit ? rgba(accent, 1) : rgba(ink, 0.5);
+        ctx.stroke();
+      });
+
+      // One annotated node: the mark a designer leaves on a diagram.
+      if (t > 0.75 && path.length) {
+        var m = nodes[path[path.length - 1]];
+        var s = 9;
+        ctx.strokeStyle = rgba(MARKER, Math.min(1, (t - 0.75) / 0.25));
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.arc(X(m), Y(m), s, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(X(m) + s + 3, Y(m));
+        ctx.lineTo(X(m) + s + 14, Y(m));
+        ctx.stroke();
+      }
     }
 
     function step(ts) {
       if (started === null) started = ts;
-      t = Math.min(1, (ts - started) / 1300);
+      t = Math.min(1, (ts - started) / 1400);
       draw();
       if (t < 1) requestAnimationFrame(step);
     }
@@ -150,6 +192,25 @@
     };
     draw();
     return cv;
+  }
+
+  /* ---------- the pointer light ---------- */
+  /* The drafting grid is only visible around the pointer, so the page
+     reads as a surface being worked on rather than a printed backdrop. */
+  function setupSpotlight() {
+    var grid = document.querySelector('.bg-grid');
+    if (!grid || REDUCED) return;
+    var x = 0, y = 0, queued = false;
+    window.addEventListener('pointermove', function (e) {
+      x = e.clientX; y = e.clientY;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        queued = false;
+        grid.style.setProperty('--mx', x + 'px');
+        grid.style.setProperty('--my', y + 'px');
+      });
+    }, { passive: true });
   }
 
   /* ---------- reveal ---------- */
@@ -382,6 +443,7 @@
     if (head) canvases.push(plate(head, head.getAttribute('data-seed') || 'header', { dot: 13 }));
 
     playOnEnter(canvases);
+    setupSpotlight();
     setupReveal();
     setupCounters();
     setupDecks();
