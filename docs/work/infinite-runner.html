@@ -107,6 +107,42 @@
       <script>
       (function () {
         var BUILD = '../game/runner/Build/OperationFishback';
+        var FPS_CAP = 60;
+
+        /* The build's movement is frame-rate dependent, and WebGL runs at the
+           browser's refresh rate: on a 144 Hz screen the game plays more than
+           twice as fast as it was tuned to. Until that is fixed in the project
+           itself, gate the animation frames Unity is given so the demo runs at
+           the speed it was designed at. Installed only when the build starts,
+           so the rest of the page keeps its own timing. */
+        function capFrames(fps) {
+          var raf = window.requestAnimationFrame.bind(window);
+          var caf = window.cancelAnimationFrame.bind(window);
+          var gap = 1000 / fps - 0.5;          // half a ms of slack
+          var lastFired = -Infinity;
+          var pending = {};
+          var nextId = 1;
+
+          window.requestAnimationFrame = function (cb) {
+            var id = nextId++;
+            function tick(t) {
+              // Callbacks queued for a frame that already passed the gate go
+              // through together, so a second caller is never starved.
+              if (t !== lastFired && t - lastFired < gap) {
+                pending[id] = raf(tick);
+                return;
+              }
+              lastFired = t;
+              delete pending[id];
+              cb(t);
+            }
+            pending[id] = raf(tick);
+            return id;
+          };
+          window.cancelAnimationFrame = function (id) {
+            if (pending[id] !== undefined) { caf(pending[id]); delete pending[id]; }
+          };
+        }
         var poster  = document.getElementById('poster');
         var loading = document.getElementById('loading');
         var fill    = document.getElementById('load-fill');
@@ -125,6 +161,7 @@
         playBtn.addEventListener('click', function () {
           poster.hidden = true;
           loading.hidden = false;
+          capFrames(FPS_CAP);
 
           var script = document.createElement('script');
           script.src = BUILD + '.loader.js';
