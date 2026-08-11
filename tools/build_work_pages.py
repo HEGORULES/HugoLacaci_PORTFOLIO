@@ -114,29 +114,26 @@ PROJECTS = [
         "title": "Prototype: Infinite Runner",
         "eyebrow": "Class project · Team",
         "disciplines": ["Prototyping", "Speed", "Level Design"],
-        "lead": "A downhill skiing endless runner built and polished in under a week, and pitched "
-                "with its own one-pager rather than left as a folder of builds.",
-        "what": "A penguin called Mr. Flipper finally catches the legendary Golden Bass at the top "
-                "of Snowy Mountain, an eagle swoops down and takes it, and he straps on skis and "
-                "chases it down the slope. That is the whole premise, and the game is the chase: a "
-                "fast, randomised obstacle course you jump and slide through, pitched as skill "
-                "mixed with luck. The randomisation is what the pitch rests on, since no two runs "
-                "lay the course out the same way, and power-ups keep each one from settling into a "
-                "pattern. The runner is an unforgiving genre to prototype in: the loop is so short "
-                "that anything which feels wrong is felt immediately and repeatedly, so there is "
-                "nowhere for a weak core to hide. Alongside the build the team produced the "
-                "one-pager below, treating the prototype as something that has to be pitched and "
-                "understood by someone who has not played it, not just handed over.",
+        "lead": "An arcade endless runner built in under a week: a penguin chasing the thief who "
+                "stole his fish, with a gacha pull every 10 sardines that can help or hurt.",
+        "what": "A prototype built in under a week with an arcade aesthetic: a penguin whose fish "
+                "has been stolen chases the thief down a hill, dodging obstacles and collecting "
+                "sardines that act as currency. Every 10 sardines trigger a gacha pull, granting a "
+                "random effect, some helpful (temporary invulnerability), some harmful (inverted "
+                "controls), that shift the odds of pulling the game's win condition on future "
+                "spins. Crash into too many obstacles, though, and the run resets from the "
+                "beginning.",
         "role_label": "What I did / experience gained",
         "role": [
-            "I worked on the prototype as part of the team and contributed to the one-pager that "
-            "presents it.",
-            "A one-week deadline is a design constraint like any other, and it forces the same "
-            "discipline every time: decide what the game actually is, cut whatever does not serve "
-            "that, and spend the time left making the core loop feel good instead of adding "
-            "features nobody asked for. Producing a one-pager alongside the build was its own "
-            "lesson, since explaining a game on a single page means knowing which single idea it "
-            "rests on.",
+            "I modeled every environment element except the characters, designed the game's "
+            "systems and how the gacha's effects would interact with the procedurally generated "
+            "level, and assembled the levels and tiles the programming team provided for "
+            "procedural obstacle generation.",
+            "Working under a sub-week deadline made this project a sharp lesson in reading the "
+            "team's real strengths and limitations and scoping around them rather than around the "
+            "ideal design. It also doubled as hands-on practice with Unity itself: my first real "
+            "contact with Cinemachine, researching procedural generation approaches, and working "
+            "with multiple simultaneous cameras in a single scene.",
         ],
         "process": None,
         "extra_html": "",
@@ -502,8 +499,8 @@ PLAY_CARD = {
     "slug": "automatic-combat-autobattler",
     "page": "play.html",
     "title": "Prototype: Automatic Battle",
-    "lead": "A two-player lane battler built in under a week. Four units, three lanes, "
-            "one shared gold budget, and balance that had to hold.",
+    "lead": "A two-player automatic combat prototype built in under a week. Four units, "
+            "three lanes, and balance that had to hold.",
     "disciplines": ["Playable", "Balance"],
 }
 
