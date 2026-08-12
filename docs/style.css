@@ -453,6 +453,25 @@ canvas{ display: block; }
 .btn-solid:hover{ border-color: var(--ivory); color: var(--void); }
 
 .btn-sm{ padding: 11px 18px; font-size: 13px; }
+
+/* Marcas de Gmail y LinkedIn en los botones de contacto. Van sobre una placa
+   blanca porque son logos pensados para fondo claro: el rojo de Gmail sobre
+   el flare rosa del boton solido no se leeria. */
+.btn-ico{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(11, 7, 16, .10);
+  flex: none;
+}
+.btn-ico svg{ width: 13px; height: 13px; display: block; }
+.btn-sm .btn-ico{ width: 19px; height: 19px; border-radius: 5px; }
+.btn-sm .btn-ico svg{ width: 11px; height: 11px; }
+
 .btn-idle{
   opacity: .4;
   cursor: not-allowed;
