@@ -1,0 +1,4 @@
+
+# Python bytecode from the cover tools
+__pycache__/
+*.pyc

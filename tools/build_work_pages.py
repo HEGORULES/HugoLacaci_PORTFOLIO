@@ -705,8 +705,9 @@ def build_next(current, from_work_dir=True):
             href = "../play.html"
         elif not from_work_dir and q["page"] != "play.html":
             href = f"work/{q['page']}"
+        cover = ("../files/covers/" if from_work_dir else "files/covers/") + q["slug"] + ".webp"
         cards.append(f"""        <a class="panel work-card" href="{href}" data-reveal style="--d:{i*80}ms">
-          <span class="work-plate"><canvas data-plate="{q['slug']}" aria-hidden="true"></canvas></span>
+          <span class="work-plate"><img src="{cover}" alt="" loading="lazy" decoding="async"></span>
           <span class="work-body">
             <span class="disc-row">{discs}</span>
             <h3>{esc(q['title'])}</h3>
