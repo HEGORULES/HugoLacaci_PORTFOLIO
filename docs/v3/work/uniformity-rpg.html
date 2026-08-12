@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPG Design · Hugo Lacaci Torres</title>
+<meta name="description" content="An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for territory, with a faculty plot underneath.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RPG Design · Hugo Lacaci Torres">
+<meta property="og:description" content="An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for territory, with a faculty plot underneath.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0C11'/><path d='M7 24 L16 9 L25 20' stroke='%236E8BFF' stroke-width='2' fill='none'/><circle cx='7' cy='24' r='3' fill='%23C8F231'/><circle cx='16' cy='9' r='3' fill='%23C8F231'/><circle cx='25' cy='20' r='3' fill='%23FF5A1F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-mark" href="../index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Lacaci</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#work" aria-current="page">Work</a></li>
+      <li><a href="../play.html">Play</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <span class="nav-progress" aria-hidden="true"></span>
+</nav>
+
+<main class="shell">
+
+  <div class="page-head" id="top">
+    <canvas class="page-head-scope" data-seed="uniformity-rpg" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <a class="backlink" href="../index.html#work">← All work</a>
+      <p class="label">Class project · Solo</p>
+      <h1 class="display page-title"><span class="misprint" data-text="RPG Design">RPG Design</span></h1>
+      <p class="lead">An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for territory, with a faculty plot underneath.</p>
+      <div class="disc-row" style="margin-top:var(--s5)"><span class="disc">Narrative</span><span class="disc">World</span><span class="disc">Docs</span></div>
+    </div>
+  </div>
+
+  <section class="section section-flush">
+    <div class="wrap-narrow">
+      <div class="prose" data-reveal>
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What it is</h2>
+        <p>Uniformity is a design document for a third-person, Persona-style RPG set in Patchwork City: a city split into four rival school districts, plus a neutral commercial hub, fighting for territorial control. That conflict hides a deeper threat: a faculty organisation plotting to turn every student into an obedient “model student”. The design borrows Persona&#x27;s social-sim backbone (a daily actions system, affection and companion events, a three-act linear structure) and pairs it with Beat &#x27;em Up combat inspired by Yakuza, Granblue Fantasy: Relink and SIFU, where street fights break out while exploring and boss fights are one-on-one duels against gang leaders.</p>
+      </div>
+      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What I did / experience gained</h2>
+        <p>I designed the full document: the three-act narrative structure, the five districts and their schools, the actions-per-day and mission systems, the stats, equipment and skill-tree progression, the combat and companion systems, and a roster of characters distributed across all four districts.</p>
+        <p>The core challenge was keeping four districts, each with its own school, aesthetic and companions, genuinely equivalent, so no path through the game feels like the correct one. That meant setting hard rules before writing any content: the same number of companions per district, the same combat-role archetypes, and equal opportunities to raise every stat, even when the specific activity differs.</p>
+        <p>This project sharpened my ability to design systems that reinforce narrative structure, using mechanical constraints (daily actions, act chokepoints) to control pacing the way a screenwriter controls a script. It also taught me how to take clear references and recombine them into a cohesive original system instead of a patchwork of borrowed mechanics.</p>
+      </div>
+      <div class="doc-block" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">Full GDD · 43 pages</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="../../files/uniformity-rpg-gdd.pdf" target="_blank" rel="noopener"><span>Open full PDF ↗</span></a>
+            <a class="btn btn-sm" href="../../files/uniformity-rpg-gdd.pdf" download><span>&#8595; Download</span></a>
+          </div>
+        </div>
+        <div class="doc-embed">
+          <iframe src="../../files/uniformity-rpg-gdd.pdf" title="RPG Design" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="head-group">
+          <p class="label">Keep going</p>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+        <a class="panel work-card" href="enemy-design.html" data-reveal style="--d:0ms">
+          <span class="work-plate"><canvas data-plate="enemy-design" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Combat</span><span class="disc">Production</span></span>
+            <h3>Enemy Design</h3>
+            <p>An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unatte…</p>
+            <span class="work-go">← Previous</span>
+          </span>
+        </a>
+        <a class="panel work-card" href="genre-hybridization.html" data-reveal style="--d:80ms">
+          <span class="work-plate"><canvas data-plate="genre-hybridization" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Systems</span><span class="disc">Narrative</span></span>
+            <h3>Genre Hybridation</h3>
+            <p>A genre hybridization exercise fusing narrative adventure and roguelike: an unnamed child with social anxiety navigating a school …</p>
+            <span class="work-go">Next →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h2 class="display" data-reveal style="--d:80ms"><span class="misprint" data-text="Contact me">Contact me</span></h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span><span>·</span><span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="../index.html#work"><span>All work</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres · Game Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="../site.js"></script>
+<style>body{padding-bottom:44px}</style><div style="position:fixed;left:0;right:0;bottom:0;z-index:99;padding:8px 16px;background:#C8F231;color:#0A0C11;font:700 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center">Propuesta visual 02 &middot; Blueprint &middot; <a href="../../index.html" style="color:#0A0C11">volver al portfolio actual</a></div>
+</body>
+</html>

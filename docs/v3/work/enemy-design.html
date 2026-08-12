@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enemy Design · Hugo Lacaci Torres</title>
+<meta name="description" content="An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unattended.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Enemy Design · Hugo Lacaci Torres">
+<meta property="og:description" content="An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unattended.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0C11'/><path d='M7 24 L16 9 L25 20' stroke='%236E8BFF' stroke-width='2' fill='none'/><circle cx='7' cy='24' r='3' fill='%23C8F231'/><circle cx='16' cy='9' r='3' fill='%23C8F231'/><circle cx='25' cy='20' r='3' fill='%23FF5A1F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-mark" href="../index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Lacaci</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#work" aria-current="page">Work</a></li>
+      <li><a href="../play.html">Play</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <span class="nav-progress" aria-hidden="true"></span>
+</nav>
+
+<main class="shell">
+
+  <div class="page-head" id="top">
+    <canvas class="page-head-scope" data-seed="enemy-design" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <a class="backlink" href="../index.html#work">← All work</a>
+      <p class="label">Final year project · Team</p>
+      <h1 class="display page-title"><span class="misprint" data-text="Enemy Design">Enemy Design</span></h1>
+      <p class="lead">An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unattended.</p>
+      <div class="disc-row" style="margin-top:var(--s5)"><span class="disc">Combat</span><span class="disc">Production</span><span class="disc">Docs</span></div>
+    </div>
+  </div>
+
+  <section class="section section-flush">
+    <div class="wrap-narrow">
+      <div class="prose" data-reveal>
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What it is</h2>
+        <p>An enemy design document built for Bobrfield, a top-down shooter prototype where the player controls three beavers who grow stressed if left unattended, switching between them while clearing enemies, completing objectives and unlocking rewards across the map. Enemies were designed specifically to exploit that core mechanic, not just complementing each other within a species&#x27; different roles, but across species too, while staying grounded in the game&#x27;s actual systems: weapons, armour types, and the different zones the levels would offer, including how enemies interact with the environment as well as the player.</p>
+      </div>
+      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What I did / experience gained</h2>
+        <p>I designed the enemy roster working directly alongside the art and narrative teams to build out every faction from day one, rather than handing off a finished spec afterward. Every enemy had to justify itself beyond “it&#x27;s a cool design”: I had to trace how it would affect moment-to-moment gameplay, how it would interact with the other enemies around it, and whether it reinforced the beaver-switching mechanic the whole game is built on.</p>
+        <p>This was my first real experience designing inside a multidisciplinary team from the ground up, and it taught me what holistic design actually requires in practice: keeping every discipline&#x27;s constraints in view at once so the final experience feels intentional rather than assembled from disconnected pieces. It sharpened my instinct to ask how a design choice ripples outward: into systems, into other enemies, into the player&#x27;s moment-to-moment experience, instead of treating any one enemy as an isolated idea.</p>
+      </div>
+
+      <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">The full documentation</p>
+          <a class="btn btn-sm" href="https://clover-echo-9e9.notion.site/Enemy-Design-c13e31c9d5648328867f813b2c348285" target="_blank" rel="noopener"><span>Open in Notion ↗</span></a>
+        </div>
+        <div class="notion-embed">
+          <iframe src="https://clover-echo-9e9.notion.site/ebd/c13e31c9d5648328867f813b2c348285"
+                  title="Enemy Design, full documentation" loading="lazy"
+                  allowfullscreen></iframe>
+        </div>
+        <p class="figure-caption">Lives in Notion, so it needs that page to stay published. The button above always works even if the frame doesn't load.</p>
+      </div>
+
+      <div class="btn-row" data-reveal style="margin-top:var(--s7)">
+        <span class="btn btn-sm btn-idle"><span>Documentation pending upload</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="head-group">
+          <p class="label">Keep going</p>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+        <a class="panel work-card" href="tft-set.html" data-reveal style="--d:0ms">
+          <span class="work-plate"><canvas data-plate="tft-set" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Systems</span><span class="disc">Economy</span></span>
+            <h3>Custom TFT Set</h3>
+            <p>A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to …</p>
+            <span class="work-go">← Previous</span>
+          </span>
+        </a>
+        <a class="panel work-card" href="uniformity-rpg.html" data-reveal style="--d:80ms">
+          <span class="work-plate"><canvas data-plate="uniformity-rpg" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Narrative</span><span class="disc">World</span></span>
+            <h3>RPG Design</h3>
+            <p>An RPG design document for a third-person, Persona-style game set in Patchwork City: four rival school districts fighting for terr…</p>
+            <span class="work-go">Next →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h2 class="display" data-reveal style="--d:80ms"><span class="misprint" data-text="Contact me">Contact me</span></h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span><span>·</span><span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="../index.html#work"><span>All work</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres · Game Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="../site.js"></script>
+<style>body{padding-bottom:44px}</style><div style="position:fixed;left:0;right:0;bottom:0;z-index:99;padding:8px 16px;background:#C8F231;color:#0A0C11;font:700 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center">Propuesta visual 02 &middot; Blueprint &middot; <a href="../../index.html" style="color:#0A0C11">volver al portfolio actual</a></div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom TFT Set · Hugo Lacaci Torres</title>
+<meta name="description" content="A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to mirror TFT&#x27;s real combat rules.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom TFT Set · Hugo Lacaci Torres">
+<meta property="og:description" content="A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to mirror TFT&#x27;s real combat rules.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0C11'/><path d='M7 24 L16 9 L25 20' stroke='%236E8BFF' stroke-width='2' fill='none'/><circle cx='7' cy='24' r='3' fill='%23C8F231'/><circle cx='16' cy='9' r='3' fill='%23C8F231'/><circle cx='25' cy='20' r='3' fill='%23FF5A1F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-mark" href="../index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Lacaci</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#work" aria-current="page">Work</a></li>
+      <li><a href="../play.html">Play</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <span class="nav-progress" aria-hidden="true"></span>
+</nav>
+
+<main class="shell">
+
+  <div class="page-head" id="top">
+    <canvas class="page-head-scope" data-seed="tft-set" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <a class="backlink" href="../index.html#work">← All work</a>
+      <p class="label">Personal project · Solo</p>
+      <h1 class="display page-title"><span class="misprint" data-text="Custom TFT Set">Custom TFT Set</span></h1>
+      <p class="lead">A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to mirror TFT&#x27;s real combat rules.</p>
+      <div class="disc-row" style="margin-top:var(--s5)"><span class="disc">Systems</span><span class="disc">Economy</span><span class="disc">Balance</span></div>
+    </div>
+  </div>
+
+  <section class="section section-flush">
+    <div class="wrap-narrow">
+      <div class="prose" data-reveal>
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What it is</h2>
+        <p>A self-initiated project: a complete custom Teamfight Tactics set built from zero. The first spreadsheet handles traits, where changing a single champion&#x27;s trait automatically updates the set-wide results; it came out of deep research into every previous TFT set (trait types, champion counts per trait, cost distribution) to land on a combination that mirrors how an official set is actually structured. The second is a damage calculator built to follow TFT&#x27;s real combat rules as closely as possible, letting me run 1v1 match-ups between champions with up to three items each to check for dominant strategies and flag who needs buffs or nerfs. The full design document is still in progress; for now, the spreadsheets speak for themselves.</p>
+      </div>
+      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What I did / experience gained</h2>
+        <p>I designed and built both spreadsheets solo, including their internal linking, so a change in one place (a champion&#x27;s trait, a stat, an item) propagates correctly across the whole set instead of requiring manual updates everywhere.</p>
+        <p>This project taught me how to actually use Excel as a design tool: building automated tables and linking multiple sheets together to keep a large, interconnected dataset clean and error-resistant, rather than a flat spreadsheet that breaks the moment something changes.</p>
+      </div>
+
+      <div id="tft" style="margin-top:var(--s8)">
+
+        <div class="section-head">
+          <div class="head-group">
+            <p class="label">Workbook one</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Traits</h2>
+          </div>
+        </div>
+        <p class="prose" style="margin-bottom:var(--s5)">Change a single champion's trait and the
+        set-wide results update on their own. The structure came out of research into every
+        previous TFT set (trait types, champion counts per trait, cost distribution) to land on a
+        combination that mirrors how an official set is actually built. It opens fitted so the
+        whole sheet is on screen at once; use the zoom to walk back into it. Click any cell to
+        read what's behind it; edit one and the sheet recalculates. Nothing you type touches the
+        file.</p>
+        <div class="xl-book" data-book="0" data-fit="on"></div>
+
+        <div class="section-head" style="margin-top:var(--s9)">
+          <div class="head-group">
+            <p class="label">Workbook two</p>
+            <h2 style="font-size:clamp(28px,4vw,48px)">Damage calculator</h2>
+          </div>
+        </div>
+        <p class="prose" style="margin-bottom:var(--s5)">Built to follow TFT's real combat rules as
+        closely as possible, so I could run 1v1 match-ups between champions with up to three items
+        each, check for dominant strategies and flag who needed a buff or a nerf. The cells in the
+        equipment selector are dropdowns, the same ones the workbook has in Excel: pick the two
+        champions and up to three items each, and every stat, resistance and damage figure below
+        recalculates. Each pick takes on its damage-type colour from the Champions and Items
+        sheets, and further down the simulation runs turn by turn until someone's health goes
+        red.</p>
+        <div class="xl-book" data-book="1"></div>
+
+      </div>
+
+      <div class="btn-row" data-reveal style="margin-top:var(--s7)">
+        <a class="btn btn-sm" download href="../../files/tft-set-16-traits.xlsx"><span>16 Traits (.xlsx) · 34 KB</span></a>
+        <a class="btn btn-sm" download href="../../files/tft-damage-calculator.xlsx"><span>Damage calculator (.xlsx) · 38 KB</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="head-group">
+          <p class="label">Keep going</p>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+        <a class="panel work-card" href="infinite-runner.html" data-reveal style="--d:0ms">
+          <span class="work-plate"><canvas data-plate="infinite-runner" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Prototyping</span><span class="disc">Speed</span></span>
+            <h3>Prototype: Infinite Runner</h3>
+            <p>An arcade endless runner built in under a week: a penguin chasing the thief who stole his fish, with a gacha pull every 10 sardine…</p>
+            <span class="work-go">← Previous</span>
+          </span>
+        </a>
+        <a class="panel work-card" href="enemy-design.html" data-reveal style="--d:80ms">
+          <span class="work-plate"><canvas data-plate="enemy-design" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Combat</span><span class="disc">Production</span></span>
+            <h3>Enemy Design</h3>
+            <p>An enemy design document for Bobrfield, a top-down shooter where you switch between three beavers who grow stressed if left unatte…</p>
+            <span class="work-go">Next →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h2 class="display" data-reveal style="--d:80ms"><span class="misprint" data-text="Contact me">Contact me</span></h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span><span>·</span><span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="../index.html#work"><span>All work</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres · Game Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="../site.js"></script>
+<script src="../xlsheet.js"></script>
+<script src="../tft.js"></script>
+<style>body{padding-bottom:44px}</style><div style="position:fixed;left:0;right:0;bottom:0;z-index:99;padding:8px 16px;background:#C8F231;color:#0A0C11;font:700 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center">Propuesta visual 02 &middot; Blueprint &middot; <a href="../../index.html" style="color:#0A0C11">volver al portfolio actual</a></div>
+</body>
+</html>

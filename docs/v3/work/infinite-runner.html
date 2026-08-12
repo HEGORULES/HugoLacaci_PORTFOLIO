@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype: Infinite Runner · Hugo Lacaci Torres</title>
+<meta name="description" content="An arcade endless runner built in under a week: a penguin chasing the thief who stole his fish, with a gacha pull every 10 sardines that can help or hurt.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prototype: Infinite Runner · Hugo Lacaci Torres">
+<meta property="og:description" content="An arcade endless runner built in under a week: a penguin chasing the thief who stole his fish, with a gacha pull every 10 sardines that can help or hurt.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0C11'/><path d='M7 24 L16 9 L25 20' stroke='%236E8BFF' stroke-width='2' fill='none'/><circle cx='7' cy='24' r='3' fill='%23C8F231'/><circle cx='16' cy='9' r='3' fill='%23C8F231'/><circle cx='25' cy='20' r='3' fill='%23FF5A1F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-mark" href="../index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Lacaci</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#work" aria-current="page">Work</a></li>
+      <li><a href="../play.html">Play</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <span class="nav-progress" aria-hidden="true"></span>
+</nav>
+
+<main class="shell">
+
+  <div class="page-head" id="top">
+    <canvas class="page-head-scope" data-seed="infinite-runner" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <a class="backlink" href="../index.html#work">← All work</a>
+      <p class="label">Class project · Team</p>
+      <h1 class="display page-title"><span class="misprint" data-text="Prototype: Infinite Runner">Prototype: Infinite Runner</span></h1>
+      <p class="lead">An arcade endless runner built in under a week: a penguin chasing the thief who stole his fish, with a gacha pull every 10 sardines that can help or hurt.</p>
+      <div class="disc-row" style="margin-top:var(--s5)"><span class="disc">Prototyping</span><span class="disc">Speed</span><span class="disc">Level Design</span></div>
+    </div>
+  </div>
+
+  <section class="section section-flush">
+    <div class="wrap-narrow">
+      <div class="prose" data-reveal>
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What it is</h2>
+        <p>A prototype built in under a week with an arcade aesthetic: a penguin whose fish has been stolen chases the thief down a hill, dodging obstacles and collecting sardines that act as currency. Every 10 sardines trigger a gacha pull, granting a random effect, some helpful (temporary invulnerability), some harmful (inverted controls), that shift the odds of pulling the game&#x27;s win condition on future spins. Crash into too many obstacles, though, and the run resets from the beginning.</p>
+      </div>
+      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What I did / experience gained</h2>
+        <p>I modeled every environment element except the characters, designed the game&#x27;s systems and how the gacha&#x27;s effects would interact with the procedurally generated level, and assembled the levels and tiles the programming team provided for procedural obstacle generation.</p>
+        <p>Working under a sub-week deadline made this project a sharp lesson in reading the team&#x27;s real strengths and limitations and scoping around them rather than around the ideal design. It also doubled as hands-on practice with Unity itself: my first real contact with Cinemachine, researching procedural generation approaches, and working with multiple simultaneous cameras in a single scene.</p>
+      </div>
+
+      <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">Playable build</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/trial/OperationFishback.zip"><span>&#8595; Windows build (118 MB)</span></a>
+          </div>
+        </div>
+
+        <!-- 16:9: the game's own menu is laid out for it, and at 16:10 the
+             buttons fall off the left edge. -->
+        <div class="stage" id="stage" style="aspect-ratio:16/9">
+          <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
+
+          <div class="stage-loading" id="loading" hidden>
+            <p class="label">Loading build</p>
+            <div class="load-bar"><div class="load-fill" id="load-fill"></div></div>
+            <p class="load-pct num" id="load-pct">0%</p>
+          </div>
+
+          <div class="stage-poster" id="poster">
+            <canvas class="stage-bg" data-plate="infinite-runner-prototype" data-dot="12" aria-hidden="true"></canvas>
+            <div class="poster-inner">
+              <p class="label">Arcade runner &middot; Built in &lt; 1 week</p>
+              <h2>Play in browser</h2>
+              <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>&#9654; Start</span></button>
+              <p class="poster-note">
+                Roughly 120 MB loads when you press start. Nothing downloads before that,
+                and on a slow connection it will take a while. Built for desktop, and best
+                played in fullscreen: the menu is laid out for a big screen.
+              </p>
+            </div>
+          </div>
+
+          <div class="stage-error" id="stage-error" hidden></div>
+        </div>
+
+        <div class="stage-bar">
+          <p class="label">Unity WebGL &middot; runs in the browser</p>
+          <div class="btn-row">
+            <button class="btn btn-sm" type="button" id="fullscreen-btn" hidden><span>&#9974; Fullscreen</span></button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      (function () {
+        var BUILD = '../../game/runner/Build/OperationFishback';
+        /* ?fps=45 sets the cap, ?fps=0 turns it off, and any ?fps at all shows
+           a live readout. The desktop build starts at quality Ultra and this one
+           at High, so the two run at different frame rates on the same machine;
+           until the project's frame-rate dependent rotations are fixed, the right
+           cap is whatever number makes this feel like the desktop build. */
+        var qs = new URLSearchParams(location.search).get('fps');
+        var FPS_CAP = qs === null ? 60 : parseInt(qs, 10);
+        if (isNaN(FPS_CAP)) FPS_CAP = 60;
+
+        /* The build's movement is frame-rate dependent, and WebGL runs at the
+           browser's refresh rate: on a 144 Hz screen the game plays more than
+           twice as fast as it was tuned to. Until that is fixed in the project
+           itself, gate the animation frames Unity is given so the demo runs at
+           the speed it was designed at. Installed only when the build starts,
+           so the rest of the page keeps its own timing. */
+        function capFrames(fps) {
+          var raf = window.requestAnimationFrame.bind(window);
+          var caf = window.cancelAnimationFrame.bind(window);
+          var gap = 1000 / fps - 0.5;          // half a ms of slack
+          var lastFired = -Infinity;
+          var pending = {};
+          var nextId = 1;
+
+          window.requestAnimationFrame = function (cb) {
+            var id = nextId++;
+            function tick(t) {
+              // Callbacks queued for a frame that already passed the gate go
+              // through together, so a second caller is never starved.
+              if (t !== lastFired && t - lastFired < gap) {
+                pending[id] = raf(tick);
+                return;
+              }
+              lastFired = t;
+              delete pending[id];
+              cb(t);
+            }
+            pending[id] = raf(tick);
+            return id;
+          };
+          window.cancelAnimationFrame = function (id) {
+            if (pending[id] !== undefined) { caf(pending[id]); delete pending[id]; }
+          };
+        }
+        var poster  = document.getElementById('poster');
+        var loading = document.getElementById('loading');
+        var fill    = document.getElementById('load-fill');
+        var pct     = document.getElementById('load-pct');
+        var errBox  = document.getElementById('stage-error');
+        var playBtn = document.getElementById('play-btn');
+        var fsBtn   = document.getElementById('fullscreen-btn');
+        var canvas  = document.getElementById('unity-canvas');
+
+        /* Diagnostic only: never rendered unless ?fps is in the address. */
+        function showMeter() {
+          var box = document.createElement('p');
+          box.style.cssText = 'position:absolute;top:8px;left:8px;z-index:5;margin:0;' +
+            'padding:4px 8px;border-radius:4px;background:rgba(0,0,0,.7);color:#fff;' +
+            'font:700 12px/1.4 ui-monospace,Menlo,monospace;pointer-events:none';
+          document.getElementById('stage').appendChild(box);
+          var frames = 0, t0 = performance.now();
+          (function tick() {
+            frames++;
+            var now = performance.now();
+            if (now - t0 >= 500) {
+              box.textContent = Math.round(frames / ((now - t0) / 1000)) + ' fps' +
+                (FPS_CAP > 0 ? '  (cap ' + FPS_CAP + ')' : '  (sin cap)');
+              frames = 0; t0 = now;
+            }
+            requestAnimationFrame(tick);
+          })();
+        }
+
+        function fail(msg) {
+          loading.hidden = true;
+          errBox.hidden = false;
+          errBox.textContent = msg;
+        }
+
+        playBtn.addEventListener('click', function () {
+          poster.hidden = true;
+          loading.hidden = false;
+          if (FPS_CAP > 0) capFrames(FPS_CAP);
+          if (qs !== null) showMeter();
+
+          var script = document.createElement('script');
+          script.src = BUILD + '.loader.js';
+
+          script.onerror = function () {
+            fail('Could not load the game engine. Check your connection and reload the page.');
+          };
+
+          script.onload = function () {
+            createUnityInstance(canvas, {
+              arguments: [],
+              dataUrl:      BUILD + '.data',
+              frameworkUrl: BUILD + '.framework.js',
+              codeUrl:      BUILD + '.wasm',
+              streamingAssetsUrl: 'StreamingAssets',
+              companyName: 'Hugo Lacaci Torres',
+              productName: 'Operation Fishback',
+              productVersion: '0.1',
+              showBanner: function (msg, type) { if (type === 'error') fail(msg); }
+            }, function (progress) {
+              var p = Math.round(progress * 100);
+              fill.style.width = p + '%';
+              pct.textContent = p + '%';
+            }).then(function (instance) {
+              loading.hidden = true;
+              fsBtn.hidden = false;
+              fsBtn.addEventListener('click', function () { instance.SetFullscreen(1); });
+              canvas.focus();
+            }).catch(function (message) {
+              fail(String(message));
+            });
+          };
+
+          document.body.appendChild(script);
+        });
+      })();
+      </script>
+
+      <div class="doc-block" data-reveal style="margin-top:var(--s8)">
+        <div class="doc-head">
+          <p class="label">The one-pager</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="../../files/operation-fishback-one-pager.pdf" target="_blank" rel="noopener"><span>Open full PDF ↗</span></a>
+            <a class="btn btn-sm" href="../../files/operation-fishback-one-pager.pdf" download><span>&#8595; Download</span></a>
+          </div>
+        </div>
+        <a class="poster-sheet" href="../../files/operation-fishback-one-pager.pdf" target="_blank" rel="noopener">
+          <picture>
+            <source srcset="../../files/operation-fishback-one-pager.webp" type="image/webp">
+            <img src="../../files/operation-fishback-one-pager.jpg" alt="One-pager for the infinite runner prototype: lore, unique selling points and genres." width="1347" height="1743" loading="lazy">
+          </picture>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="head-group">
+          <p class="label">Keep going</p>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+        <a class="panel work-card" href="../play.html" data-reveal style="--d:0ms">
+          <span class="work-plate"><canvas data-plate="automatic-combat-autobattler" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Playable</span><span class="disc">Balance</span></span>
+            <h3>Prototype: Automatic Battle</h3>
+            <p>A two-player automatic combat prototype built in under a week. Four units, three lanes, and balance that had to hold.…</p>
+            <span class="work-go">← Previous</span>
+          </span>
+        </a>
+        <a class="panel work-card" href="tft-set.html" data-reveal style="--d:80ms">
+          <span class="work-plate"><canvas data-plate="tft-set" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Systems</span><span class="disc">Economy</span></span>
+            <h3>Custom TFT Set</h3>
+            <p>A complete custom Teamfight Tactics set designed from scratch: a self-linking traits spreadsheet and a damage calculator built to …</p>
+            <span class="work-go">Next →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h2 class="display" data-reveal style="--d:80ms"><span class="misprint" data-text="Contact me">Contact me</span></h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span><span>·</span><span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="../index.html#work"><span>All work</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres · Game Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="../site.js"></script>
+<style>body{padding-bottom:44px}</style><div style="position:fixed;left:0;right:0;bottom:0;z-index:99;padding:8px 16px;background:#C8F231;color:#0A0C11;font:700 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center">Propuesta visual 02 &middot; Blueprint &middot; <a href="../../index.html" style="color:#0A0C11">volver al portfolio actual</a></div>
+</body>
+</html>

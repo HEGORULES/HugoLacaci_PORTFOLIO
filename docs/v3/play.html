@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play Prototype: Automatic Battle · Hugo Lacaci Torres</title>
+<meta name="description" content="Play Prototype: Automatic Battle in the browser: a two-player automatic combat prototype built and balanced in under a week.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Play Prototype: Automatic Battle">
+<meta property="og:description" content="A two-player automatic combat prototype, playable in the browser. No download.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23090B12'/><path d='M3 25 L8 19 L12 22 L17 9 L22 17 L29 5' stroke='%23F2912E' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-screen" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-mark" href="index.html">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Lacaci</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="play.html" aria-current="page">Play</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+  <span class="nav-progress" aria-hidden="true"></span>
+</nav>
+
+<main class="shell">
+
+  <div class="page-head" id="top">
+    <div class="wrap">
+      <a class="backlink" href="index.html#work">← All work</a>
+      <p class="label">Class project · Playable build</p>
+      <h1 class="display page-title"><span class="misprint" data-text="Prototype: Automatic Battle">Prototype: Automatic Battle</span></h1>
+      <p class="lead">
+        A two-player, automatic combat prototype built in under a week.
+      </p>
+    </div>
+  </div>
+
+  <section class="section section-flush">
+    <div class="wrap-narrow">
+      <div class="prose" data-reveal>
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What it is</h2>
+        <p>Slavic Battle is a two-player, automatic combat prototype built in under a week. Each round, both players spend gold to place units: Soldier, Tank, Ranger and Mage, across three lanes, then watch them clash automatically; whoever wins 2 of 3 lanes takes the round, and whoever wins 2 rounds wins the match. Designed with rock-paper-scissors-style unit counters in mind, the whole game hinges on getting the four units&#x27; stats to feel fair and distinct from each other.</p>
+      </div>
+      <div class="prose" data-reveal style="--d:80ms;margin-top:var(--s7)">
+        <h2 class="display" style="font-size:clamp(26px,3.6vw,40px);margin:0 0 var(--s4)">What I did / experience gained</h2>
+        <p>I originated the core game concept, then led QA and balance for the project: running extensive playtesting to make sure all four units felt fair and distinct against each other, rather than any one composition dominating. This meant testing in isolated match-ups first (soldiers vs. mages, tanks vs. rangers, and so on) to tune individual stats, then moving to mirror battles to rule out positional advantages, and finally full playtests across the team and beyond to catch what isolated testing couldn&#x27;t.</p>
+        <p>Owning balance on a game built in under a week taught me how to prioritize under a tight timeline: deciding which testing method would catch the most meaningful problems fastest, and trusting a structured process (isolated → mirrored → open playtests) instead of guessing at numbers. It also sharpened my eye for spotting when a &#x201C;feels off&#x201D; reaction from a playtester points to a real balance issue versus an unlucky match.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-flush">
+    <div class="wrap">
+
+      <div class="stage" id="stage">
+        <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+
+        <div class="stage-loading" id="loading" hidden>
+          <p class="label">Loading build</p>
+          <div class="load-bar"><div class="load-fill" id="load-fill"></div></div>
+          <p class="load-pct num" id="load-pct">0%</p>
+        </div>
+
+        <div class="stage-poster" id="poster">
+          <canvas class="stage-bg" data-plate="automatic-combat-autobattler" data-dot="12" aria-hidden="true"></canvas>
+          <div class="poster-inner">
+            <p class="label">Two players · Built in &lt; 1 week</p>
+            <h2>Play in browser</h2>
+            <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>▶ Start</span></button>
+            <p class="poster-note">
+              Roughly 50 MB loads when you press start. Nothing downloads before that.
+              Built for desktop; on a phone it will be slow.
+            </p>
+          </div>
+        </div>
+
+        <div class="stage-error" id="stage-error" hidden></div>
+      </div>
+
+      <div class="stage-bar">
+        <p class="label">Unity WebGL · runs in the browser</p>
+        <div class="btn-row">
+          <button class="btn btn-sm" type="button" id="fullscreen-btn" hidden><span>⛶ Fullscreen</span></button>
+          <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/v1.0/Build.zip"><span>&#8595; Windows build (78 MB)</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="head-group">
+          <p class="label">Keep going</p>
+          <h2 style="font-size:clamp(30px,5vw,64px)">Before and after</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+<!-- NEXTUP:START -->
+        <a class="panel work-card" href="work/beyond-the-health-bar.html" data-reveal style="--d:0ms">
+          <span class="work-plate"><canvas data-plate="beyond-the-health-bar" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Research</span><span class="disc">Systems</span></span>
+            <h3>Bachelor&#x27;s Final Project (BFP)</h3>
+            <p>A research thesis on how the mechanical, spatial, narrative and psychological dimensions of design come together to shape a boss e…</p>
+            <span class="work-go">← Previous</span>
+          </span>
+        </a>
+        <a class="panel work-card" href="work/infinite-runner.html" data-reveal style="--d:80ms">
+          <span class="work-plate"><canvas data-plate="infinite-runner" aria-hidden="true"></canvas></span>
+          <span class="work-body">
+            <span class="disc-row"><span class="disc">Prototyping</span><span class="disc">Speed</span></span>
+            <h3>Prototype: Infinite Runner</h3>
+            <p>An arcade endless runner built in under a week: a penguin chasing the thief who stole his fish, with a gacha pull every 10 sardine…</p>
+            <span class="work-go">Next →</span>
+          </span>
+        </a>
+        <!-- NEXTUP:END -->
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h2 class="display" data-reveal style="--d:80ms"><span class="misprint" data-text="Contact me">Contact me</span></h2>
+          <p class="footer-meta" data-reveal style="--d:140ms">
+            <span>hugo.lacaci@gmail.com</span>
+            <span>·</span>
+            <span>Madrid, Spain</span>
+          </p>
+        </div>
+        <div class="btn-row" data-reveal style="--d:200ms">
+          <a class="btn btn-solid" href="mailto:hugo.lacaci@gmail.com"><span>Email me</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/hugo-lacaci-torres" target="_blank" rel="noopener"><span>LinkedIn ↗</span></a>
+          <a class="btn" href="index.html#work"><span>All work</span></a>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Hugo Lacaci Torres · Game Designer</span>
+        <span>Madrid · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="site.js"></script>
+<script>
+(function () {
+  var BUILD = '../game/Build/AutomaticCombat_WebBuild';
+  var poster  = document.getElementById('poster');
+  var loading = document.getElementById('loading');
+  var fill    = document.getElementById('load-fill');
+  var pct     = document.getElementById('load-pct');
+  var errBox  = document.getElementById('stage-error');
+  var playBtn = document.getElementById('play-btn');
+  var fsBtn   = document.getElementById('fullscreen-btn');
+  var canvas  = document.getElementById('unity-canvas');
+
+  function fail(msg) {
+    loading.hidden = true;
+    errBox.hidden = false;
+    errBox.textContent = msg;
+  }
+
+  playBtn.addEventListener('click', function () {
+    poster.hidden = true;
+    loading.hidden = false;
+
+    var script = document.createElement('script');
+    script.src = BUILD + '.loader.js';
+
+    script.onerror = function () {
+      fail('Could not load the game engine. Check your connection and reload the page.');
+    };
+
+    script.onload = function () {
+      createUnityInstance(canvas, {
+        arguments: [],
+        dataUrl:      BUILD + '.data.unityweb',
+        frameworkUrl: BUILD + '.framework.js.unityweb',
+        codeUrl:      BUILD + '.wasm.unityweb',
+        streamingAssetsUrl: 'StreamingAssets',
+        companyName: 'Hugo Lacaci Torres',
+        productName: 'Prototype: Automatic Battle',
+        productVersion: '0.1.0',
+        // Swallow Unity's own red banner; errors surface through fail() instead.
+        showBanner: function (msg, type) { if (type === 'error') fail(msg); }
+      }, function (progress) {
+        var p = Math.round(progress * 100);
+        fill.style.width = p + '%';
+        pct.textContent = p + '%';
+      }).then(function (instance) {
+        loading.hidden = true;
+        fsBtn.hidden = false;
+        fsBtn.addEventListener('click', function () { instance.SetFullscreen(1); });
+        canvas.focus();
+      }).catch(function (message) {
+        fail(String(message));
+      });
+    };
+
+    document.body.appendChild(script);
+  });
+})();
+</script>
+<style>body{padding-bottom:44px}</style><div style="position:fixed;left:0;right:0;bottom:0;z-index:99;padding:8px 16px;background:#C8F231;color:#0A0C11;font:700 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center">Propuesta visual 02 &middot; Blueprint &middot; <a href="../index.html" style="color:#0A0C11">volver al portfolio actual</a></div>
+</body>
+</html>
