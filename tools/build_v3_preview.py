@@ -27,6 +27,24 @@ for name in ('style.css', 'site.js', 'tft.js', 'xlsheet.js'):
 
 (OUT / 'data' / 'tft-sheets.json').write_text(read('docs/data/tft-sheets.json'), encoding='utf-8')
 
+RUNNER_ZIP = ("https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/"
+              "normal/OperationFishbackNormalBuild.zip")
+
+RUNNER_DOWNLOAD = """<div class="stage" style="aspect-ratio:16/9">
+          <img class="stage-art" src="../../files/covers/infinite-runner.webp" alt="" loading="lazy" decoding="async">
+          <div class="stage-poster is-art">
+            <div class="poster-inner">
+              <p class="label">Arcade runner &middot; Built in &lt; 1 week</p>
+              <h2>Download and play</h2>
+              <a class="btn btn-solid btn-play" href="RUNNER_ZIP_URL"><span>&#8595; Download for Windows</span></a>
+              <p class="poster-note">
+                115 MB zipped, around 600 MB unpacked. Unzip the whole folder and run
+                <strong>OperationFishback.exe</strong>; the files next to it have to stay there.
+              </p>
+            </div>
+          </div>
+        </div>""".replace("RUNNER_ZIP_URL", RUNNER_ZIP)
+
 def banner(up):
     """up: relative prefix that reaches docs/ from the page being written."""
     return ('<style>body{padding-bottom:44px}</style>'
@@ -52,15 +70,14 @@ play = play.replace('</body>', banner('../') + '</body>')
 for slug in WORK:
     page = read(f'docs/work/{slug}.html')
     page = page.replace('"../files/', '"../../files/')
-    page = page.replace("'../game/runner/Build/", "'../../game/runner/Build/")
 
-    # La build del runner se reconstruyó con Decompression Fallback: los tres
-    # archivos pasan a .unityweb. La rama claude/design-v3 todavía pide los
-    # antiguos, así que se corrigen aquí en vez de tocar esa rama.
-    page = page.replace("BUILD + '.data',", "BUILD + '.data.unityweb',")
-    page = page.replace("BUILD + '.framework.js',", "BUILD + '.framework.js.unityweb',")
-    page = page.replace("BUILD + '.wasm',", "BUILD + '.wasm.unityweb',")
-    page = page.replace("Roughly 120 MB loads", "Roughly 90 MB loads")
+    # El runner ya no se juega en el navegador: la build de WebGL se retiró y
+    # ahora se descarga. La rama claude/design-v3 sigue trayendo el reproductor,
+    # así que aquí se sustituye por el mismo bloque de descarga que usa el sitio,
+    # en vez de dejar un botón de Start que no llevaría a ninguna parte.
+    if slug == "infinite-runner":
+        a, b = page.index('<div class="stage"'), page.index("</script>") + len("</script>")
+        page = page[:a] + RUNNER_DOWNLOAD + page[b:]
     page = page.replace('</body>', banner('../../') + '</body>')
     (OUT / 'work' / f'{slug}.html').write_text(page, encoding='utf-8')
 

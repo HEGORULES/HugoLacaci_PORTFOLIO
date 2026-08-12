@@ -1283,7 +1283,7 @@ table.xl td.xl-dv{ padding: 0; background: #FFF7CC; }
   inset: 0;
   width: 100%; height: 100%;
   opacity: .5;
-  pointer-events: none;
+  pointer-events: none;  object-fit: cover;
 }
 .poster-inner{
   position: relative;
@@ -1304,6 +1304,18 @@ table.xl td.xl-dv{ padding: 0; background: #FFF7CC; }
 }
 .poster-note{ font-size: 14px; line-height: 1.55; color: var(--haze); margin: 0; }
 .btn-play{ font-size: 16px; padding: 18px 34px; }
+
+/* Poster de descarga: una captura real de fondo. Va por debajo del velo, no
+   dentro de el, o los botones del propio juego compiten con los de la pagina. */
+.stage-art{
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.stage-poster.is-art{
+  background: linear-gradient(180deg, rgba(11,7,16,.62), rgba(11,7,16,.90));
+}
 
 .stage-loading{
   position: absolute;

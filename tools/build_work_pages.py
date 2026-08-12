@@ -141,171 +141,33 @@ PROJECTS = [
         "extra_html": """
       <div class="doc-block doc-wide" data-reveal style="margin-top:var(--s8)">
         <div class="doc-head">
-          <p class="label">Playable build</p>
+          <p class="label">Downloadable build</p>
           <div class="btn-row">
-            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/trial/OperationFishback.zip"><span>&#8595; Windows build (118 MB)</span></a>
+            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Windows build (115 MB)</span></a>
           </div>
         </div>
 
-        <!-- 16:9: the game's own menu is laid out for it, and at 16:10 the
-             buttons fall off the left edge. -->
-        <div class="stage" id="stage" style="aspect-ratio:16/9">
-          <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
-
-          <div class="stage-loading" id="loading" hidden>
-            <p class="label">Loading build</p>
-            <div class="load-bar"><div class="load-fill" id="load-fill"></div></div>
-            <p class="load-pct num" id="load-pct">0%</p>
-          </div>
-
-          <div class="stage-poster" id="poster">
-            <canvas class="stage-bg" data-plate="infinite-runner-prototype" data-dot="12" aria-hidden="true"></canvas>
+        <!-- 16:9: the game's own menu is laid out for it. -->
+        <div class="stage" style="aspect-ratio:16/9">
+          <img class="stage-art" src="../files/covers/infinite-runner.webp" alt="" loading="lazy" decoding="async">
+          <div class="stage-poster is-art">
             <div class="poster-inner">
               <p class="label">Arcade runner &middot; Built in &lt; 1 week</p>
-              <h2>Play in browser</h2>
-              <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>&#9654; Start</span></button>
+              <h2>Download and play</h2>
+              <a class="btn btn-solid btn-play" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Download for Windows</span></a>
               <p class="poster-note">
-                Roughly 90 MB loads when you press start. Nothing downloads before that,
-                and on a slow connection it will take a while. Built for desktop, and best
-                played in fullscreen: the menu is laid out for a big screen.
+                115 MB zipped, around 600 MB unpacked. Unzip the whole folder and run
+                <strong>OperationFishback.exe</strong>; the files next to it have to stay there.
+                Best in fullscreen: the menu is laid out for a big screen.
               </p>
             </div>
           </div>
-
-          <div class="stage-error" id="stage-error" hidden></div>
         </div>
 
         <div class="stage-bar">
-          <p class="label">Unity WebGL &middot; runs in the browser</p>
-          <div class="btn-row">
-            <button class="btn btn-sm" type="button" id="fullscreen-btn" hidden><span>&#9974; Fullscreen</span></button>
-          </div>
+          <p class="label">Windows &middot; Unity &middot; not a browser build</p>
         </div>
       </div>
-
-      <script>
-      (function () {
-        var BUILD = '../game/runner/Build/OperationFishback';
-        /* ?fps=45 sets the cap, ?fps=0 turns it off, and any ?fps at all shows
-           a live readout. The desktop build starts at quality Ultra and this one
-           at High, so the two run at different frame rates on the same machine;
-           until the project's frame-rate dependent rotations are fixed, the right
-           cap is whatever number makes this feel like the desktop build. */
-        var qs = new URLSearchParams(location.search).get('fps');
-        var FPS_CAP = qs === null ? 60 : parseInt(qs, 10);
-        if (isNaN(FPS_CAP)) FPS_CAP = 60;
-
-        /* The build's movement is frame-rate dependent, and WebGL runs at the
-           browser's refresh rate: on a 144 Hz screen the game plays more than
-           twice as fast as it was tuned to. Until that is fixed in the project
-           itself, gate the animation frames Unity is given so the demo runs at
-           the speed it was designed at. Installed only when the build starts,
-           so the rest of the page keeps its own timing. */
-        function capFrames(fps) {
-          var raf = window.requestAnimationFrame.bind(window);
-          var caf = window.cancelAnimationFrame.bind(window);
-          var gap = 1000 / fps - 0.5;          // half a ms of slack
-          var lastFired = -Infinity;
-          var pending = {};
-          var nextId = 1;
-
-          window.requestAnimationFrame = function (cb) {
-            var id = nextId++;
-            function tick(t) {
-              // Callbacks queued for a frame that already passed the gate go
-              // through together, so a second caller is never starved.
-              if (t !== lastFired && t - lastFired < gap) {
-                pending[id] = raf(tick);
-                return;
-              }
-              lastFired = t;
-              delete pending[id];
-              cb(t);
-            }
-            pending[id] = raf(tick);
-            return id;
-          };
-          window.cancelAnimationFrame = function (id) {
-            if (pending[id] !== undefined) { caf(pending[id]); delete pending[id]; }
-          };
-        }
-        var poster  = document.getElementById('poster');
-        var loading = document.getElementById('loading');
-        var fill    = document.getElementById('load-fill');
-        var pct     = document.getElementById('load-pct');
-        var errBox  = document.getElementById('stage-error');
-        var playBtn = document.getElementById('play-btn');
-        var fsBtn   = document.getElementById('fullscreen-btn');
-        var canvas  = document.getElementById('unity-canvas');
-
-        /* Diagnostic only: never rendered unless ?fps is in the address. */
-        function showMeter() {
-          var box = document.createElement('p');
-          box.style.cssText = 'position:absolute;top:8px;left:8px;z-index:5;margin:0;' +
-            'padding:4px 8px;border-radius:4px;background:rgba(0,0,0,.7);color:#fff;' +
-            'font:700 12px/1.4 ui-monospace,Menlo,monospace;pointer-events:none';
-          document.getElementById('stage').appendChild(box);
-          var frames = 0, t0 = performance.now();
-          (function tick() {
-            frames++;
-            var now = performance.now();
-            if (now - t0 >= 500) {
-              box.textContent = Math.round(frames / ((now - t0) / 1000)) + ' fps' +
-                (FPS_CAP > 0 ? '  (cap ' + FPS_CAP + ')' : '  (sin cap)');
-              frames = 0; t0 = now;
-            }
-            requestAnimationFrame(tick);
-          })();
-        }
-
-        function fail(msg) {
-          loading.hidden = true;
-          errBox.hidden = false;
-          errBox.textContent = msg;
-        }
-
-        playBtn.addEventListener('click', function () {
-          poster.hidden = true;
-          loading.hidden = false;
-          if (FPS_CAP > 0) capFrames(FPS_CAP);
-          if (qs !== null) showMeter();
-
-          var script = document.createElement('script');
-          script.src = BUILD + '.loader.js';
-
-          script.onerror = function () {
-            fail('Could not load the game engine. Check your connection and reload the page.');
-          };
-
-          script.onload = function () {
-            createUnityInstance(canvas, {
-              arguments: [],
-              dataUrl:      BUILD + '.data.unityweb',
-              frameworkUrl: BUILD + '.framework.js.unityweb',
-              codeUrl:      BUILD + '.wasm.unityweb',
-              streamingAssetsUrl: 'StreamingAssets',
-              companyName: 'Hugo Lacaci Torres',
-              productName: 'Operation Fishback',
-              productVersion: '0.1',
-              showBanner: function (msg, type) { if (type === 'error') fail(msg); }
-            }, function (progress) {
-              var p = Math.round(progress * 100);
-              fill.style.width = p + '%';
-              pct.textContent = p + '%';
-            }).then(function (instance) {
-              loading.hidden = true;
-              fsBtn.hidden = false;
-              fsBtn.addEventListener('click', function () { instance.SetFullscreen(1); });
-              canvas.focus();
-            }).catch(function (message) {
-              fail(String(message));
-            });
-          };
-
-          document.body.appendChild(script);
-        });
-      })();
-      </script>
 """,
         "docs": [],
         "posters": [(
