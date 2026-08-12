@@ -86,7 +86,7 @@
               <h2>Play in browser</h2>
               <button class="btn btn-solid btn-play" type="button" id="play-btn"><span>&#9654; Start</span></button>
               <p class="poster-note">
-                Roughly 120 MB loads when you press start. Nothing downloads before that,
+                Roughly 90 MB loads when you press start. Nothing downloads before that,
                 and on a slow connection it will take a while. Built for desktop, and best
                 played in fullscreen: the menu is laid out for a big screen.
               </p>
@@ -201,9 +201,9 @@
           script.onload = function () {
             createUnityInstance(canvas, {
               arguments: [],
-              dataUrl:      BUILD + '.data',
-              frameworkUrl: BUILD + '.framework.js',
-              codeUrl:      BUILD + '.wasm',
+              dataUrl:      BUILD + '.data.unityweb',
+              frameworkUrl: BUILD + '.framework.js.unityweb',
+              codeUrl:      BUILD + '.wasm.unityweb',
               streamingAssetsUrl: 'StreamingAssets',
               companyName: 'Hugo Lacaci Torres',
               productName: 'Operation Fishback',

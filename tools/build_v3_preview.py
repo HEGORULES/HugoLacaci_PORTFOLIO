@@ -53,6 +53,14 @@ for slug in WORK:
     page = read(f'docs/work/{slug}.html')
     page = page.replace('"../files/', '"../../files/')
     page = page.replace("'../game/runner/Build/", "'../../game/runner/Build/")
+
+    # La build del runner se reconstruyó con Decompression Fallback: los tres
+    # archivos pasan a .unityweb. La rama claude/design-v3 todavía pide los
+    # antiguos, así que se corrigen aquí en vez de tocar esa rama.
+    page = page.replace("BUILD + '.data',", "BUILD + '.data.unityweb',")
+    page = page.replace("BUILD + '.framework.js',", "BUILD + '.framework.js.unityweb',")
+    page = page.replace("BUILD + '.wasm',", "BUILD + '.wasm.unityweb',")
+    page = page.replace("Roughly 120 MB loads", "Roughly 90 MB loads")
     page = page.replace('</body>', banner('../../') + '</body>')
     (OUT / 'work' / f'{slug}.html').write_text(page, encoding='utf-8')
 
