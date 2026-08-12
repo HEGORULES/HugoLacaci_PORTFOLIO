@@ -143,7 +143,7 @@ PROJECTS = [
         <div class="doc-head">
           <p class="label">Downloadable build</p>
           <div class="btn-row">
-            <a class="btn btn-sm" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Windows build (115 MB)</span></a>
+            <a class="btn btn-sm" href="https://github.com/HugoLacaci/HugoLacaci.github.io/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Windows build (115 MB)</span></a>
           </div>
         </div>
 
@@ -154,7 +154,7 @@ PROJECTS = [
             <div class="poster-inner">
               <p class="label">Arcade runner &middot; Built in &lt; 1 week</p>
               <h2>Download and play</h2>
-              <a class="btn btn-solid btn-play" href="https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Download for Windows</span></a>
+              <a class="btn btn-solid btn-play" href="https://github.com/HugoLacaci/HugoLacaci.github.io/releases/download/normal/OperationFishbackNormalBuild.zip"><span>&#8595; Download for Windows</span></a>
               <p class="poster-note">
                 115 MB zipped, around 600 MB unpacked. Unzip the whole folder and run
                 <strong>OperationFishback.exe</strong>; the files next to it have to stay there.
@@ -312,8 +312,8 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:type" content="article">
 <meta property="og:title" content="{title} · Hugo Lacaci Torres">
 <meta property="og:description" content="{meta}">
-<meta property="og:url" content="https://hegorules.github.io/HugoLacaci_PORTFOLIO/work/{slug}.html">
-<meta property="og:image" content="https://hegorules.github.io/HugoLacaci_PORTFOLIO/files/share-card.png">
+<meta property="og:url" content="https://hugolacaci.github.io/work/{slug}.html">
+<meta property="og:image" content="https://hugolacaci.github.io/files/share-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Hugo Lacaci, Game Designer. Eight projects.">

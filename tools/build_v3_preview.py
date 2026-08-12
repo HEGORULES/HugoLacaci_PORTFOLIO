@@ -27,7 +27,7 @@ for name in ('style.css', 'site.js', 'tft.js', 'xlsheet.js'):
 
 (OUT / 'data' / 'tft-sheets.json').write_text(read('docs/data/tft-sheets.json'), encoding='utf-8')
 
-RUNNER_ZIP = ("https://github.com/HEGORULES/HugoLacaci_PORTFOLIO/releases/download/"
+RUNNER_ZIP = ("https://github.com/HugoLacaci/HugoLacaci.github.io/releases/download/"
               "normal/OperationFishbackNormalBuild.zip")
 
 RUNNER_DOWNLOAD = """<div class="stage" style="aspect-ratio:16/9">
@@ -45,6 +45,25 @@ RUNNER_DOWNLOAD = """<div class="stage" style="aspect-ratio:16/9">
           </div>
         </div>""".replace("RUNNER_ZIP_URL", RUNNER_ZIP)
 
+# La rama claude/design-v3 se congelo antes del cambio de nombre de la cuenta y
+# antes de que el runner pasara a descarga, asi que sus enlaces se corrigen aqui.
+RENAMES = [
+    ("https://github.com/HEGORULES/HugoLacaci_PORTFOLIO",
+     "https://github.com/HugoLacaci/HugoLacaci.github.io"),
+    ("https://hegorules.github.io/HugoLacaci_PORTFOLIO/", "https://hugolacaci.github.io/"),
+    ("releases/download/trial/OperationFishback.zip"
+     '"><span>&#8595; Windows build (118 MB)',
+     "releases/download/normal/OperationFishbackNormalBuild.zip"
+     '"><span>&#8595; Windows build (115 MB)'),
+]
+
+
+def relink(page):
+    for a, b in RENAMES:
+        page = page.replace(a, b)
+    return page
+
+
 def banner(up):
     """up: relative prefix that reaches docs/ from the page being written."""
     return ('<style>body{padding-bottom:44px}</style>'
@@ -57,12 +76,14 @@ def banner(up):
 # Home: only the CV lives one level up.
 home = read('docs/index.html')
 home = home.replace('href="Curriculum_GD_G.pdf"', 'href="../Curriculum_GD_G.pdf"')
+home = relink(home)
 home = home.replace('</body>', banner('../') + '</body>')
 (OUT / 'index.html').write_text(home, encoding='utf-8')
 
 # Play page: the Unity build stays where it is.
 play = read('docs/play.html')
 play = play.replace('game/Build/', '../game/Build/')
+play = relink(play)
 play = play.replace('</body>', banner('../') + '</body>')
 (OUT / 'play.html').write_text(play, encoding='utf-8')
 
@@ -78,6 +99,7 @@ for slug in WORK:
     if slug == "infinite-runner":
         a, b = page.index('<div class="stage"'), page.index("</script>") + len("</script>")
         page = page[:a] + RUNNER_DOWNLOAD + page[b:]
+    page = relink(page)
     page = page.replace('</body>', banner('../../') + '</body>')
     (OUT / 'work' / f'{slug}.html').write_text(page, encoding='utf-8')
 
