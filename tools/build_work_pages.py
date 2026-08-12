@@ -312,6 +312,12 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:type" content="article">
 <meta property="og:title" content="{title} · Hugo Lacaci Torres">
 <meta property="og:description" content="{meta}">
+<meta property="og:url" content="https://hegorules.github.io/HugoLacaci_PORTFOLIO/work/{slug}.html">
+<meta property="og:image" content="https://hegorules.github.io/HugoLacaci_PORTFOLIO/files/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hugo Lacaci, Game Designer. Eight projects.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B0710">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0710'/><circle cx='13' cy='16' r='9' fill='%23FF3D57'/><circle cx='20' cy='16' r='9' fill='%237C4DFF' fill-opacity='.8'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
